@@ -1,0 +1,121 @@
+{
+  "projectiles": [
+    {
+      "id": "frag",
+      "speed": 20,
+      "gravity": 16,
+      "size": 0.12,
+      "fuseMs": 3000,
+      "blast": { "damage": 100, "radius": 4.5, "hole": 1.6, "push": 12 },
+      "credit": "nade",
+      "model": "projectiles/grenade"
+    },
+    {
+      "id": "bouncer",
+      "speed": 18,
+      "gravity": 16,
+      "size": 0.12,
+      "fuseMs": 2500,
+      "bounce": 0.5,
+      "blast": { "damage": 100, "radius": 4.5, "hole": 1.6, "push": 12 },
+      "credit": "nade",
+      "model": "projectiles/bouncer"
+    },
+    {
+      "id": "rocket",
+      "speed": 30,
+      "gravity": 0,
+      "size": 0.15,
+      "fuseMs": 4000,
+      "blast": { "damage": 100, "radius": 3.5, "hole": 1.2, "push": 16 },
+      "credit": "rocket",
+      "model": "projectiles/rocket"
+    },
+    {
+      "id": "mortar",
+      "speed": 18,
+      "gravity": 16,
+      "size": 0.16,
+      "fuseMs": 4000,
+      "split": { "into": "bomblet", "count": 3 },
+      "blast": { "damage": 40, "radius": 2.5, "hole": 0.8, "push": 8 },
+      "credit": "mortar",
+      "model": "projectiles/mortar"
+    },
+    {
+      "id": "bomblet",
+      "speed": 7,
+      "gravity": 16,
+      "size": 0.09,
+      "fuseMs": 2000,
+      "blast": { "damage": 40, "radius": 2.5, "hole": 0.8, "push": 8 },
+      "credit": "mortar",
+      "model": "projectiles/bomblet"
+    },
+    {
+      "id": "splitter",
+      "speed": 18,
+      "gravity": 16,
+      "size": 0.13,
+      "fuseMs": 3000,
+      "bounce": 0.45,
+      "split": { "into": "splitterBit", "count": 5 },
+      "blast": { "damage": 70, "radius": 4, "hole": 1.5, "push": 12 },
+      "credit": "splitter",
+      "model": "projectiles/splitter"
+    },
+    {
+      "id": "splitterBit",
+      "speed": 9,
+      "gravity": 16,
+      "size": 0.1,
+      "fuseMs": 1600,
+      "bounce": 0.4,
+      "blast": { "damage": 55, "radius": 3.2, "hole": 1.2, "push": 10 },
+      "credit": "splitter",
+      "model": "projectiles/splitter-bit"
+    },
+    {
+      "id": "choir",
+      "speed": 16,
+      "gravity": 16,
+      "size": 0.16,
+      "fuseMs": 3000,
+      "bounce": 0.3,
+      "blast": { "damage": 200, "radius": 7, "hole": 2.8, "push": 22 },
+      "credit": "choir",
+      "model": "projectiles/choir"
+    },
+    {
+      "id": "missile",
+      "speed": 0,
+      "gravity": 24,
+      "size": 0.18,
+      "fuseMs": 5000,
+      "blast": { "damage": 80, "radius": 3.5, "hole": 1.6, "push": 14 },
+      "credit": "airstrike",
+      "model": "projectiles/missile"
+    },
+    {
+      "id": "pilot",
+      "speed": 14,
+      "gravity": 0,
+      "size": 0.3,
+      "fuseMs": 15000,
+      "steer": true,
+      "blast": { "damage": 260, "radius": 9, "hole": 3.2, "push": 26 },
+      "credit": "pilot",
+      "model": "projectiles/pilot"
+    },
+    {
+      "id": "ball",
+      "speed": 22,
+      "gravity": 12,
+      "size": 0.07,
+      "fuseMs": 3000,
+      "hit": { "damage": 30, "headshot": 1.5 },
+      "credit": "ball",
+      "model": "projectiles/ball"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "characters.schema.json",
+  "title": "Characters",
+  "description": "The characters.",
+  "type": "object",
+  "properties": {
+    "health": {
+      "type": "object",
+      "description": "Health.",
+      "properties": {
+        "start": {
+          "type": "integer",
+          "description": "Health you spawn with.",
+          "minimum": 10,
+          "maximum": 200
+        },
+        "max": {
+          "type": "integer",
+          "description": "The most health pickups give you (a Health Orb more).",
+          "minimum": 10,
+          "maximum": 200
+        },
+        "overheal": {
+          "type": "integer",
+          "description": "The most health you can have at all.",
+          "minimum": 10,
+          "maximum": 400
+        }
+      },
+      "additionalProperties": false,
+      "required": ["start", "max", "overheal"]
+    },
+    "armor": {
+      "type": "object",
+      "description": "Armor.",
+      "properties": {
+        "max": {
+          "type": "integer",
+          "description": "The most armor you can have.",
+          "minimum": 0,
+          "maximum": 400
+        }
+      },
+      "additionalProperties": false,
+      "required": ["max"]
+    },
+    "decay": {
+      "type": "object",
+      "description": "Health and armor above a level tick back down.",
+      "properties": {
+        "above": {
+          "type": "integer",
+          "description": "The level they tick down to.",
+          "minimum": 10,
+          "maximum": 400
+        },
+        "perSecond": { "type": "integer", "description": "Points a second.", "minimum": 0, "maximum": 20 }
+      },
+      "additionalProperties": false,
+      "required": ["above", "perSecond"]
+    },
+    "colors": {
+      "type": "array",
+      "description": "Player colours, given out in order to whoever comes in.",
+      "items": { "type": "string", "description": "A colour.", "pattern": "^#[0-9a-fA-F]{6}$" },
+      "minItems": 1,
+      "maxItems": 32
+    },
+    "teams": {
+      "type": "object",
+      "description": "Capture the flag's two teams.",
+      "properties": {
+        "red": {
+          "type": "object",
+          "description": "The red team.",
+          "properties": {
+            "name": { "type": "string", "description": "What it's called.", "minLength": 1, "maxLength": 20 },
+            "color": { "type": "string", "description": "Its colour.", "pattern": "^#[0-9a-fA-F]{6}$" }
+          },
+          "additionalProperties": false,
+          "required": ["name", "color"]
+        },
+        "blue": {
+          "type": "object",
+          "description": "The blue team.",
+          "properties": {
+            "name": { "type": "string", "description": "What it's called.", "minLength": 1, "maxLength": 20 },
+            "color": { "type": "string", "description": "Its colour.", "pattern": "^#[0-9a-fA-F]{6}$" }
+          },
+          "additionalProperties": false,
+          "required": ["name", "color"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["red", "blue"]
+    }
+  },
+  "additionalProperties": false,
+  "required": ["health", "armor", "decay", "colors", "teams"]
+}

@@ -1,0 +1,16 @@
+{
+  "modes": ["dm", "ctf"],
+  "deathmatch": { "kills": 25, "timeLimitMs": 600000 },
+  "ctf": {
+    "captures": 3,
+    "timeLimitMs": 900000,
+    "flagReach": 1.3,
+    "flagReturnMs": 20000,
+    "weaponsStay": true,
+    "defendRange": 12
+  },
+  "round": { "breakMs": 8000, "suddenDeath": true, "crumblePerSecond": 500 },
+  "respawn": { "delayMs": 1500, "protectionMs": 1000 },
+  "damage": { "armorShare": 0.6667, "selfBlast": 0.5, "friendlyFire": false, "voidCreditMs": 8000 },
+  "medals": { "multiKillMs": 3500, "assistMs": 3000, "spree": 5 }
+}

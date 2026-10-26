@@ -1,0 +1,488 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "weapons.schema.json",
+  "title": "Weapons",
+  "description": "The weapons.",
+  "type": "object",
+  "properties": {
+    "spawn": {
+      "type": "array",
+      "description": "The weapons you start each life with, the first in your hands.",
+      "items": {
+        "type": "string",
+        "description": "A weapon's id.",
+        "minLength": 1,
+        "maxLength": 40,
+        "x-zirbel-ref": "weapons"
+      },
+      "minItems": 1,
+      "maxItems": 9,
+      "uniqueItems": true
+    },
+    "spread": {
+      "type": "object",
+      "description": "How movement spoils your aim: shots scatter inside a cone round where you look, its half-angle in radians.",
+      "properties": {
+        "still": { "type": "number", "description": "Standing still.", "minimum": 0, "maximum": 0.1 },
+        "moving": {
+          "type": "number",
+          "description": "Added at full running speed.",
+          "minimum": 0,
+          "maximum": 0.3
+        },
+        "air": { "type": "number", "description": "Added in the air.", "minimum": 0, "maximum": 0.3 }
+      },
+      "additionalProperties": false,
+      "required": ["still", "moving", "air"]
+    },
+    "weapons": {
+      "type": "array",
+      "description": "The weapons, in slot order.",
+      "items": {
+        "type": "object",
+        "description": "A weapon.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Its id: lower case letters, digits and hyphens. Other blocks refer to it by this.",
+            "pattern": "^[a-z][a-zA-Z0-9-]{0,39}$"
+          },
+          "slot": {
+            "type": "integer",
+            "description": "Its number key, and its place in the weapon bar.",
+            "minimum": 1,
+            "maximum": 9
+          },
+          "name": { "type": "string", "description": "What it's called.", "minLength": 1, "maxLength": 30 },
+          "tips": {
+            "type": "object",
+            "description": "Brief first-use instructions, with control labels supplied by the current input device.",
+            "properties": {
+              "primary": {
+                "type": "string",
+                "description": "What primary fire does; the HUD supplies its button label.",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "secondary": {
+                "type": "string",
+                "description": "How to use alternate fire; the HUD supplies its button label.",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "extra": {
+                "type": "string",
+                "description": "An optional technique; {primary} and {boost} name the active controls.",
+                "minLength": 1,
+                "maxLength": 140
+              }
+            },
+            "required": ["primary", "secondary"],
+            "additionalProperties": false
+          },
+          "short": {
+            "type": "string",
+            "description": "Its short name, in the weapon bar.",
+            "minLength": 1,
+            "maxLength": 12
+          },
+          "kind": {
+            "type": "string",
+            "description": "How it fires, an accepted behaviour: bullet (one shot, hits what's under the crosshair, chips walls), pellets (a cone of them), launcher (throws a projectile), beam (hits what's on the end of it, every tick), rail (through everyone in its path).",
+            "enum": ["bullet", "pellets", "launcher", "beam", "rail"]
+          },
+          "ammo": {
+            "type": ["integer", "null"],
+            "description": "Shots in a full load; null for a weapon that never runs out.",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "cooldownMs": {
+            "type": "integer",
+            "description": "The least time between shots, in ms.",
+            "minimum": 30,
+            "maximum": 10000
+          },
+          "damage": {
+            "type": "integer",
+            "description": "Damage a hit does (each pellet, each tick of a beam).",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "headshot": {
+            "type": "number",
+            "description": "How many times the damage a hit on the head does.",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "range": {
+            "type": "number",
+            "description": "How far it reaches, in metres.",
+            "minimum": 2,
+            "maximum": 200
+          },
+          "precise": {
+            "type": "boolean",
+            "description": "Whether standing still makes it exact: moving spreads its shots."
+          },
+          "pellets": {
+            "type": "integer",
+            "description": "Pellets in a shot (kind pellets).",
+            "minimum": 2,
+            "maximum": 30
+          },
+          "cone": {
+            "type": "number",
+            "description": "How wide the pellets spread, in radians (kind pellets).",
+            "minimum": 0.005,
+            "maximum": 0.5
+          },
+          "projectile": {
+            "type": "string",
+            "description": "What it launches (kind launcher): a projectile's id.",
+            "minLength": 1,
+            "maxLength": 40,
+            "x-zirbel-ref": "projectiles"
+          },
+          "alt": {
+            "description": "What the right button does.",
+            "oneOf": [
+              { "$ref": "#/$defs/zoom" },
+              { "$ref": "#/$defs/slug" },
+              { "$ref": "#/$defs/launch" },
+              { "$ref": "#/$defs/overload" },
+              { "$ref": "#/$defs/charge" }
+            ]
+          },
+          "pressure": {
+            "type": "object",
+            "description": "Primary fire aimed at nearby ground becomes a harmless pressure jump instead of a projectile.",
+            "properties": {
+              "range": {
+                "type": "number",
+                "description": "Ground must be within this many metres of the eyes.",
+                "minimum": 2,
+                "maximum": 5
+              },
+              "push": {
+                "type": "number",
+                "description": "Speed added away from the aimed direction, in m/s.",
+                "minimum": 5,
+                "maximum": 20
+              }
+            },
+            "additionalProperties": false,
+            "required": ["range", "push"]
+          },
+          "model": {
+            "type": "string",
+            "description": "What it looks like in your hands: a model from the asset catalogue.",
+            "enum": [
+              "weapons/rifle",
+              "weapons/shotgun",
+              "weapons/launcher",
+              "weapons/rocket",
+              "weapons/spark",
+              "weapons/rail"
+            ]
+          },
+          "sound": {
+            "type": "string",
+            "description": "What a shot sounds like.",
+            "enum": [
+              "sounds/shot",
+              "sounds/shotgun",
+              "sounds/launch",
+              "sounds/rocket",
+              "sounds/zap",
+              "sounds/overload",
+              "sounds/rail",
+              "sounds/boom",
+              "sounds/empty",
+              "sounds/clink",
+              "sounds/click",
+              "sounds/step",
+              "sounds/pad",
+              "sounds/dodge",
+              "sounds/kick",
+              "sounds/pickup-weapon",
+              "sounds/pickup-armor",
+              "sounds/pickup-orb",
+              "sounds/pickup-health",
+              "sounds/medal",
+              "sounds/strike",
+              "sounds/powerup",
+              "sounds/crate",
+              "sounds/baa",
+              "sounds/teleport",
+              "sounds/chew",
+              "sounds/creak",
+              "sounds/crash",
+              "sounds/pour",
+              "sounds/splash",
+              "sounds/planet",
+              "sounds/toss",
+              "sounds/thrown",
+              "sounds/charge",
+              "sounds/hit",
+              "sounds/hurt",
+              "sounds/hook",
+              "sounds/flourish",
+              "sounds/choir",
+              "sounds/rumble"
+            ]
+          },
+          "recoil": {
+            "type": "number",
+            "description": "How hard it kicks back in your hands.",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "flash": {
+            "type": "number",
+            "description": "How long its muzzle flashes, in seconds.",
+            "minimum": 0,
+            "maximum": 0.3
+          },
+          "fling": {
+            "type": "number",
+            "description": "How hard the boxes it knocks off someone fly.",
+            "minimum": 0,
+            "maximum": 20
+          },
+          "best": {
+            "type": "integer",
+            "description": "Which weapon your hands go to when the one in them runs dry: the lowest number you have loaded.",
+            "minimum": 1,
+            "maximum": 20
+          }
+        },
+        "additionalProperties": false,
+        "required": ["id", "slot", "name", "short", "kind", "ammo", "cooldownMs", "model", "sound"]
+      },
+      "minItems": 1,
+      "maxItems": 9
+    },
+    "kick": {
+      "type": "object",
+      "description": "The kick (V): whoever is right in front of you takes a hit and goes flying. A kill with it is a Show-off.",
+      "properties": {
+        "damage": { "type": "integer", "description": "Its damage.", "minimum": 1, "maximum": 300 },
+        "reach": {
+          "type": "number",
+          "description": "How close they must be, in metres.",
+          "minimum": 0.5,
+          "maximum": 4
+        },
+        "push": {
+          "type": "number",
+          "description": "How hard it throws them, in m/s.",
+          "minimum": 0,
+          "maximum": 40
+        },
+        "cooldownMs": {
+          "type": "integer",
+          "description": "The least time between kicks, in ms.",
+          "minimum": 100,
+          "maximum": 5000
+        },
+        "fling": {
+          "type": "number",
+          "description": "How hard the boxes it knocks off fly.",
+          "minimum": 0,
+          "maximum": 20
+        }
+      },
+      "additionalProperties": false,
+      "required": ["damage", "reach", "push", "cooldownMs", "fling"]
+    },
+    "juggling": {
+      "type": "object",
+      "description": "Your juggling balls (F), instead of a weapon: you run faster, the action button throws a ball.",
+      "properties": {
+        "speed": {
+          "type": "number",
+          "description": "How much faster you run with them out.",
+          "minimum": 1,
+          "maximum": 1.5
+        },
+        "tricks": {
+          "type": "array",
+          "description": "The tricks, in order: F goes from one to the next.",
+          "items": { "type": "string", "description": "A trick's name.", "minLength": 1, "maxLength": 20 },
+          "minItems": 1,
+          "maxItems": 6
+        },
+        "projectile": {
+          "type": "string",
+          "description": "What a throw launches.",
+          "minLength": 1,
+          "maxLength": 40,
+          "x-zirbel-ref": "projectiles"
+        },
+        "cooldownMs": {
+          "type": "integer",
+          "description": "The least time between throws, in ms.",
+          "minimum": 100,
+          "maximum": 5000
+        },
+        "fling": {
+          "type": "number",
+          "description": "How hard the boxes a ball knocks off fly.",
+          "minimum": 0,
+          "maximum": 20
+        }
+      },
+      "additionalProperties": false,
+      "required": ["speed", "tricks", "projectile", "cooldownMs", "fling"]
+    }
+  },
+  "additionalProperties": false,
+  "required": ["spawn", "spread", "weapons", "kick", "juggling"],
+  "$defs": {
+    "zoom": {
+      "type": "object",
+      "description": "Hold to zoom in: a tighter aim, but you move slower.",
+      "properties": {
+        "kind": { "const": "zoom", "description": "Zoom." },
+        "fov": {
+          "type": "number",
+          "description": "The field of view zoomed in, in degrees.",
+          "minimum": 10,
+          "maximum": 70
+        },
+        "slow": {
+          "type": "number",
+          "description": "How much slower you run zoomed in: 0 not at all, 0.9 hardly at all.",
+          "minimum": 0,
+          "maximum": 0.9
+        },
+        "steady": {
+          "type": "number",
+          "description": "How much of your spread zooming takes away: 0 none, 1 all of it.",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": false,
+      "required": ["kind", "fov", "slow", "steady"]
+    },
+    "slug": {
+      "type": "object",
+      "description": "One heavy slug that blows a doorway into a wall close by.",
+      "properties": {
+        "kind": { "const": "slug", "description": "A slug." },
+        "damage": { "type": "integer", "description": "Its damage.", "minimum": 1, "maximum": 300 },
+        "range": {
+          "type": "number",
+          "description": "How close a wall must be for it to blow a hole, in metres.",
+          "minimum": 1,
+          "maximum": 60
+        },
+        "hole": {
+          "type": "number",
+          "description": "The hole's radius, in metres.",
+          "minimum": 0.2,
+          "maximum": 3
+        },
+        "cooldownMs": {
+          "type": "integer",
+          "description": "The least time between slugs, in ms.",
+          "minimum": 100,
+          "maximum": 10000
+        }
+      },
+      "additionalProperties": false,
+      "required": ["kind", "damage", "range", "hole", "cooldownMs"]
+    },
+    "launch": {
+      "type": "object",
+      "description": "Launches another projectile.",
+      "properties": {
+        "kind": { "const": "launch", "description": "Another projectile." },
+        "projectile": {
+          "type": "string",
+          "description": "What it launches.",
+          "minLength": 1,
+          "maxLength": 40,
+          "x-zirbel-ref": "projectiles"
+        },
+        "cost": {
+          "type": "integer",
+          "description": "Ammo it uses (1 if left out).",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "cooldownMs": {
+          "type": "integer",
+          "description": "The least time between them, in ms (the weapon's own if left out).",
+          "minimum": 100,
+          "maximum": 10000
+        }
+      },
+      "additionalProperties": false,
+      "required": ["kind", "projectile"]
+    },
+    "overload": {
+      "type": "object",
+      "description": "A jolt to whoever you hit, arcing on to others nearby.",
+      "properties": {
+        "kind": { "const": "overload", "description": "Overload." },
+        "damage": {
+          "type": "integer",
+          "description": "Damage to whoever you hit.",
+          "minimum": 1,
+          "maximum": 300
+        },
+        "chain": {
+          "type": "integer",
+          "description": "Damage to each it arcs on to.",
+          "minimum": 0,
+          "maximum": 300
+        },
+        "reach": {
+          "type": "number",
+          "description": "How far it arcs, in metres.",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "links": {
+          "type": "integer",
+          "description": "How many more it arcs on to.",
+          "minimum": 0,
+          "maximum": 6
+        },
+        "cost": { "type": "integer", "description": "Ammo it uses.", "minimum": 1, "maximum": 100 },
+        "cooldownMs": {
+          "type": "integer",
+          "description": "The least time between them, in ms.",
+          "minimum": 100,
+          "maximum": 10000
+        }
+      },
+      "additionalProperties": false,
+      "required": ["kind", "damage", "chain", "reach", "links", "cost", "cooldownMs"]
+    },
+    "charge": {
+      "type": "object",
+      "description": "Hold to charge: let go and it fires, through walls too once it's charged.",
+      "properties": {
+        "kind": { "const": "charge", "description": "Charge." },
+        "ms": {
+          "type": "integer",
+          "description": "How long it takes to charge, in ms.",
+          "minimum": 100,
+          "maximum": 5000
+        },
+        "pierce": {
+          "type": "number",
+          "description": "How much wall a charged shot goes through, in metres.",
+          "minimum": 0,
+          "maximum": 4
+        }
+      },
+      "additionalProperties": false,
+      "required": ["kind", "ms", "pierce"]
+    }
+  }
+}

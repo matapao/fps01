@@ -1,0 +1,350 @@
+{
+  "about": "fps01 is an arena shooter for phones, tablets and computers. Every map is a layout in one arena: a 72 m floor of half-metre boxes floating among the stars, under a roof held up by pillars round its edge. Everything can be blown apart, and whatever is cut loose falls. Layouts are built of primitives, pieces and prefabs, mirrored across the middle so they're fair from every side. The engine (accepted code) reads the blocks in data/ at run time and checks them; a room plays one revision of the data at a time and takes a new one at its next round, the same on every screen. Weapons fire by kinds the engine knows, with numbers from the data; pickups are pieces with a pickup component. A radar shows pickups and drops near you; there is no kill feed and no announcer. Players go by the names the hub gives their seats; there is no chat. Look at a layout with look before you propose it, and play it with the Play tools.",
+  "feel": [
+    "Fast and readable: quick movement (9 m/s running, strafe-jumping, bunny hops, dodges, jump pads). Keep layouts open enough to move fast, with height to climb.",
+    "Everything is boxes of half-metre cells in matte, bright colours, lit by a sun and the sky: no textures, no clutter. Keep to the materials' palette.",
+    "Maps are fair: mirror what you place across the middle (mirror xz or point), and give both halves the same pickups and spawns.",
+    "Everything can be blown apart, and what's cut loose falls: build things that hold together, standing on the floor.",
+    "Everyone is 100 boxes, one per point of health, knocked off from the feet up as they're hurt.",
+    "No announcements: the radar shows what's near. Players go by the names the hub gives their seats (Player One, Bot One): nobody chooses one, and there's no chat.",
+    "Spawns stand in the open with floor under them, away from jump pads; pickups stand on something with room round them."
+  ],
+  "blocks": [
+    {
+      "id": "layouts",
+      "file": "data/layouts.json",
+      "schema": "data/layouts.schema.json",
+      "ids": "/layouts/*/id",
+      "about": "The maps: Depot, Canal and Fort, each a layout in the arena (72 m across, under a roof on pillars), built of parts: primitives, pieces and prefabs. With their spawns, pickups, jump pads and zones (the flags, the pedestal, the water). The menu offers them in this order.",
+      "how": [
+        "Add a crate: put { \"type\": \"piece\", \"id\": \"crate\", \"at\": [x, 0, z] } at the end of a layout's parts.",
+        "Make anything fair from every side: give it \"mirror\": \"xz\" (all four quarters) or \"point\" (both halves, turned round the middle).",
+        "Cut a doorway or a window: a \"hole\" part after the wall it cuts (later parts replace earlier ones).",
+        "Add a pickup: { \"piece\": \"health\", \"at\": [x, y, z] } in pickups, standing on something.",
+        "Add a jump pad: { \"at\": [x, y, z], \"to\": [x, y, z] } in pads; it throws you onto to.",
+        "A new map: copy a layout, give it a new id and name, and change its parts. Look at it with look before you propose it."
+      ]
+    },
+    {
+      "id": "prefabs",
+      "file": "data/prefabs.json",
+      "schema": "data/prefabs.schema.json",
+      "ids": "/prefabs/*/id",
+      "about": "Named groups of parts that layouts place as one: the bunker, the waiting room, the wagons, the engine shed, houses, bridges, the forts, the chapel, huts.",
+      "how": [
+        "Place one: { \"type\": \"prefab\", \"id\": \"gravel-bunker\", \"at\": [x, 0, z], \"turn\": 90 } in a layout's parts.",
+        "Paint one differently: \"swap\": { \"wagon\": \"green-wagon\" } swaps a material for another.",
+        "Make a new one from parts in its own space: its middle at x = 0, z = 0, the floor at y = 0."
+      ]
+    },
+    {
+      "id": "pieces",
+      "file": "data/pieces.json",
+      "schema": "data/pieces.schema.json",
+      "ids": "/pieces/*/id",
+      "about": "The catalogue of things to place: pickups (health, armor, Health Orbs, the weapons on their pads), the jump pad, and props made of cells (crates, boxes, barriers, cover, benches, trees, doorways, windows). Each pairs a look from the asset catalogue, cells of materials or both, with components and their parameters.",
+      "how": [
+        "Tune a pickup: change its pickup component's amount, cap or respawnMs.",
+        "A new prop: cells of materials, in its own space (its middle on the floor).",
+        "A new pickup: an asset from assets/assets.json (pickups/\u2026), a colour, a sound, and a pickup component."
+      ]
+    },
+    {
+      "id": "materials",
+      "file": "data/materials.json",
+      "schema": "data/materials.schema.json",
+      "ids": "/materials/*/id",
+      "about": "What the arena is built of, cell by cell: each material's colour (and its underside's), how many bullet hits break a cell of it, and whether it's a floor, slippery, tiled, or falls in heaps. The engine needs pillar, jump-pad, red-pad and blue-pad.",
+      "how": [
+        "Make something sturdier: raise its material's hits.",
+        "A new material: a new id, a name and a colour; keep to the game's matte palette."
+      ]
+    },
+    {
+      "id": "weapons",
+      "file": "data/weapons.json",
+      "schema": "data/weapons.schema.json",
+      "ids": "/weapons/*/id",
+      "about": "The arsenal: six weapons, each firing in a way the engine knows (bullet, pellets, launcher, beam, rail) with a second use on the right button (zoom, slug, launch, overload, charge); what you spawn with; how movement spreads your aim; the kick and the juggling balls.",
+      "how": [
+        "Tune a weapon: damage, cooldownMs, range, ammo (null: never runs out).",
+        "A new weapon: copy one, give it a new id and a free slot, and pick its kind, model and sound from the catalogue. Put it on a pad with a weapon pickup piece."
+      ]
+    },
+    {
+      "id": "projectiles",
+      "file": "data/projectiles.json",
+      "schema": "data/projectiles.schema.json",
+      "ids": "/projectiles/*/id",
+      "about": "Things that fly: grenades, rockets, mortars and their bomblets, the specials from crates, thrown juggling balls. Each with its speed, gravity, size, fuse, blast (damage, radius, the hole it tears, its push), bounce or split.",
+      "how": ["Make rockets dig deeper: raise their blast's hole.", "A bouncier grenade: raise bounce."]
+    },
+    {
+      "id": "loot",
+      "file": "data/loot.json",
+      "schema": "data/loot.schema.json",
+      "about": "Powerups on the pedestal (when, how long, and their numbers), and the crates that drift down on parachutes (how often, how fast, and what's in them, by chance), with the specials' numbers.",
+      "how": ["More crates: lower crates.everyMs.", "Change what's in them: their chances."]
+    },
+    {
+      "id": "rules",
+      "file": "data/rules.json",
+      "schema": "data/rules.schema.json",
+      "about": "Match flow, chosen from what the engine supports: the modes offered (deathmatch, capture the flag), what wins a round and its time limit, sudden death, the break between rounds, respawns and spawn protection, damage (armor's share, your own blast's, friendly fire, void kills), medals and sprees.",
+      "how": [
+        "A quicker match: lower deathmatch.kills or timeLimitMs.",
+        "No sudden death: round.suddenDeath false, and a tie is a draw."
+      ]
+    },
+    {
+      "id": "movement",
+      "file": "data/movement.json",
+      "schema": "data/movement.schema.json",
+      "about": "How players move: running, jumping, gravity, the grip on the ground and the steer in the air (strafe-jumping), friction, the speed cap, dodges, jump pads, oil, water, the grappling hook and Lift.",
+      "how": [
+        "Floatier jumps: lower gravity; higher ones: raise jump.",
+        "Keep run near 9 m/s: the maps are built for it."
+      ]
+    },
+    {
+      "id": "characters",
+      "file": "data/characters.json",
+      "schema": "data/characters.schema.json",
+      "about": "The players: the health they spawn with and pickups give, the most health and armor there can be, how both tick back down, the colours players get, and the two teams' names and colours.",
+      "how": ["Tougher players: raise health.start and health.max together."]
+    },
+    {
+      "id": "radar",
+      "file": "data/radar.json",
+      "schema": "data/radar.schema.json",
+      "about": "The radar in the top right: its range, its size (smaller on phones), whether it turns with you, how a drop pings where it will land, which pickups show, and its colours.",
+      "how": [
+        "See further: raise range.",
+        "Only health and armor: \"pickups\": [\"health\", \"armor\", \"orb\"]."
+      ]
+    },
+    {
+      "id": "hud",
+      "file": "data/hud.json",
+      "schema": "data/hud.schema.json",
+      "about": "What players start with on screen: the crosshair's shape, colour and spread, the field of view, how far the view turns for a mouse and a finger, the touch stick, the gamepad's sticks, and the round trip shown in the corner.",
+      "how": ["A dot for a crosshair: crosshair.shape \"dot\"."]
+    },
+    {
+      "id": "sky",
+      "file": "data/sky.json",
+      "schema": "data/sky.schema.json",
+      "about": "The universe the arena floats in: the planets round it (which way, how big, which look) and what their pieces do when one is shot and blows up.",
+      "how": ["Move a planet: change its dir.", "Fewer pieces when one blows up: lower debris.strikes."]
+    }
+  ],
+  "assets": "assets/assets.json",
+  "budgets": {
+    "dataBytes": 262144,
+    "boxes": 4000,
+    "pieces": 200,
+    "cells": 220000,
+    "triangles": 600000
+  },
+  "look": "src/agent/look.ts",
+  "check": "src/agent/check.ts",
+  "play": "src/agent/play.ts",
+  "apply": "round",
+  "build": {
+    "command": "node tools/build.js",
+    "out": "dist/zirbel/fps01",
+    "entry": "public/js/main.js",
+    "entries": {
+      "js/main": "public/js/main.js",
+      "authority": "zirbel/authority.js",
+      "agent/play": "src/agent/play.ts",
+      "agent/look": "src/agent/look.ts",
+      "agent/check": "src/agent/check.ts"
+    },
+    "html": "public/index.html",
+    "static": [
+      {
+        "from": "public/style.css",
+        "to": "style.css"
+      },
+      "data/**",
+      "assets/**",
+      "LICENSE",
+      {
+        "from": "public/audio",
+        "to": "audio"
+      },
+      {
+        "from": "public/audio.html",
+        "to": "audio.html"
+      }
+    ],
+    "external": ["/zirbel-net.js"],
+    "aliases": {
+      "/shared/": "shared/"
+    },
+    "provided": {
+      "three": "0.186.1"
+    }
+  },
+  "checks": {
+    "types": "tsconfig.json",
+    "tests": "test/*.test.*",
+    "data": "shared/check.js"
+  },
+  "code": [
+    {
+      "path": "zirbel/room.js",
+      "about": "The room's authority on zirbel: one room is one game, every seat a socket-like object; greets pages, hands out the room's data, takes revisions at the next round.",
+      "editable": false,
+      "why": "The wire every screen shares, and the seats' identity."
+    },
+    {
+      "path": "zirbel/authority.js",
+      "about": "The headless authority's entry, for the hub.",
+      "editable": false,
+      "why": "What the hub loads."
+    },
+    {
+      "path": "public/js/transport.js",
+      "about": "The page's WebSocket look-alike over zirbel-net, and the page that runs the room's authority while it is host.",
+      "editable": false,
+      "why": "The wire every screen shares."
+    },
+    {
+      "path": "shared/wire.js",
+      "about": "Snapshots and pages' states on zirbel as bytes, with only what changed; players far off and out of view less often.",
+      "editable": false,
+      "why": "The wire every screen shares."
+    },
+    {
+      "path": "shared/data.js",
+      "about": "The data in force, read and checked at run time; modules work their numbers out in onData.",
+      "editable": false,
+      "why": "The data contract: what the blocks mean."
+    },
+    {
+      "path": "shared/check.js",
+      "about": "Checks data when it loads: schemas, ids other blocks name, what the engine needs.",
+      "editable": false,
+      "why": "The data contract."
+    },
+    {
+      "path": "shared/schema.js",
+      "about": "The JSON Schema validator the engine checks data with.",
+      "editable": false,
+      "why": "The data contract."
+    },
+    {
+      "path": "shared/layout.js",
+      "about": "Expands a layout's parts, pieces and prefabs into boxes, and its spawns, pickups and pads into spots.",
+      "editable": false,
+      "why": "What the layouts mean: change it with the schemas."
+    },
+    {
+      "path": "shared/arena.js",
+      "about": "The arena every layout stands in: the grid, the pillars, the roof; builds a layout's cells.",
+      "editable": false,
+      "why": "The grid's size is in every message about cells."
+    },
+    {
+      "path": "shared/voxels.js",
+      "about": "The arena's cells, their history and wear: every screen makes the same changes in the same order.",
+      "editable": false,
+      "why": "Every screen's copy of the arena must stay the same."
+    },
+    {
+      "path": "shared/map.js",
+      "about": "The current map, expanded from its layout: spawns, pickups, pads, flags, the pool, the pedestal.",
+      "editable": true
+    },
+    {
+      "path": "shared/movement.js",
+      "about": "Movement: acceleration, friction, strafe-jumping, bunny hops, dodges, pads, oil, water.",
+      "editable": true
+    },
+    {
+      "path": "shared/physics.js",
+      "about": "Collision and ray tests against the cells.",
+      "editable": true
+    },
+    {
+      "path": "shared/reach.js",
+      "about": "Where you can walk to, which decides where the hook catches.",
+      "editable": true
+    },
+    {
+      "path": "shared/{constants,weapons,loot,rounds,tricks,planets,materials,aim,water}.js",
+      "about": "The numbers from the data, as the modules read them, and the rules that go with them.",
+      "editable": true
+    },
+    {
+      "path": "server/game.js",
+      "about": "One game: players, health and armor, kills, respawns, rounds, capture the flag, snapshots; plays by its data, a new revision from the next round.",
+      "editable": true
+    },
+    {
+      "path": "server/arsenal.js",
+      "about": "Weapons on the authority: checks every hit, flies projectiles, sets off blasts. Each weapon kind and alt kind is a method: a new kind is a new method here and in public/js/arsenal.js.",
+      "editable": true
+    },
+    {
+      "path": "server/{items,powerups,crates,director,physics,roof,planets,pool,util}.js",
+      "about": "Pickups, powerups, crates and specials, the round's clock and sudden death, what falls when the arena breaks, the roof and its pillars, the planets, the water.",
+      "editable": true
+    },
+    {
+      "path": "server/{index,lobbies,run,static,release,updates}.js",
+      "about": "The LAN party server (npm start): serving files, its games, restarts and updates.",
+      "editable": false,
+      "why": "Not part of the game on zirbel."
+    },
+    {
+      "path": "public/js/main.js",
+      "about": "The page: your player, input, the handlers for the room's messages, the render loop.",
+      "editable": true
+    },
+    {
+      "path": "public/js/{arsenal,avatars,body,guns,tricks,effects,world,debris,pickups,loot,strikemap,radar,hud,touch,audio}.js",
+      "about": "Your weapons, everyone's box bodies, the guns in your hands, effects, the arena's meshes and debris, pickups and loot, the radar, the HUD, touch controls, synthesized sounds.",
+      "editable": true
+    },
+    {
+      "path": "public/index.html",
+      "about": "The page and its HUD.",
+      "editable": true
+    },
+    {
+      "path": "public/style.css",
+      "about": "The menu, the HUD and the touch controls.",
+      "editable": true
+    },
+    {
+      "path": "src/agent/play.ts",
+      "about": "The play adapter: an agent's seat, speaking the game's own messages, with intents (goto, follow, engage, hold) that carry on by themselves.",
+      "editable": true
+    },
+    {
+      "path": "src/agent/route.ts",
+      "about": "The way on foot for goto: A* over where a player can stand, with steps, jumps, drops and jump pads.",
+      "editable": true
+    },
+    {
+      "path": "src/agent/look.ts",
+      "about": "A layout seen from above, as an SVG plan with a legend.",
+      "editable": true
+    },
+    {
+      "path": "src/agent/check.ts",
+      "about": "Spawn and pickup safety, landing spots, reachability, and counts for the budgets.",
+      "editable": true
+    },
+    {
+      "path": "tools/**",
+      "about": "The build (tools/build.js) and the data's formatter.",
+      "editable": false,
+      "why": "What hosts run to build the game."
+    }
+  ],
+  "review": "creator"
+}

@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "movement.schema.json",
+  "title": "Movement",
+  "description": "The movement.",
+  "type": "object",
+  "properties": {
+    "run": { "type": "number", "description": "How fast you run, in m/s.", "minimum": 4, "maximum": 16 },
+    "jump": {
+      "type": "number",
+      "description": "How fast a jump leaves the ground, in m/s: 7.5 gets you onto a 1 m crate.",
+      "minimum": 4,
+      "maximum": 12
+    },
+    "gravity": { "type": "number", "description": "Gravity, in m/s².", "minimum": 8, "maximum": 40 },
+    "groundAccel": {
+      "type": "number",
+      "description": "How quickly you get up to speed on the ground.",
+      "minimum": 2,
+      "maximum": 30
+    },
+    "airAccel": {
+      "type": "number",
+      "description": "How much you can steer in the air: what makes strafe-jumping work.",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "friction": {
+      "type": "number",
+      "description": "How quickly you stop on the ground.",
+      "minimum": 1,
+      "maximum": 20
+    },
+    "stopSpeed": {
+      "type": "number",
+      "description": "Below this speed, friction stops you as if you were going this fast, in m/s.",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "speedCap": {
+      "type": "number",
+      "description": "Running faster than this (bunny hops, blasts) fades back towards it, in m/s.",
+      "minimum": 8,
+      "maximum": 40
+    },
+    "dodge": {
+      "type": "object",
+      "description": "Shift: a quick dash in the direction you're moving, once on the ground and once more in the air.",
+      "properties": {
+        "speed": {
+          "type": "number",
+          "description": "How fast the dash goes, in m/s.",
+          "minimum": 4,
+          "maximum": 25
+        },
+        "hop": {
+          "type": "number",
+          "description": "How fast it lifts you, in m/s.",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "cooldownMs": {
+          "type": "integer",
+          "description": "How long until you can dodge again, in ms.",
+          "minimum": 200,
+          "maximum": 10000
+        }
+      },
+      "additionalProperties": false,
+      "required": ["speed", "hop", "cooldownMs"]
+    },
+    "padCooldownMs": {
+      "type": "integer",
+      "description": "A jump pad won't throw you twice within this long, in ms.",
+      "minimum": 100,
+      "maximum": 3000
+    },
+    "slippery": {
+      "type": "object",
+      "description": "On slippery ground (oil): how much of the ground's friction and grip you keep.",
+      "properties": {
+        "friction": {
+          "type": "number",
+          "description": "Share of the friction.",
+          "minimum": 0.01,
+          "maximum": 1
+        },
+        "accel": { "type": "number", "description": "Share of the grip.", "minimum": 0.01, "maximum": 1 }
+      },
+      "additionalProperties": false,
+      "required": ["friction", "accel"]
+    },
+    "water": {
+      "type": "object",
+      "description": "Wading and swimming.",
+      "properties": {
+        "speed": {
+          "type": "number",
+          "description": "Share of your running speed you keep.",
+          "minimum": 0.2,
+          "maximum": 1
+        },
+        "gravity": {
+          "type": "number",
+          "description": "Share of gravity you feel.",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "accel": { "type": "number", "description": "How well you steer.", "minimum": 0.5, "maximum": 20 },
+        "swim": {
+          "type": "number",
+          "description": "How fast holding jump swims you up, in m/s.",
+          "minimum": 0.5,
+          "maximum": 10
+        }
+      },
+      "additionalProperties": false,
+      "required": ["speed", "gravity", "accel", "swim"]
+    },
+    "hook": {
+      "type": "object",
+      "description": "The grappling hook (E): it only catches where you couldn't walk to.",
+      "properties": {
+        "range": {
+          "type": "number",
+          "description": "How far it reaches, in metres.",
+          "minimum": 5,
+          "maximum": 80
+        },
+        "pull": {
+          "type": "number",
+          "description": "How hard the rope drags you, in m/s².",
+          "minimum": 10,
+          "maximum": 150
+        },
+        "speed": {
+          "type": "number",
+          "description": "The fastest it drags you, in m/s.",
+          "minimum": 5,
+          "maximum": 40
+        },
+        "arrive": {
+          "type": "number",
+          "description": "This close to the hook, it lets go and pops you up over the edge, in metres.",
+          "minimum": 0.5,
+          "maximum": 4
+        },
+        "hop": {
+          "type": "number",
+          "description": "How fast it pops you up, in m/s.",
+          "minimum": 2,
+          "maximum": 15
+        },
+        "cooldownMs": {
+          "type": "integer",
+          "description": "How long between firing it, in ms.",
+          "minimum": 0,
+          "maximum": 5000
+        }
+      },
+      "additionalProperties": false,
+      "required": ["range", "pull", "speed", "arrive", "hop", "cooldownMs"]
+    },
+    "lift": {
+      "type": "object",
+      "description": "The Lift powerup: hold jump to rise, let go to drift down.",
+      "properties": {
+        "rise": {
+          "type": "number",
+          "description": "How fast you rise, in m/s².",
+          "minimum": 2,
+          "maximum": 30
+        },
+        "fall": {
+          "type": "number",
+          "description": "How fast you drift down, in m/s².",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "airAccel": {
+          "type": "number",
+          "description": "How well you steer in the air.",
+          "minimum": 1,
+          "maximum": 20
+        }
+      },
+      "additionalProperties": false,
+      "required": ["rise", "fall", "airAccel"]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "run",
+    "jump",
+    "gravity",
+    "groundAccel",
+    "airAccel",
+    "friction",
+    "stopSpeed",
+    "speedCap",
+    "dodge",
+    "padCooldownMs",
+    "slippery",
+    "water",
+    "hook",
+    "lift"
+  ]
+}

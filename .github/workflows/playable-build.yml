@@ -1,0 +1,46 @@
+name: Playable build
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    types: [opened, reopened, synchronize, labeled, unlabeled]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: playable-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # Builds have no deployment credentials. Central import checks the current live policy again.
+    env:
+      GAME_ID: fps01
+      BUILD_DIRECTORY: dist/zirbel/fps01
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - run: npm ci --ignore-scripts
+      - run: npm run verify
+      - run: npm run zirbel
+      - name: Package candidate
+        shell: bash
+        run: |
+          test -f "$BUILD_DIRECTORY/zirbel.json"
+          test -f "$BUILD_DIRECTORY/index.html"
+          find "$BUILD_DIRECTORY" -type f -printf '%P\0' | LC_ALL=C sort -z > "$RUNNER_TEMP/playable-files"
+          tar --format=ustar --owner=0 --group=0 --mtime=@0 -czf "$RUNNER_TEMP/playable.tgz" -C "$BUILD_DIRECTORY" --null -T "$RUNNER_TEMP/playable-files"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playable-${{ env.GAME_ID }}-${{ env.SOURCE_SHA }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/playable.tgz
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0

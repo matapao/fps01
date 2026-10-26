@@ -1,0 +1,153 @@
+{
+  "spawn": ["rifle", "shotgun"],
+  "spread": { "still": 0.003, "moving": 0.05, "air": 0.09 },
+  "weapons": [
+    {
+      "id": "rifle",
+      "slot": 1,
+      "name": "Rifle",
+      "tips": { "primary": "Hold for rapid fire; stand still for accuracy.", "secondary": "Hold to zoom." },
+      "short": "Rifle",
+      "kind": "bullet",
+      "ammo": null,
+      "cooldownMs": 120,
+      "damage": 18,
+      "headshot": 2,
+      "range": 200,
+      "precise": true,
+      "alt": { "kind": "zoom", "fov": 35, "slow": 0.4, "steady": 0.65 },
+      "model": "weapons/rifle",
+      "sound": "sounds/shot",
+      "recoil": 1,
+      "flash": 0.05,
+      "fling": 3,
+      "best": 6
+    },
+    {
+      "id": "shotgun",
+      "slot": 2,
+      "name": "Shotgun",
+      "tips": {
+        "primary": "Fire a close-range spread.",
+        "secondary": "Fire a heavy slug; breaks nearby walls."
+      },
+      "short": "Shotgun",
+      "kind": "pellets",
+      "ammo": null,
+      "cooldownMs": 950,
+      "pellets": 11,
+      "damage": 9,
+      "cone": 0.075,
+      "range": 40,
+      "alt": { "kind": "slug", "damage": 60, "range": 15, "hole": 1, "cooldownMs": 1200 },
+      "model": "weapons/shotgun",
+      "sound": "sounds/shotgun",
+      "recoil": 2.6,
+      "flash": 0.07,
+      "fling": 6,
+      "best": 5
+    },
+    {
+      "id": "launcher",
+      "slot": 3,
+      "name": "Grenade launcher",
+      "tips": { "primary": "Lob an explosive grenade.", "secondary": "Launch a bouncing grenade." },
+      "short": "Grenades",
+      "kind": "launcher",
+      "ammo": 8,
+      "cooldownMs": 800,
+      "projectile": "frag",
+      "alt": { "kind": "launch", "projectile": "bouncer" },
+      "model": "weapons/launcher",
+      "sound": "sounds/launch",
+      "recoil": 1.8,
+      "flash": 0.08,
+      "fling": 10,
+      "best": 3
+    },
+    {
+      "id": "rocket",
+      "slot": 4,
+      "name": "Rocket launcher",
+      "tips": {
+        "primary": "Fire a straight rocket.",
+        "secondary": "Lob a mortar (2 rockets).",
+        "extra": "Aim down + {primary} to rocket jump. {boost} for more height; the floor stays intact."
+      },
+      "short": "Rockets",
+      "kind": "launcher",
+      "ammo": 10,
+      "cooldownMs": 800,
+      "projectile": "rocket",
+      "pressure": { "range": 3.5, "push": 14 },
+      "alt": { "kind": "launch", "projectile": "mortar", "cost": 2, "cooldownMs": 1400 },
+      "model": "weapons/rocket",
+      "sound": "sounds/rocket",
+      "recoil": 2.2,
+      "flash": 0.09,
+      "fling": 10,
+      "best": 2
+    },
+    {
+      "id": "spark",
+      "slot": 5,
+      "name": "Spark gun",
+      "tips": {
+        "primary": "Hold for a short-range beam.",
+        "secondary": "Chain lightning between enemies (10 ammo)."
+      },
+      "short": "Spark",
+      "kind": "beam",
+      "ammo": 100,
+      "cooldownMs": 50,
+      "damage": 7,
+      "range": 18,
+      "alt": {
+        "kind": "overload",
+        "damage": 30,
+        "chain": 20,
+        "reach": 6,
+        "links": 2,
+        "cost": 10,
+        "cooldownMs": 1200
+      },
+      "model": "weapons/spark",
+      "sound": "sounds/zap",
+      "recoil": 0.15,
+      "flash": 0.06,
+      "fling": 2.5,
+      "best": 4
+    },
+    {
+      "id": "rail",
+      "slot": 6,
+      "name": "Railgun",
+      "tips": {
+        "primary": "Fire a piercing shot.",
+        "secondary": "Hold to charge; release to shoot through walls."
+      },
+      "short": "Railgun",
+      "kind": "rail",
+      "ammo": 8,
+      "cooldownMs": 1500,
+      "damage": 1000,
+      "range": 200,
+      "precise": true,
+      "alt": { "kind": "charge", "ms": 1000, "pierce": 1 },
+      "model": "weapons/rail",
+      "sound": "sounds/rail",
+      "recoil": 2.4,
+      "flash": 0.08,
+      "fling": 11,
+      "best": 1
+    }
+  ],
+  "kick": { "damage": 40, "reach": 1.6, "push": 12, "cooldownMs": 600, "fling": 8 },
+  "juggling": {
+    "speed": 1.15,
+    "tricks": ["Cascade", "Tower", "Shower"],
+    "projectile": "ball",
+    "cooldownMs": 450,
+    "fling": 4
+  }
+}

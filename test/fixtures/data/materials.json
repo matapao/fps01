@@ -1,0 +1,131 @@
+{
+  "materials": [
+    {
+      "id": "pillar",
+      "name": "pillar",
+      "about": "The pillars round the edge and the beam along their tops, which hold the roof up.",
+      "color": "#8d939b",
+      "ceiling": "#6b7078",
+      "breakable": true,
+      "hits": 14
+    },
+    {
+      "id": "asphalt",
+      "name": "asphalt",
+      "color": "#5c5f64",
+      "ceiling": "#303236",
+      "breakable": true,
+      "hits": 6,
+      "floor": true
+    },
+    {
+      "id": "ballast",
+      "name": "ballast",
+      "color": "#857d70",
+      "ceiling": "#4a453e",
+      "breakable": true,
+      "hits": 6,
+      "floor": true
+    },
+    {
+      "id": "rail",
+      "name": "rail",
+      "color": "#aab0b8",
+      "ceiling": "#4f5359",
+      "breakable": true,
+      "hits": 12,
+      "floor": true
+    },
+    {
+      "id": "oil",
+      "name": "oil",
+      "color": "#24282e",
+      "ceiling": "#1b1e22",
+      "breakable": true,
+      "hits": 6,
+      "floor": true,
+      "slippery": true
+    },
+    {
+      "id": "cobbles",
+      "name": "cobbles",
+      "color": "#958c7e",
+      "ceiling": "#504b43",
+      "breakable": true,
+      "hits": 6,
+      "floor": true,
+      "tiles": true
+    },
+    {
+      "id": "canal-bed",
+      "name": "canal bed",
+      "color": "#4e5d56",
+      "ceiling": "#2f3833",
+      "breakable": true,
+      "hits": 6,
+      "floor": true
+    },
+    {
+      "id": "grass",
+      "name": "grass",
+      "color": "#62944a",
+      "ceiling": "#3c4b31",
+      "breakable": true,
+      "hits": 6,
+      "floor": true
+    },
+    {
+      "id": "dirt",
+      "name": "dirt",
+      "color": "#8c6c49",
+      "ceiling": "#4e3e2b",
+      "breakable": true,
+      "hits": 6,
+      "floor": true
+    },
+    { "id": "wall", "name": "wall", "color": "#c5ccd6", "breakable": true, "hits": 5 },
+    { "id": "concrete", "name": "concrete", "color": "#8b8778", "breakable": true, "hits": 8 },
+    { "id": "yellow-line", "name": "yellow line", "color": "#dcb43c", "breakable": true, "hits": 8 },
+    { "id": "brick", "name": "brick", "color": "#9b5842", "breakable": true, "hits": 8 },
+    { "id": "plaster", "name": "plaster", "color": "#e3d4b9", "breakable": true, "hits": 5 },
+    { "id": "stone", "name": "stone", "color": "#a8a193", "breakable": true, "hits": 10 },
+    { "id": "rock", "name": "rock", "color": "#7d776e", "breakable": true, "hits": 12 },
+    { "id": "steel", "name": "steel", "color": "#6d7782", "breakable": true, "hits": 12 },
+    { "id": "slate", "name": "slate", "color": "#4c545e", "breakable": true, "hits": 4, "tiles": true },
+    { "id": "roof-tiles", "name": "roof tiles", "color": "#b5523b", "breakable": true, "hits": 4, "tiles": true },
+    { "id": "wood", "name": "wood", "color": "#9a7148", "breakable": true, "hits": 4 },
+    { "id": "crate", "name": "crate", "color": "#c98a3c", "breakable": true, "hits": 3 },
+    { "id": "box", "name": "box", "color": "#6b4a2b", "breakable": true, "hits": 4 },
+    { "id": "wagon", "name": "wagon", "color": "#7e3b2b", "breakable": true, "hits": 6 },
+    { "id": "green-wagon", "name": "green wagon", "color": "#3d6a56", "breakable": true, "hits": 6 },
+    { "id": "tank", "name": "tank", "color": "#39444f", "breakable": true, "hits": 6 },
+    { "id": "gravel", "name": "gravel", "color": "#8f887c", "breakable": true, "hits": 1, "rubble": true },
+    { "id": "boat", "name": "boat", "color": "#2f5e80", "breakable": true, "hits": 4 },
+    { "id": "awning", "name": "awning", "color": "#b9473d", "breakable": true, "hits": 2 },
+    { "id": "hedge", "name": "hedge", "color": "#2f7d3a", "breakable": true, "hits": 2 },
+    { "id": "bark", "name": "bark", "color": "#6a4a30", "breakable": true, "hits": 3 },
+    { "id": "foliage", "name": "foliage", "color": "#3f7d36", "breakable": true, "hits": 2 },
+    { "id": "hay", "name": "hay", "color": "#d9b95c", "breakable": true, "hits": 1, "rubble": true },
+    {
+      "id": "red-pad",
+      "name": "red pad",
+      "about": "Under the red flag, in capture the flag: nothing breaks it.",
+      "color": "#b8483f",
+      "breakable": false
+    },
+    {
+      "id": "blue-pad",
+      "name": "blue pad",
+      "about": "Under the blue flag, in capture the flag: nothing breaks it.",
+      "color": "#3a68b8",
+      "breakable": false
+    },
+    {
+      "id": "jump-pad",
+      "name": "jump pad",
+      "about": "Under every jump pad: nothing breaks it.",
+      "color": "#2fd0ff",
+      "breakable": false
+    }
+  ]
+}

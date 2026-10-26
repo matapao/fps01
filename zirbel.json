@@ -1,0 +1,100 @@
+{
+  "id": "fps01",
+  "version": "0.3.2",
+  "title": "FPS01",
+  "tagline": "Maps of half-metre boxes you can blow apart, down to the roof over your head.",
+  "back": [
+    "Everyone is built of a hundred boxes, one for each point of health, and every point of damage drains the colour from one more.",
+    "Blow a hole in any wall, floor or pillar, and whatever is cut loose falls, crushing whoever is below.",
+    "Six weapons each have a second use: the railgun, charged, fires through a metre of wall.",
+    "Jump pads and a grappling hook take you up onto the roofs; put your weapon away to run faster and juggle.",
+    "Race to 25 kills, or bring the other team's flag home, on Depot, Canal or Fort, with up to 16 players."
+  ],
+  "players": {
+    "min": 1,
+    "max": 16
+  },
+  "entry": "index.html",
+  "authority": "authority.js",
+  "runsOn": "Phones, tablets and computers",
+  "orientation": "landscape",
+  "madeBy": {
+    "name": "Matapao",
+    "url": "https://github.com/matapao"
+  },
+  "license": "MIT",
+  "agents": {
+    "play": true,
+    "build": true,
+    "fork": true
+  },
+  "credits": [
+    {
+      "slot": "3D engine",
+      "artist": "three.js authors",
+      "work": "three.js r186",
+      "url": "https://threejs.org",
+      "license": "MIT"
+    }
+  ],
+  "metrics": [
+    {
+      "name": "eliminations_total",
+      "type": "counter",
+      "help": "Eliminations resolved by the game authority",
+      "labels": {
+        "mode": ["dm", "ctf"],
+        "map": ["depot", "canal", "fort"]
+      }
+    },
+    {
+      "name": "captures_total",
+      "type": "counter",
+      "help": "Flags captured",
+      "labels": {
+        "mode": ["dm", "ctf"],
+        "map": ["depot", "canal", "fort"]
+      }
+    },
+    {
+      "name": "rounds_total",
+      "type": "counter",
+      "help": "Completed rounds",
+      "labels": {
+        "mode": ["dm", "ctf"],
+        "map": ["depot", "canal", "fort"]
+      }
+    },
+    {
+      "name": "round_seconds",
+      "type": "histogram",
+      "help": "Completed round duration",
+      "unit": "seconds",
+      "buckets": [15, 30, 60, 120, 300, 600, 1200, 3600],
+      "labels": {
+        "mode": ["dm", "ctf"],
+        "map": ["depot", "canal", "fort"]
+      }
+    },
+    {
+      "name": "round_kills",
+      "type": "gauge",
+      "help": "Highest elimination score in a completed round",
+      "record": "high",
+      "labels": {
+        "mode": ["dm", "ctf"],
+        "map": ["depot", "canal", "fort"]
+      }
+    },
+    {
+      "name": "round_captures",
+      "type": "gauge",
+      "help": "Flags captured in a completed round",
+      "record": "high",
+      "labels": {
+        "mode": ["dm", "ctf"],
+        "map": ["depot", "canal", "fort"]
+      }
+    }
+  ]
+}

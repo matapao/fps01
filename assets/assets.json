@@ -1,0 +1,1371 @@
+[
+  {
+    "id": "characters/box-body",
+    "kind": "model",
+    "file": "public/js/body.js",
+    "use": "Everyone's body but your own: 100 boxes, one for each point of health, round a white skeleton (a spine down the back, hands and feet), and black shades. Hits knock the boxes off from the feet up.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/body.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.375, 0, -0.25],
+      "max": [0.375, 1.75, 0.125]
+    },
+    "anchors": {
+      "head": [0, 1.62, 0],
+      "eyes": [0, 1.6, -0.19],
+      "gun": [0.32, 1.15, -0.4],
+      "muzzle": [0.32, 1.15, -0.7],
+      "hand": [-0.36, 1.2, -0.3],
+      "flag": [0.12, 1.65, 0.32],
+      "crown": [0, 1.94, 0]
+    },
+    "collider": {
+      "box": {
+        "min": [-0.4, 0, -0.4],
+        "max": [0.4, 1.8, 0.4]
+      }
+    },
+    "palette": ["player colour", "#ffffff", "#14181f"],
+    "lod": 1
+  },
+  {
+    "id": "characters/crown",
+    "kind": "model",
+    "file": "public/js/avatars.js",
+    "use": "The gold crown on whoever leads, if nobody is level with them.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/avatars.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.23, 1.9, -0.23],
+      "max": [0.23, 2.13, 0.23]
+    },
+    "collider": null,
+    "palette": ["#ffd04a"],
+    "lod": 1
+  },
+  {
+    "id": "characters/shells",
+    "kind": "model",
+    "file": "public/js/avatars.js",
+    "use": "The glows round a player: spawn protection (cyan), armor (gold), health over 100 (blue) and a powerup (its colour).",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/avatars.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.6, 0, -0.6],
+      "max": [0.6, 1.8, 0.6]
+    },
+    "collider": null,
+    "palette": ["#7fe9ff", "#ffc23a", "#5fa8ff"],
+    "lod": 1
+  },
+  {
+    "id": "weapons/rifle",
+    "kind": "model",
+    "file": "public/js/guns.js",
+    "use": "The rifle in your hands, drawn over the world so it never pokes into walls.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/guns.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.07, -0.13, -0.32],
+      "max": [0.07, 0.08, 0.2]
+    },
+    "anchors": {
+      "muzzle": [0, 0.008, -0.3],
+      "grip": [0, -0.065, 0.06]
+    },
+    "collider": null,
+    "palette": ["#4a525e", "#2b3038", "#ff8a2a"],
+    "lod": 1
+  },
+  {
+    "id": "weapons/shotgun",
+    "kind": "model",
+    "file": "public/js/guns.js",
+    "use": "The double-barrelled shotgun in your hands, with a pump and a wooden stock, drawn over the world so it never pokes into walls.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/guns.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.07, -0.13, -0.35000000000000003],
+      "max": [0.07, 0.08, 0.2]
+    },
+    "anchors": {
+      "muzzle": [0, 0.008, -0.33],
+      "grip": [0, -0.065, 0.06]
+    },
+    "collider": null,
+    "palette": ["#2b3038", "#4a525e", "#7a4a2a", "#ff8a2a"],
+    "lod": 1
+  },
+  {
+    "id": "weapons/launcher",
+    "kind": "model",
+    "file": "public/js/guns.js",
+    "use": "The grenade launcher in your hands: an olive body, its bands in the colour of what it's loaded with, drawn over the world so it never pokes into walls.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/guns.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.07, -0.13, -0.33],
+      "max": [0.07, 0.08, 0.2]
+    },
+    "anchors": {
+      "muzzle": [0, 0.008, -0.31],
+      "grip": [0, -0.065, 0.06]
+    },
+    "collider": null,
+    "palette": ["#2b3038", "#55663a", "#ff8a2a"],
+    "lod": 1
+  },
+  {
+    "id": "weapons/rocket",
+    "kind": "model",
+    "file": "public/js/guns.js",
+    "use": "The rocket launcher in your hands: an olive tube with a red muzzle ring, drawn over the world so it never pokes into walls.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/guns.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.07, -0.13, -0.38],
+      "max": [0.07, 0.08, 0.2]
+    },
+    "anchors": {
+      "muzzle": [0, 0.008, -0.36],
+      "grip": [0, -0.065, 0.06]
+    },
+    "collider": null,
+    "palette": ["#55663a", "#c8392b", "#2b3038", "#ff8a2a"],
+    "lod": 1
+  },
+  {
+    "id": "weapons/spark",
+    "kind": "model",
+    "file": "public/js/guns.js",
+    "use": "The spark gun in your hands: a rod through glowing coils, drawn over the world so it never pokes into walls.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/guns.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.07, -0.13, -0.33],
+      "max": [0.07, 0.08, 0.2]
+    },
+    "anchors": {
+      "muzzle": [0, 0.008, -0.31],
+      "grip": [0, -0.065, 0.06]
+    },
+    "collider": null,
+    "palette": ["#4a525e", "#6fd3ff", "#2b3038"],
+    "lod": 1
+  },
+  {
+    "id": "weapons/rail",
+    "kind": "model",
+    "file": "public/js/guns.js",
+    "use": "The railgun in your hands, its strip glowing brighter as it charges, drawn over the world so it never pokes into walls.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/guns.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.07, -0.13, -0.4],
+      "max": [0.07, 0.08, 0.2]
+    },
+    "anchors": {
+      "muzzle": [0, 0.008, -0.38],
+      "grip": [0, -0.065, 0.06]
+    },
+    "collider": null,
+    "palette": ["#4a525e", "#3f8f30", "#2b3038"],
+    "lod": 1
+  },
+  {
+    "id": "weapons/special",
+    "kind": "model",
+    "file": "public/js/guns.js",
+    "use": "A special from a crate in your hands: a little device with a light in the colour of what it is, drawn over the world so it never pokes into walls.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/guns.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.07, -0.13, -0.13999999999999999],
+      "max": [0.07, 0.08, 0.2]
+    },
+    "anchors": {
+      "muzzle": [0, 0.008, -0.12],
+      "grip": [0, -0.065, 0.06]
+    },
+    "collider": null,
+    "palette": ["#2b3038", "#4a525e"],
+    "lod": 1
+  },
+  {
+    "id": "weapons/juggling",
+    "kind": "model",
+    "file": "public/js/tricks.js",
+    "use": "Your juggling balls instead of a weapon: two gloved hands whose every finger bends at three joints, and three balls (red, yellow, blue).",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/tricks.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.3, -0.25, -0.55],
+      "max": [0.3, 0.45, -0.15]
+    },
+    "anchors": {
+      "right-hand": [0.12, -0.1, -0.34],
+      "left-hand": [-0.12, -0.1, -0.34]
+    },
+    "collider": null,
+    "palette": ["#e8524a", "#f2c14e", "#3d8bfd"],
+    "lod": 1
+  },
+  {
+    "id": "pickups/health",
+    "kind": "model",
+    "file": "public/js/pickups.js",
+    "use": "Health on its pad: a white box with a red cross on every face, turning and bobbing over a glowing ring.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/pickups.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.3, 0.45, -0.3],
+      "max": [0.3, 0.95, 0.3]
+    },
+    "anchors": {
+      "base": [0, 0, 0]
+    },
+    "collider": {
+      "cylinder": {
+        "radius": 1.1,
+        "height": 2
+      }
+    },
+    "palette": ["#f4f6fa", "#e8312a"],
+    "lod": 1
+  },
+  {
+    "id": "pickups/orb",
+    "kind": "model",
+    "file": "public/js/pickups.js",
+    "use": "A Health Orb on its pad: a glowing blue sphere in a soft halo.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/pickups.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.46, 0.24, -0.46],
+      "max": [0.46, 1.16, 0.46]
+    },
+    "anchors": {
+      "base": [0, 0, 0]
+    },
+    "collider": {
+      "cylinder": {
+        "radius": 1.1,
+        "height": 2
+      }
+    },
+    "palette": ["#3d7bff"],
+    "lod": 1
+  },
+  {
+    "id": "pickups/armor",
+    "kind": "model",
+    "file": "public/js/pickups.js",
+    "use": "Armor on its pad: a yellow shard.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/pickups.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.28, 0.34, -0.16],
+      "max": [0.28, 1.06, 0.16]
+    },
+    "anchors": {
+      "base": [0, 0, 0]
+    },
+    "collider": {
+      "cylinder": {
+        "radius": 1.1,
+        "height": 2
+      }
+    },
+    "palette": ["#ffc933"],
+    "lod": 1
+  },
+  {
+    "id": "pickups/weapon",
+    "kind": "model",
+    "file": "public/js/pickups.js",
+    "use": "A weapon on its pad: a gun shape glowing in its weapon's colour (rockets red, spark guns blue, railguns green).",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/pickups.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.1, 0.5, -0.6],
+      "max": [0.1, 0.9, 0.42]
+    },
+    "anchors": {
+      "base": [0, 0, 0]
+    },
+    "collider": {
+      "cylinder": {
+        "radius": 1.1,
+        "height": 2
+      }
+    },
+    "palette": ["piece colour", "#2b3038"],
+    "lod": 1
+  },
+  {
+    "id": "props/jump-pad",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "A jump pad's glow: a pulsing ring on the pad, and a faint column of light above it as high as it throws you.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.95, 0, -0.95],
+      "max": [0.95, 3, 0.95]
+    },
+    "anchors": {
+      "pad": [0, 0, 0]
+    },
+    "collider": null,
+    "palette": ["#5fe6ff"],
+    "lod": 1
+  },
+  {
+    "id": "props/pedestal",
+    "kind": "model",
+    "file": "public/js/loot.js",
+    "use": "The pedestal's ring, where the powerups appear: it glows in the colour of what's there, and pulses in the colour of what's coming.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/loot.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.75, 0, -0.75],
+      "max": [0.75, 0.05, 0.75]
+    },
+    "anchors": {
+      "powerup": [0, 1, 0]
+    },
+    "collider": null,
+    "palette": ["#ffffff"],
+    "lod": 1
+  },
+  {
+    "id": "props/flag",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "A team's flag on its stand, in capture the flag: a pole 2.2 m high and a banner in the team's colour.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.65, 0, -0.65],
+      "max": [0.9, 2.2, 0.65]
+    },
+    "anchors": {
+      "stand": [0, 0, 0]
+    },
+    "collider": {
+      "cylinder": {
+        "radius": 1.3,
+        "height": 1.5
+      }
+    },
+    "palette": ["#e8524a", "#3d8bfd", "#d8dde4"],
+    "lod": 1
+  },
+  {
+    "id": "loot/powerup",
+    "kind": "model",
+    "file": "public/js/loot.js",
+    "use": "A powerup: a glowing gem in its colour, inside a soft halo.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/loot.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.42, -0.42, -0.42],
+      "max": [0.42, 0.42, 0.42]
+    },
+    "collider": {
+      "cylinder": {
+        "radius": 1.2,
+        "height": 2.2
+      }
+    },
+    "palette": ["powerup colour"],
+    "lod": 1
+  },
+  {
+    "id": "loot/crate-health",
+    "kind": "model",
+    "file": "public/js/loot.js",
+    "use": "A health crate: a white box with a red cross, drifting down under a parachute.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/loot.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-1.1, 0, -1.1],
+      "max": [1.1, 3, 1.1]
+    },
+    "anchors": {
+      "bottom": [0, 0, 0]
+    },
+    "collider": {
+      "cylinder": {
+        "radius": 1.3,
+        "height": 3
+      }
+    },
+    "palette": ["#f2f2f2", "#e8312a", "#ff5a3c"],
+    "lod": 1
+  },
+  {
+    "id": "loot/crate-special",
+    "kind": "model",
+    "file": "public/js/loot.js",
+    "use": "A crate with a special inside: a wooden box with a big yellow question mark, drifting down under a parachute.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/loot.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-1.1, 0, -1.1],
+      "max": [1.1, 3, 1.1]
+    },
+    "anchors": {
+      "bottom": [0, 0, 0]
+    },
+    "collider": {
+      "cylinder": {
+        "radius": 1.3,
+        "height": 3
+      }
+    },
+    "palette": ["#b07a3c", "#ffd23d", "#ff5a3c"],
+    "lod": 1
+  },
+  {
+    "id": "loot/woolly",
+    "kind": "model",
+    "file": "public/js/loot.js",
+    "use": "A woolly on the run: a fluffy white body, a black head and legs.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/loot.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.3, 0, -0.42],
+      "max": [0.3, 0.6, 0.3]
+    },
+    "collider": {
+      "box": {
+        "min": [-0.25, 0, -0.25],
+        "max": [0.25, 0.55, 0.25]
+      }
+    },
+    "palette": ["#f4f1e8", "#1d1d22"],
+    "lod": 1
+  },
+  {
+    "id": "projectiles/grenade",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "A grenade: a green ball with a blinking red light.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.12, -0.12, -0.12],
+      "max": [0.12, 0.12, 0.12]
+    },
+    "collider": {
+      "sphere": {
+        "radius": 0.12
+      }
+    },
+    "palette": ["#46602f", "#ff3b2f"],
+    "lod": 1
+  },
+  {
+    "id": "projectiles/bouncer",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "A bouncing grenade: a blue ball with a blinking light.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.12, -0.12, -0.12],
+      "max": [0.12, 0.12, 0.12]
+    },
+    "collider": {
+      "sphere": {
+        "radius": 0.12
+      }
+    },
+    "palette": ["#2f4a60", "#4dd2ff"],
+    "lod": 1
+  },
+  {
+    "id": "projectiles/rocket",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "A rocket: a grey body, a red nose, a flame and a trail of smoke.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.23, -0.23, -0.23],
+      "max": [0.23, 0.23, 0.23]
+    },
+    "collider": {
+      "sphere": {
+        "radius": 0.23
+      }
+    },
+    "palette": ["#5b6470", "#c8392b"],
+    "lod": 1
+  },
+  {
+    "id": "projectiles/mortar",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "A mortar shell: a dark ball with an orange light.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.16, -0.16, -0.16],
+      "max": [0.16, 0.16, 0.16]
+    },
+    "collider": {
+      "sphere": {
+        "radius": 0.16
+      }
+    },
+    "palette": ["#3a3f46", "#ff8a2a"],
+    "lod": 1
+  },
+  {
+    "id": "projectiles/bomblet",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "A mortar's bomblet: a small red ball.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.09, -0.09, -0.09],
+      "max": [0.09, 0.09, 0.09]
+    },
+    "collider": {
+      "sphere": {
+        "radius": 0.09
+      }
+    },
+    "palette": ["#8a2a20", "#ffd27a"],
+    "lod": 1
+  },
+  {
+    "id": "projectiles/splitter",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "A splitter bomb.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.13, -0.13, -0.13],
+      "max": [0.13, 0.13, 0.13]
+    },
+    "collider": {
+      "sphere": {
+        "radius": 0.13
+      }
+    },
+    "palette": ["#ffe14d"],
+    "lod": 1
+  },
+  {
+    "id": "projectiles/splitter-bit",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "A piece of a splitter bomb.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.1, -0.1, -0.1],
+      "max": [0.1, 0.1, 0.1]
+    },
+    "collider": {
+      "sphere": {
+        "radius": 0.1
+      }
+    },
+    "palette": ["#ffe14d"],
+    "lod": 1
+  },
+  {
+    "id": "projectiles/choir",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "The choir grenade.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.16, -0.16, -0.16],
+      "max": [0.16, 0.16, 0.16]
+    },
+    "collider": {
+      "sphere": {
+        "radius": 0.16
+      }
+    },
+    "palette": ["#ffc933"],
+    "lod": 1
+  },
+  {
+    "id": "projectiles/missile",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "An air strike's missile.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.18, -0.18, -0.18],
+      "max": [0.18, 0.18, 0.18]
+    },
+    "collider": {
+      "sphere": {
+        "radius": 0.18
+      }
+    },
+    "palette": ["#5b6470"],
+    "lod": 1
+  },
+  {
+    "id": "projectiles/pilot",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "The pilot missile: a slow missile you fly yourself.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.3, -0.3, -0.3],
+      "max": [0.3, 0.3, 0.3]
+    },
+    "collider": {
+      "sphere": {
+        "radius": 0.3
+      }
+    },
+    "palette": ["#5dff7a"],
+    "lod": 1
+  },
+  {
+    "id": "projectiles/ball",
+    "kind": "model",
+    "file": "public/js/effects.js",
+    "use": "A juggling ball, thrown.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-0.07, -0.07, -0.07],
+      "max": [0.07, 0.07, 0.07]
+    },
+    "collider": {
+      "sphere": {
+        "radius": 0.07
+      }
+    },
+    "palette": ["#e8524a"],
+    "lod": 1
+  },
+  {
+    "id": "sky/planet-ringed",
+    "kind": "model",
+    "file": "public/js/world.js",
+    "use": "A big ringed planet, in bands of sand and amber. Infinitely far away, out among the stars; shoot it and it blows up.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/world.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-1, -1, -1],
+      "max": [1, 1, 1]
+    },
+    "collider": null,
+    "lod": 1
+  },
+  {
+    "id": "sky/planet-rocky",
+    "kind": "model",
+    "file": "public/js/world.js",
+    "use": "A small red rocky planet. Infinitely far away, out among the stars; shoot it and it blows up.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/world.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-1, -1, -1],
+      "max": [1, 1, 1]
+    },
+    "collider": null,
+    "lod": 1
+  },
+  {
+    "id": "sky/planet-icy",
+    "kind": "model",
+    "file": "public/js/world.js",
+    "use": "A pale blue ice planet. Infinitely far away, out among the stars; shoot it and it blows up.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/world.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-1, -1, -1],
+      "max": [1, 1, 1]
+    },
+    "collider": null,
+    "lod": 1
+  },
+  {
+    "id": "sky/planet-moon",
+    "kind": "model",
+    "file": "public/js/world.js",
+    "use": "A green planet with a grey moon. Infinitely far away, out among the stars; shoot it and it blows up.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/world.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-1, -1, -1],
+      "max": [1, 1, 1]
+    },
+    "collider": null,
+    "lod": 1
+  },
+  {
+    "id": "sky/planet-violet",
+    "kind": "model",
+    "file": "public/js/world.js",
+    "use": "A violet planet with rings, high overhead. Infinitely far away, out among the stars; shoot it and it blows up.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: built from boxes, spheres and cylinders by public/js/world.js",
+    "bytes": 0,
+    "procedural": true,
+    "bounds": {
+      "min": [-1, -1, -1],
+      "max": [1, 1, 1]
+    },
+    "collider": null,
+    "lod": 1
+  },
+  {
+    "id": "sky/nebula",
+    "kind": "texture",
+    "file": "public/js/world.js",
+    "use": "The universe the arena floats in: a nebula behind the stars.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: drawn on a canvas by nebula() in public/js/world.js",
+    "bytes": 0,
+    "procedural": true,
+    "size": 1024
+  },
+  {
+    "id": "sky/stars",
+    "kind": "texture",
+    "file": "public/js/world.js",
+    "use": "Stars: three layers of soft dots, the sun's glow among them.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: drawn on a canvas by dot() in public/js/world.js",
+    "bytes": 0,
+    "procedural": true,
+    "size": 64
+  },
+  {
+    "id": "textures/puff",
+    "kind": "texture",
+    "file": "public/js/effects.js",
+    "use": "Smoke, dust and flame: soft round puffs.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: drawn on a canvas by puffTexture() in public/js/effects.js",
+    "bytes": 0,
+    "procedural": true,
+    "size": 64
+  },
+  {
+    "id": "textures/tiles",
+    "kind": "texture",
+    "file": "public/js/world.js",
+    "use": "Tiled materials (cobbles, slate, roof tiles): their faces drawn in 1 m tiles.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: drawn on a canvas by meshColumn() in public/js/world.js",
+    "bytes": 0,
+    "procedural": true,
+    "size": 0
+  },
+  {
+    "id": "sounds/shot",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A rifle shot.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by shot() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.22
+  },
+  {
+    "id": "sounds/shotgun",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A shotgun blast.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by shotgun() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.55
+  },
+  {
+    "id": "sounds/launch",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "The grenade launcher's hollow thump.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by launch() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.4
+  },
+  {
+    "id": "sounds/rocket",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A rocket leaving its launcher.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by rocket() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.6
+  },
+  {
+    "id": "sounds/zap",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "The spark gun's crackle.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by zap() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.1
+  },
+  {
+    "id": "sounds/overload",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "The spark gun's overload.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by overload() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.4
+  },
+  {
+    "id": "sounds/rail",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "The railgun's crack.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by rail() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.65
+  },
+  {
+    "id": "sounds/boom",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A blast.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by boom() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 1.3
+  },
+  {
+    "id": "sounds/empty",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A dry click: out of ammo, or nothing to use.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by empty() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.05
+  },
+  {
+    "id": "sounds/clink",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A grenade bouncing.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by clink() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.06
+  },
+  {
+    "id": "sounds/click",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A click.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by click() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.03
+  },
+  {
+    "id": "sounds/step",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A footstep.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by step() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.25
+  },
+  {
+    "id": "sounds/pad",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A jump pad throwing you.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by pad() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.4
+  },
+  {
+    "id": "sounds/dodge",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A dodge.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by dodge() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.2
+  },
+  {
+    "id": "sounds/kick",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A kick, and a thud when it lands.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by kick() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.15
+  },
+  {
+    "id": "sounds/pickup-weapon",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "Picking up a weapon: a clack.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by item() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.15
+  },
+  {
+    "id": "sounds/pickup-armor",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "Picking up armor: a clink.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by item() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.15
+  },
+  {
+    "id": "sounds/pickup-orb",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "Picking up a Health Orb: it rings out.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by item() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.5
+  },
+  {
+    "id": "sounds/pickup-health",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "Picking up health: a chime.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by item() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.2
+  },
+  {
+    "id": "sounds/medal",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A short fanfare.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by medal() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.4
+  },
+  {
+    "id": "sounds/strike",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "An air strike called in: a falling whistle.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by strike() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 1.1
+  },
+  {
+    "id": "sounds/powerup",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A powerup: a rising chime when one is coming, a fanfare when you take it.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by powerup() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.6
+  },
+  {
+    "id": "sounds/crate",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A crate on its way down: a falling whistle.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by crate() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 1
+  },
+  {
+    "id": "sounds/baa",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A woolly.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by baa() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.5
+  },
+  {
+    "id": "sounds/teleport",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A teleport, going and arriving.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by teleport() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.4
+  },
+  {
+    "id": "sounds/chew",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "Sudden death taking the floor away.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by chew() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.5
+  },
+  {
+    "id": "sounds/creak",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "The arena groaning as it breaks.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by creak() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 1
+  },
+  {
+    "id": "sounds/crash",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "Something big landing.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by crash() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 1.5
+  },
+  {
+    "id": "sounds/pour",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "Water pouring out of a hole.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by pour() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 1
+  },
+  {
+    "id": "sounds/splash",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A splash.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by splash() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.5
+  },
+  {
+    "id": "sounds/planet",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A planet blowing up.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by planet() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 3
+  },
+  {
+    "id": "sounds/toss",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A juggling ball thrown.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by toss() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.15
+  },
+  {
+    "id": "sounds/thrown",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A thrown juggling ball coming down.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by thrown() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.15
+  },
+  {
+    "id": "sounds/charge",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "The railgun charging.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by charge() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 1
+  },
+  {
+    "id": "sounds/hit",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "Your hit landed (higher for a headshot).",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by hit() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.08
+  },
+  {
+    "id": "sounds/hurt",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "You're hit.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by hurt() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.2
+  },
+  {
+    "id": "sounds/hook",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "The hook firing, and catching.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by hook() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.25
+  },
+  {
+    "id": "sounds/flourish",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A juggling flourish.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by flourish() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 0.3
+  },
+  {
+    "id": "sounds/choir",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "The choir grenade singing.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by choir() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 1.5
+  },
+  {
+    "id": "sounds/rumble",
+    "kind": "sound",
+    "file": "public/js/audio.js",
+    "use": "A rumble.",
+    "by": "Langame",
+    "license": "MIT",
+    "source": "procedural: synthesized with the Web Audio API by rumble() in public/js/audio.js",
+    "bytes": 0,
+    "procedural": true,
+    "seconds": 1
+  }
+]

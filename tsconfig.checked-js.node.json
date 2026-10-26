@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.checked-js.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022"],
+    "types": ["node"]
+  },
+  "include": ["shared/**/*", "server/**/*", "tools/**/*", "zirbel/**/*"]
+}

@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rules.schema.json",
+  "title": "Rules",
+  "description": "The rules.",
+  "type": "object",
+  "properties": {
+    "modes": {
+      "type": "array",
+      "description": "The modes the menu offers, the first the default: dm (deathmatch: everyone for themselves), ctf (capture the flag: Red against Blue).",
+      "items": { "type": "string", "description": "A mode.", "enum": ["dm", "ctf"] },
+      "minItems": 1,
+      "maxItems": 2,
+      "uniqueItems": true
+    },
+    "deathmatch": {
+      "type": "object",
+      "description": "Deathmatch: the first to so many kills wins the round, or whoever leads when time runs out.",
+      "properties": {
+        "kills": {
+          "type": "integer",
+          "description": "Kills that win the round.",
+          "minimum": 1,
+          "maximum": 200
+        },
+        "timeLimitMs": {
+          "type": "integer",
+          "description": "How long a round lasts, in ms.",
+          "minimum": 60000,
+          "maximum": 3600000
+        }
+      },
+      "additionalProperties": false,
+      "required": ["kills", "timeLimitMs"]
+    },
+    "round": {
+      "type": "object",
+      "description": "The round's rhythm.",
+      "properties": {
+        "breakMs": {
+          "type": "integer",
+          "description": "How long the scores stay up after a round, before the next starts, in ms.",
+          "minimum": 2000,
+          "maximum": 60000
+        },
+        "suddenDeath": {
+          "type": "boolean",
+          "description": "When time runs out with nobody ahead: true, the next kill (or capture) wins and the floor crumbles away; false, the round is a draw."
+        },
+        "crumblePerSecond": {
+          "type": "integer",
+          "description": "In sudden death: floor cells crumbled away each second.",
+          "minimum": 50,
+          "maximum": 5000
+        }
+      },
+      "additionalProperties": false,
+      "required": ["breakMs", "suddenDeath", "crumblePerSecond"]
+    },
+    "respawn": {
+      "type": "object",
+      "description": "Coming back after you're taken out.",
+      "properties": {
+        "delayMs": {
+          "type": "integer",
+          "description": "How long until you respawn, in ms.",
+          "minimum": 0,
+          "maximum": 30000
+        },
+        "protectionMs": {
+          "type": "integer",
+          "description": "How long nothing can hurt you after you spawn (until you fire), in ms.",
+          "minimum": 0,
+          "maximum": 10000
+        }
+      },
+      "additionalProperties": false,
+      "required": ["delayMs", "protectionMs"]
+    },
+    "damage": {
+      "type": "object",
+      "description": "How damage works.",
+      "properties": {
+        "armorShare": {
+          "type": "number",
+          "description": "The share of damage armor takes, while it lasts: 0 (none) to 1 (all).",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "selfBlast": {
+          "type": "number",
+          "description": "The share of its damage your own blast does you.",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "friendlyFire": {
+          "type": "boolean",
+          "description": "Whether teammates can hurt each other (capture the flag)."
+        },
+        "voidCreditMs": {
+          "type": "integer",
+          "description": "Falling into the void is a kill for whoever hurt you this recently, in ms.",
+          "minimum": 0,
+          "maximum": 30000
+        }
+      },
+      "additionalProperties": false,
+      "required": ["armorShare", "selfBlast", "friendlyFire", "voidCreditMs"]
+    },
+    "medals": {
+      "type": "object",
+      "description": "What counts as what, for medals and sprees.",
+      "properties": {
+        "multiKillMs": {
+          "type": "integer",
+          "description": "Kills this close together add up to a multi kill, in ms.",
+          "minimum": 500,
+          "maximum": 10000
+        },
+        "assistMs": {
+          "type": "integer",
+          "description": "Hurting someone this soon before someone else kills them is an assist, in ms.",
+          "minimum": 500,
+          "maximum": 10000
+        },
+        "spree": {
+          "type": "integer",
+          "description": "Kills without dying that make a killing spree.",
+          "minimum": 2,
+          "maximum": 50
+        }
+      },
+      "additionalProperties": false,
+      "required": ["multiKillMs", "assistMs", "spree"]
+    },
+    "ctf": {
+      "type": "object",
+      "description": "Capture the flag: Red against Blue; bring the other team's flag to your own, while yours is at home.",
+      "properties": {
+        "captures": {
+          "type": "integer",
+          "description": "Captures that win the round.",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "timeLimitMs": {
+          "type": "integer",
+          "description": "How long a round lasts, in ms.",
+          "minimum": 60000,
+          "maximum": 3600000
+        },
+        "flagReach": {
+          "type": "number",
+          "description": "How close you have to get to a flag to take it (or send yours home), in metres.",
+          "minimum": 0.5,
+          "maximum": 4
+        },
+        "flagReturnMs": {
+          "type": "integer",
+          "description": "A dropped flag goes home by itself after this long, in ms.",
+          "minimum": 1000,
+          "maximum": 120000
+        },
+        "weaponsStay": { "type": "boolean", "description": "Whether weapons stay on their pads when taken." },
+        "defendRange": {
+          "type": "number",
+          "description": "Killing someone this close to your flag is a Defender medal, in metres.",
+          "minimum": 1,
+          "maximum": 40
+        }
+      },
+      "additionalProperties": false,
+      "required": ["captures", "timeLimitMs", "flagReach", "flagReturnMs", "weaponsStay", "defendRange"]
+    }
+  },
+  "additionalProperties": false,
+  "required": ["modes", "deathmatch", "round", "respawn", "damage", "medals", "ctf"]
+}

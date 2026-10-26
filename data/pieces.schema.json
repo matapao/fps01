@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pieces.schema.json",
+  "title": "Pieces",
+  "description": "The pieces.",
+  "type": "object",
+  "properties": {
+    "pieces": {
+      "type": "array",
+      "description": "Every piece.",
+      "items": {
+        "type": "object",
+        "description": "A piece.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Its id: lower case letters, digits and hyphens. Other blocks refer to it by this.",
+            "pattern": "^[a-z][a-zA-Z0-9-]{0,39}$"
+          },
+          "name": {
+            "type": "string",
+            "description": "What it's called, for people: shown when you take it.",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "about": {
+            "type": "string",
+            "description": "What it is and what it's for, for people and agents: one or two sentences.",
+            "minLength": 1,
+            "maxLength": 400
+          },
+          "asset": {
+            "type": "string",
+            "description": "What it looks like: a model from the asset catalogue (assets/assets.json).",
+            "enum": [
+              "pickups/health",
+              "pickups/orb",
+              "pickups/armor",
+              "pickups/weapon",
+              "props/jump-pad",
+              "props/pedestal",
+              "props/flag"
+            ]
+          },
+          "color": {
+            "type": "string",
+            "description": "Its colour, where it glows: its pad's ring, its blip on the radar.",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "sound": {
+            "type": "string",
+            "description": "What you hear when it does its thing (taking a pickup, a jump pad throwing you).",
+            "enum": [
+              "sounds/shot",
+              "sounds/shotgun",
+              "sounds/launch",
+              "sounds/rocket",
+              "sounds/zap",
+              "sounds/overload",
+              "sounds/rail",
+              "sounds/boom",
+              "sounds/empty",
+              "sounds/clink",
+              "sounds/click",
+              "sounds/step",
+              "sounds/pad",
+              "sounds/dodge",
+              "sounds/kick",
+              "sounds/pickup-weapon",
+              "sounds/pickup-armor",
+              "sounds/pickup-orb",
+              "sounds/pickup-health",
+              "sounds/medal",
+              "sounds/strike",
+              "sounds/powerup",
+              "sounds/crate",
+              "sounds/baa",
+              "sounds/teleport",
+              "sounds/chew",
+              "sounds/creak",
+              "sounds/crash",
+              "sounds/pour",
+              "sounds/splash",
+              "sounds/planet",
+              "sounds/toss",
+              "sounds/thrown",
+              "sounds/charge",
+              "sounds/hit",
+              "sounds/hurt",
+              "sounds/hook",
+              "sounds/flourish",
+              "sounds/choir",
+              "sounds/rumble"
+            ]
+          },
+          "cells": {
+            "type": "array",
+            "description": "Cells it's built of, as parts (geometry.schema.json), in its own space: its at is its middle, on the floor.",
+            "items": { "$ref": "geometry.schema.json#/$defs/part" },
+            "minItems": 1,
+            "maxItems": 60
+          },
+          "components": {
+            "type": "array",
+            "description": "What it does: accepted behaviours, with their parameters.",
+            "items": { "oneOf": [{ "$ref": "#/$defs/pickup" }, { "$ref": "#/$defs/jumpPad" }] },
+            "minItems": 0,
+            "maxItems": 4
+          }
+        },
+        "additionalProperties": false,
+        "required": ["id", "name"]
+      },
+      "minItems": 1,
+      "maxItems": 200
+    }
+  },
+  "additionalProperties": false,
+  "required": ["pieces"],
+  "$defs": {
+    "pickup": {
+      "type": "object",
+      "description": "Lies on the floor and gives whoever walks over it something, if they have room for it; then it's gone until it comes back.",
+      "properties": {
+        "type": { "const": "pickup", "description": "A pickup." },
+        "gives": {
+          "type": "string",
+          "description": "What it gives: health, armor, or a weapon with a full load (one you have already is topped up).",
+          "enum": ["health", "armor", "weapon"]
+        },
+        "amount": {
+          "type": "integer",
+          "description": "How much health or armor it gives.",
+          "minimum": 1,
+          "maximum": 200
+        },
+        "cap": {
+          "type": "integer",
+          "description": "The most health or armor it takes you up to.",
+          "minimum": 1,
+          "maximum": 300
+        },
+        "weapon": {
+          "type": "string",
+          "description": "Which weapon it gives (gives: weapon).",
+          "minLength": 1,
+          "maxLength": 40,
+          "x-zirbel-ref": "weapons"
+        },
+        "respawnMs": {
+          "type": "integer",
+          "description": "How long until it comes back after someone takes it, in ms.",
+          "minimum": 1000,
+          "maximum": 300000
+        },
+        "warnMs": {
+          "type": "integer",
+          "description": "How long before it comes back the radar shows it pinging, in ms (0: it doesn't).",
+          "minimum": 0,
+          "maximum": 30000
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type", "gives", "respawnMs"]
+    },
+    "jumpPad": {
+      "type": "object",
+      "description": "Throws whoever steps on it up onto the spot its placement names (pads in a layout).",
+      "properties": {
+        "type": { "const": "jumpPad", "description": "A jump pad." },
+        "clear": {
+          "type": "number",
+          "description": "How far above the spot it throws you, at the top of the arc, in metres.",
+          "minimum": 0.5,
+          "maximum": 6
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type"]
+    }
+  }
+}

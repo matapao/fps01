@@ -1,0 +1,7 @@
+{
+  "health": { "start": 100, "max": 100, "overheal": 200 },
+  "armor": { "max": 150 },
+  "decay": { "above": 100, "perSecond": 1 },
+  "colors": ["#e8524a", "#3d8bfd", "#f2b33d", "#3fbf7f", "#b36bff", "#ff7ab8", "#2ec4c4", "#f28b30"],
+  "teams": { "red": { "name": "Red", "color": "#e8524a" }, "blue": { "name": "Blue", "color": "#3d8bfd" } }
+}

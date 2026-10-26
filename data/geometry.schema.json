@@ -1,0 +1,1531 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "geometry.schema.json",
+  "title": "Geometry",
+  "description": "The parts layouts, prefabs and pieces are built of: boxes of cells half a metre on a side, laid one after another. Shared by layouts.schema.json, prefabs.schema.json and pieces.schema.json.",
+  "$ref": "#/$defs/part",
+  "$defs": {
+    "box": {
+      "type": "object",
+      "description": "A box from one corner to the other: every cell whose middle is inside it is filled. A later part replaces what an earlier one filled.",
+      "properties": {
+        "type": { "const": "box", "description": "Which kind of part this is." },
+        "min": {
+          "type": "array",
+          "description": "Its corner with the smallest x, y and z, in metres, on the half-metre grid.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x, in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "y, in metres",
+              "minimum": -2,
+              "maximum": 20,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "z, in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.5
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "max": {
+          "type": "array",
+          "description": "Its corner with the largest x, y and z, in metres, on the half-metre grid.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x, in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "y, in metres",
+              "minimum": -2,
+              "maximum": 20,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "z, in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.5
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "m": {
+          "type": "string",
+          "description": "What it's made of: a material's id (data/materials.json).",
+          "minLength": 1,
+          "maxLength": 40,
+          "x-zirbel-ref": "materials"
+        },
+        "about": {
+          "type": "string",
+          "description": "What it is and what it's for, for people and agents: one or two sentences.",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "mirror": {
+          "type": "string",
+          "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+          "enum": ["x", "z", "xz", "point"]
+        },
+        "repeat": {
+          "type": "object",
+          "description": "Lay it again in a row: count copies in all, each step further on.",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "How many copies, the first included.",
+              "minimum": 1,
+              "maximum": 40
+            },
+            "step": {
+              "type": "array",
+              "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "description": "x, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "y, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "z, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "additionalProperties": false,
+          "required": ["count", "step"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type", "min", "max", "m"]
+    },
+    "block": {
+      "type": "object",
+      "description": "A block: centred on at's x and z, from at's y up. The commonest part: walls, floors, platforms, boxes.",
+      "properties": {
+        "type": { "const": "block", "description": "Which kind of part this is." },
+        "at": {
+          "type": "array",
+          "description": "Where it stands: [x, y, z] in metres. x runs west to east, z north to south, y up; the floor is at y = 0, the arena spans -36 to 36 on x and z. On the grid: x and z in quarter metres, y in half metres.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x (west to east), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "y (up), in metres",
+              "minimum": -2,
+              "maximum": 20,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "z (north to south), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "size": {
+          "type": "array",
+          "description": "How big: [width along x, height along y, depth along z], in metres: whole cells, so multiples of 0.5.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "width (x), in metres",
+              "minimum": 0.5,
+              "maximum": 80,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "height (y), in metres",
+              "minimum": 0.5,
+              "maximum": 80,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "depth (z), in metres",
+              "minimum": 0.5,
+              "maximum": 80,
+              "multipleOf": 0.5
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "m": {
+          "type": "string",
+          "description": "What it's made of: a material's id (data/materials.json).",
+          "minLength": 1,
+          "maxLength": 40,
+          "x-zirbel-ref": "materials"
+        },
+        "about": {
+          "type": "string",
+          "description": "What it is and what it's for, for people and agents: one or two sentences.",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "mirror": {
+          "type": "string",
+          "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+          "enum": ["x", "z", "xz", "point"]
+        },
+        "repeat": {
+          "type": "object",
+          "description": "Lay it again in a row: count copies in all, each step further on.",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "How many copies, the first included.",
+              "minimum": 1,
+              "maximum": 40
+            },
+            "step": {
+              "type": "array",
+              "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "description": "x, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "y, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "z, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "additionalProperties": false,
+          "required": ["count", "step"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type", "at", "size", "m"]
+    },
+    "hole": {
+      "type": "object",
+      "description": "Air in a block, cut out of whatever was laid before it: a doorway, a window, a tunnel. Centred on at's x and z, from at's y up.",
+      "properties": {
+        "type": { "const": "hole", "description": "Which kind of part this is." },
+        "at": {
+          "type": "array",
+          "description": "Where it stands: [x, y, z] in metres. x runs west to east, z north to south, y up; the floor is at y = 0, the arena spans -36 to 36 on x and z. On the grid: x and z in quarter metres, y in half metres.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x (west to east), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "y (up), in metres",
+              "minimum": -2,
+              "maximum": 20,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "z (north to south), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "size": {
+          "type": "array",
+          "description": "How big: [width along x, height along y, depth along z], in metres: whole cells, so multiples of 0.5.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "width (x), in metres",
+              "minimum": 0.5,
+              "maximum": 80,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "height (y), in metres",
+              "minimum": 0.5,
+              "maximum": 80,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "depth (z), in metres",
+              "minimum": 0.5,
+              "maximum": 80,
+              "multipleOf": 0.5
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "about": {
+          "type": "string",
+          "description": "What it is and what it's for, for people and agents: one or two sentences.",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "mirror": {
+          "type": "string",
+          "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+          "enum": ["x", "z", "xz", "point"]
+        },
+        "repeat": {
+          "type": "object",
+          "description": "Lay it again in a row: count copies in all, each step further on.",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "How many copies, the first included.",
+              "minimum": 1,
+              "maximum": 40
+            },
+            "step": {
+              "type": "array",
+              "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "description": "x, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "y, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "z, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "additionalProperties": false,
+          "required": ["count", "step"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type", "at", "size"]
+    },
+    "floor": {
+      "type": "object",
+      "description": "A floor slab: its top at at's y, centred on at's x and z.",
+      "properties": {
+        "type": { "const": "floor", "description": "Which kind of part this is." },
+        "at": {
+          "type": "array",
+          "description": "Where it stands: [x, y, z] in metres. x runs west to east, z north to south, y up; the floor is at y = 0, the arena spans -36 to 36 on x and z. On the grid: x and z in quarter metres, y in half metres.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x (west to east), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "y (up), in metres",
+              "minimum": -2,
+              "maximum": 20,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "z (north to south), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "size": {
+          "type": "array",
+          "description": "How big: [width along x, depth along z], in metres: multiples of 0.5.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "width (x), in metres",
+              "minimum": 0.5,
+              "maximum": 76,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "depth (z), in metres",
+              "minimum": 0.5,
+              "maximum": 76,
+              "multipleOf": 0.5
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "thick": {
+          "type": "number",
+          "description": "How thick, in metres: a multiple of 0.5.",
+          "minimum": 0.5,
+          "maximum": 4,
+          "multipleOf": 0.5
+        },
+        "m": {
+          "type": "string",
+          "description": "What it's made of: a material's id (data/materials.json).",
+          "minLength": 1,
+          "maxLength": 40,
+          "x-zirbel-ref": "materials"
+        },
+        "about": {
+          "type": "string",
+          "description": "What it is and what it's for, for people and agents: one or two sentences.",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "mirror": {
+          "type": "string",
+          "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+          "enum": ["x", "z", "xz", "point"]
+        },
+        "repeat": {
+          "type": "object",
+          "description": "Lay it again in a row: count copies in all, each step further on.",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "How many copies, the first included.",
+              "minimum": 1,
+              "maximum": 40
+            },
+            "step": {
+              "type": "array",
+              "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "description": "x, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "y, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "z, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "additionalProperties": false,
+          "required": ["count", "step"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type", "at", "size", "m"]
+    },
+    "walls": {
+      "type": "object",
+      "description": "Four walls round an open middle: a room with no roof, a pen, a ring. size is the outside.",
+      "properties": {
+        "type": { "const": "walls", "description": "Which kind of part this is." },
+        "at": {
+          "type": "array",
+          "description": "Where it stands: [x, y, z] in metres. x runs west to east, z north to south, y up; the floor is at y = 0, the arena spans -36 to 36 on x and z. On the grid: x and z in quarter metres, y in half metres.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x (west to east), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "y (up), in metres",
+              "minimum": -2,
+              "maximum": 20,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "z (north to south), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "size": {
+          "type": "array",
+          "description": "How big: [width along x, height along y, depth along z], in metres: whole cells, so multiples of 0.5.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "width (x), in metres",
+              "minimum": 0.5,
+              "maximum": 80,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "height (y), in metres",
+              "minimum": 0.5,
+              "maximum": 80,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "depth (z), in metres",
+              "minimum": 0.5,
+              "maximum": 80,
+              "multipleOf": 0.5
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "thick": {
+          "type": "number",
+          "description": "How thick the walls are, in metres: a multiple of 0.5.",
+          "minimum": 0.5,
+          "maximum": 4,
+          "multipleOf": 0.5
+        },
+        "m": {
+          "type": "string",
+          "description": "What it's made of: a material's id (data/materials.json).",
+          "minLength": 1,
+          "maxLength": 40,
+          "x-zirbel-ref": "materials"
+        },
+        "about": {
+          "type": "string",
+          "description": "What it is and what it's for, for people and agents: one or two sentences.",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "mirror": {
+          "type": "string",
+          "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+          "enum": ["x", "z", "xz", "point"]
+        },
+        "repeat": {
+          "type": "object",
+          "description": "Lay it again in a row: count copies in all, each step further on.",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "How many copies, the first included.",
+              "minimum": 1,
+              "maximum": 40
+            },
+            "step": {
+              "type": "array",
+              "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "description": "x, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "y, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "z, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "additionalProperties": false,
+          "required": ["count", "step"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type", "at", "size", "m"]
+    },
+    "stairs": {
+      "type": "object",
+      "description": "Steps climbing from at towards dir, each solid down to at's y. You walk up steps half a metre high without jumping.",
+      "properties": {
+        "type": { "const": "stairs", "description": "Which kind of part this is." },
+        "at": {
+          "type": "array",
+          "description": "Where it stands: [x, y, z] in metres. x runs west to east, z north to south, y up; the floor is at y = 0, the arena spans -36 to 36 on x and z. On the grid: x and z in quarter metres, y in half metres.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x (west to east), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "y (up), in metres",
+              "minimum": -2,
+              "maximum": 20,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "z (north to south), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "dir": {
+          "type": "string",
+          "description": "Which way the steps climb: east (+x), west (-x), south (+z) or north (-z).",
+          "enum": ["east", "west", "south", "north"]
+        },
+        "steps": { "type": "integer", "description": "How many steps.", "minimum": 1, "maximum": 40 },
+        "run": {
+          "type": "number",
+          "description": "How deep each step is, in metres: a multiple of 0.5.",
+          "minimum": 0.5,
+          "maximum": 4,
+          "multipleOf": 0.5
+        },
+        "rise": {
+          "type": "number",
+          "description": "How high each step is, in metres: a multiple of 0.5. Half a metre you walk up; more you jump.",
+          "minimum": 0.5,
+          "maximum": 2,
+          "multipleOf": 0.5
+        },
+        "width": {
+          "type": "number",
+          "description": "How wide the stairs are, in metres: a multiple of 0.5.",
+          "minimum": 0.5,
+          "maximum": 40,
+          "multipleOf": 0.5
+        },
+        "from": {
+          "type": "number",
+          "description": "How high the first step starts above at's y, in metres: a multiple of 0.5.",
+          "minimum": 0,
+          "maximum": 10,
+          "multipleOf": 0.5
+        },
+        "m": {
+          "type": "string",
+          "description": "What it's made of: a material's id (data/materials.json).",
+          "minLength": 1,
+          "maxLength": 40,
+          "x-zirbel-ref": "materials"
+        },
+        "about": {
+          "type": "string",
+          "description": "What it is and what it's for, for people and agents: one or two sentences.",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "mirror": {
+          "type": "string",
+          "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+          "enum": ["x", "z", "xz", "point"]
+        },
+        "repeat": {
+          "type": "object",
+          "description": "Lay it again in a row: count copies in all, each step further on.",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "How many copies, the first included.",
+              "minimum": 1,
+              "maximum": 40
+            },
+            "step": {
+              "type": "array",
+              "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "description": "x, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "y, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "z, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "additionalProperties": false,
+          "required": ["count", "step"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type", "at", "dir", "steps", "m"]
+    },
+    "ramp": {
+      "type": "object",
+      "description": "A slope, as half-metre steps you walk up: from at, length long towards dir, rising rise.",
+      "properties": {
+        "type": { "const": "ramp", "description": "Which kind of part this is." },
+        "at": {
+          "type": "array",
+          "description": "Where it stands: [x, y, z] in metres. x runs west to east, z north to south, y up; the floor is at y = 0, the arena spans -36 to 36 on x and z. On the grid: x and z in quarter metres, y in half metres.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x (west to east), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "y (up), in metres",
+              "minimum": -2,
+              "maximum": 20,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "z (north to south), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "dir": {
+          "type": "string",
+          "description": "Which way the steps climb: east (+x), west (-x), south (+z) or north (-z).",
+          "enum": ["east", "west", "south", "north"]
+        },
+        "length": {
+          "type": "number",
+          "description": "How long, in metres: a multiple of 0.5.",
+          "minimum": 0.5,
+          "maximum": 40,
+          "multipleOf": 0.5
+        },
+        "rise": {
+          "type": "number",
+          "description": "How high it goes, in metres: a multiple of 0.5.",
+          "minimum": 0.5,
+          "maximum": 12,
+          "multipleOf": 0.5
+        },
+        "width": {
+          "type": "number",
+          "description": "How wide, in metres: a multiple of 0.5.",
+          "minimum": 0.5,
+          "maximum": 40,
+          "multipleOf": 0.5
+        },
+        "m": {
+          "type": "string",
+          "description": "What it's made of: a material's id (data/materials.json).",
+          "minLength": 1,
+          "maxLength": 40,
+          "x-zirbel-ref": "materials"
+        },
+        "about": {
+          "type": "string",
+          "description": "What it is and what it's for, for people and agents: one or two sentences.",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "mirror": {
+          "type": "string",
+          "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+          "enum": ["x", "z", "xz", "point"]
+        },
+        "repeat": {
+          "type": "object",
+          "description": "Lay it again in a row: count copies in all, each step further on.",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "How many copies, the first included.",
+              "minimum": 1,
+              "maximum": 40
+            },
+            "step": {
+              "type": "array",
+              "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "description": "x, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "y, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "z, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "additionalProperties": false,
+          "required": ["count", "step"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type", "at", "dir", "length", "rise", "m"]
+    },
+    "tiers": {
+      "type": "object",
+      "description": "Blocks stacked one on another, each centred on the one below: a boulder, a haystack, a tree's crown, a tower.",
+      "properties": {
+        "type": { "const": "tiers", "description": "Which kind of part this is." },
+        "at": {
+          "type": "array",
+          "description": "Where it stands: [x, y, z] in metres. x runs west to east, z north to south, y up; the floor is at y = 0, the arena spans -36 to 36 on x and z. On the grid: x and z in quarter metres, y in half metres.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x (west to east), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "y (up), in metres",
+              "minimum": -2,
+              "maximum": 20,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "z (north to south), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "m": {
+          "type": "string",
+          "description": "What it's made of: a material's id (data/materials.json).",
+          "minLength": 1,
+          "maxLength": 40,
+          "x-zirbel-ref": "materials"
+        },
+        "layers": {
+          "type": "array",
+          "description": "The blocks, from the bottom up.",
+          "items": {
+            "type": "object",
+            "description": "One block of the stack.",
+            "properties": {
+              "size": {
+                "type": "array",
+                "description": "How big: [width along x, height along y, depth along z], in metres: whole cells, so multiples of 0.5.",
+                "prefixItems": [
+                  {
+                    "type": "number",
+                    "description": "width (x), in metres",
+                    "minimum": 0.5,
+                    "maximum": 80,
+                    "multipleOf": 0.5
+                  },
+                  {
+                    "type": "number",
+                    "description": "height (y), in metres",
+                    "minimum": 0.5,
+                    "maximum": 80,
+                    "multipleOf": 0.5
+                  },
+                  {
+                    "type": "number",
+                    "description": "depth (z), in metres",
+                    "minimum": 0.5,
+                    "maximum": 80,
+                    "multipleOf": 0.5
+                  }
+                ],
+                "items": false,
+                "minItems": 3,
+                "maxItems": 3
+              },
+              "m": {
+                "type": "string",
+                "description": "What it's made of: a material's id (data/materials.json).",
+                "minLength": 1,
+                "maxLength": 40,
+                "x-zirbel-ref": "materials"
+              }
+            },
+            "additionalProperties": false,
+            "required": ["size"]
+          },
+          "minItems": 1,
+          "maxItems": 12
+        },
+        "about": {
+          "type": "string",
+          "description": "What it is and what it's for, for people and agents: one or two sentences.",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "mirror": {
+          "type": "string",
+          "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+          "enum": ["x", "z", "xz", "point"]
+        },
+        "repeat": {
+          "type": "object",
+          "description": "Lay it again in a row: count copies in all, each step further on.",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "How many copies, the first included.",
+              "minimum": 1,
+              "maximum": 40
+            },
+            "step": {
+              "type": "array",
+              "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "description": "x, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "y, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "z, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "additionalProperties": false,
+          "required": ["count", "step"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type", "at", "layers", "m"]
+    },
+    "group": {
+      "type": "object",
+      "description": "Parts laid together, as one: they move, turn, mirror and repeat as one. Their positions are from the group's at.",
+      "properties": {
+        "type": { "const": "group", "description": "Which kind of part this is." },
+        "at": {
+          "type": "array",
+          "description": "Where it stands: [x, y, z] in metres. x runs west to east, z north to south, y up; the floor is at y = 0, the arena spans -36 to 36 on x and z. On the grid: x and z in quarter metres, y in half metres.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x (west to east), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "y (up), in metres",
+              "minimum": -2,
+              "maximum": 20,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "z (north to south), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "turn": {
+          "type": "integer",
+          "description": "Turned this many degrees clockwise, seen from above (north to east).",
+          "enum": [0, 90, 180, 270],
+          "minimum": 0,
+          "maximum": 270
+        },
+        "flip": {
+          "type": "string",
+          "description": "Turned into its mirror image across its own middle: x (east and west swap), z (north and south swap), or both.",
+          "enum": ["x", "z", "xz"]
+        },
+        "parts": {
+          "type": "array",
+          "description": "The parts, in the order they're laid.",
+          "items": { "$ref": "#/$defs/part" },
+          "minItems": 1,
+          "maxItems": 200
+        },
+        "about": {
+          "type": "string",
+          "description": "What it is and what it's for, for people and agents: one or two sentences.",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "mirror": {
+          "type": "string",
+          "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+          "enum": ["x", "z", "xz", "point"]
+        },
+        "repeat": {
+          "type": "object",
+          "description": "Lay it again in a row: count copies in all, each step further on.",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "How many copies, the first included.",
+              "minimum": 1,
+              "maximum": 40
+            },
+            "step": {
+              "type": "array",
+              "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "description": "x, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "y, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "z, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "additionalProperties": false,
+          "required": ["count", "step"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type", "parts"]
+    },
+    "prefab": {
+      "type": "object",
+      "description": "A prefab (data/prefabs.json) placed here: its parts, moved to at, turned, flipped and scaled.",
+      "properties": {
+        "type": { "const": "prefab", "description": "Which kind of part this is." },
+        "id": {
+          "type": "string",
+          "description": "Which prefab: its id.",
+          "minLength": 1,
+          "maxLength": 40,
+          "x-zirbel-ref": "prefabs"
+        },
+        "at": {
+          "type": "array",
+          "description": "Where it stands: [x, y, z] in metres. x runs west to east, z north to south, y up; the floor is at y = 0, the arena spans -36 to 36 on x and z. On the grid: x and z in quarter metres, y in half metres.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x (west to east), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "y (up), in metres",
+              "minimum": -2,
+              "maximum": 20,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "z (north to south), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "turn": {
+          "type": "integer",
+          "description": "Turned this many degrees clockwise, seen from above (north to east).",
+          "enum": [0, 90, 180, 270],
+          "minimum": 0,
+          "maximum": 270
+        },
+        "flip": {
+          "type": "string",
+          "description": "Turned into its mirror image across its own middle: x (east and west swap), z (north and south swap), or both.",
+          "enum": ["x", "z", "xz"]
+        },
+        "scale": {
+          "type": "array",
+          "description": "Stretched along each axis: [x, y, z], 1 for as it is, in quarters. Its cells stay half a metre: what it comes to must keep to the grid.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x, in metres",
+              "minimum": 0.25,
+              "maximum": 8,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "y, in metres",
+              "minimum": 0.25,
+              "maximum": 8,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "z, in metres",
+              "minimum": 0.25,
+              "maximum": 8,
+              "multipleOf": 0.25
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "swap": {
+          "type": "object",
+          "description": "Materials to use instead of others in it: { \"wagon\": \"green-wagon\" } paints a box wagon green.",
+          "propertyNames": {
+            "type": "string",
+            "description": "The material it uses.",
+            "minLength": 1,
+            "maxLength": 40,
+            "x-zirbel-ref": "materials"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "description": "The material to use instead.",
+            "minLength": 1,
+            "maxLength": 40,
+            "x-zirbel-ref": "materials"
+          },
+          "maxProperties": 12
+        },
+        "about": {
+          "type": "string",
+          "description": "What it is and what it's for, for people and agents: one or two sentences.",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "mirror": {
+          "type": "string",
+          "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+          "enum": ["x", "z", "xz", "point"]
+        },
+        "repeat": {
+          "type": "object",
+          "description": "Lay it again in a row: count copies in all, each step further on.",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "How many copies, the first included.",
+              "minimum": 1,
+              "maximum": 40
+            },
+            "step": {
+              "type": "array",
+              "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "description": "x, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "y, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "z, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "additionalProperties": false,
+          "required": ["count", "step"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type", "id", "at"]
+    },
+    "piece": {
+      "type": "object",
+      "description": "A piece (data/pieces.json) with cells, placed here: a crate, a barrier, a tree.",
+      "properties": {
+        "type": { "const": "piece", "description": "Which kind of part this is." },
+        "id": {
+          "type": "string",
+          "description": "Which piece: its id.",
+          "minLength": 1,
+          "maxLength": 40,
+          "x-zirbel-ref": "pieces"
+        },
+        "at": {
+          "type": "array",
+          "description": "Where it stands: [x, y, z] in metres. x runs west to east, z north to south, y up; the floor is at y = 0, the arena spans -36 to 36 on x and z. On the grid: x and z in quarter metres, y in half metres.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x (west to east), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "y (up), in metres",
+              "minimum": -2,
+              "maximum": 20,
+              "multipleOf": 0.5
+            },
+            {
+              "type": "number",
+              "description": "z (north to south), in metres",
+              "minimum": -40,
+              "maximum": 40,
+              "multipleOf": 0.25
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "turn": {
+          "type": "integer",
+          "description": "Turned this many degrees clockwise, seen from above (north to east).",
+          "enum": [0, 90, 180, 270],
+          "minimum": 0,
+          "maximum": 270
+        },
+        "flip": {
+          "type": "string",
+          "description": "Turned into its mirror image across its own middle: x (east and west swap), z (north and south swap), or both.",
+          "enum": ["x", "z", "xz"]
+        },
+        "scale": {
+          "type": "array",
+          "description": "Stretched along each axis: [x, y, z], 1 for as it is, in quarters. Its cells stay half a metre: what it comes to must keep to the grid.",
+          "prefixItems": [
+            {
+              "type": "number",
+              "description": "x, in metres",
+              "minimum": 0.25,
+              "maximum": 8,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "y, in metres",
+              "minimum": 0.25,
+              "maximum": 8,
+              "multipleOf": 0.25
+            },
+            {
+              "type": "number",
+              "description": "z, in metres",
+              "minimum": 0.25,
+              "maximum": 8,
+              "multipleOf": 0.25
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "swap": {
+          "type": "object",
+          "description": "Materials to use instead of others in it.",
+          "propertyNames": {
+            "type": "string",
+            "description": "The material it uses.",
+            "minLength": 1,
+            "maxLength": 40,
+            "x-zirbel-ref": "materials"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "description": "The material to use instead.",
+            "minLength": 1,
+            "maxLength": 40,
+            "x-zirbel-ref": "materials"
+          },
+          "maxProperties": 12
+        },
+        "about": {
+          "type": "string",
+          "description": "What it is and what it's for, for people and agents: one or two sentences.",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "mirror": {
+          "type": "string",
+          "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+          "enum": ["x", "z", "xz", "point"]
+        },
+        "repeat": {
+          "type": "object",
+          "description": "Lay it again in a row: count copies in all, each step further on.",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "How many copies, the first included.",
+              "minimum": 1,
+              "maximum": 40
+            },
+            "step": {
+              "type": "array",
+              "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "description": "x, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "y, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                },
+                {
+                  "type": "number",
+                  "description": "z, in metres",
+                  "minimum": -40,
+                  "maximum": 40,
+                  "multipleOf": 0.25
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "additionalProperties": false,
+          "required": ["count", "step"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["type", "id", "at"]
+    },
+    "part": {
+      "description": "One part of a layout, a prefab or a piece: a primitive (box, block, hole, floor, walls, stairs, ramp, tiers), a group of parts, a prefab or a piece.",
+      "oneOf": [
+        { "$ref": "#/$defs/box" },
+        { "$ref": "#/$defs/block" },
+        { "$ref": "#/$defs/hole" },
+        { "$ref": "#/$defs/floor" },
+        { "$ref": "#/$defs/walls" },
+        { "$ref": "#/$defs/stairs" },
+        { "$ref": "#/$defs/ramp" },
+        { "$ref": "#/$defs/tiers" },
+        { "$ref": "#/$defs/group" },
+        { "$ref": "#/$defs/prefab" },
+        { "$ref": "#/$defs/piece" }
+      ]
+    }
+  }
+}

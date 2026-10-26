@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "radar.schema.json",
+  "title": "Radar",
+  "description": "The radar.",
+  "type": "object",
+  "properties": {
+    "show": { "type": "boolean", "description": "Whether there's a radar at all." },
+    "range": {
+      "type": "number",
+      "description": "How far it shows, from you to its edge, in metres.",
+      "minimum": 8,
+      "maximum": 80
+    },
+    "size": {
+      "type": "integer",
+      "description": "How big it is with a mouse and keyboard, in CSS pixels across.",
+      "minimum": 80,
+      "maximum": 260
+    },
+    "touchSize": {
+      "type": "integer",
+      "description": "How big it is on a phone or tablet, in CSS pixels across: it stays clear of the buttons.",
+      "minimum": 64,
+      "maximum": 200
+    },
+    "turn": {
+      "type": "string",
+      "description": "view: it turns with you, where you look is up. north: north is always up, and your arrow turns.",
+      "enum": ["view", "north"]
+    },
+    "rings": {
+      "type": "integer",
+      "description": "Range rings drawn inside its edge.",
+      "minimum": 0,
+      "maximum": 4
+    },
+    "refreshHz": {
+      "type": "integer",
+      "description": "How many times a second it's drawn.",
+      "minimum": 5,
+      "maximum": 60
+    },
+    "pickups": {
+      "description": "Which pickups show: \"all\", or a list of piece ids.",
+      "oneOf": [
+        { "const": "all", "description": "Every pickup." },
+        {
+          "type": "array",
+          "description": "These pickups only.",
+          "items": {
+            "type": "string",
+            "description": "A pickup piece's id.",
+            "minLength": 1,
+            "maxLength": 40,
+            "x-zirbel-ref": "pieces"
+          },
+          "minItems": 0,
+          "maxItems": 60,
+          "uniqueItems": true
+        }
+      ]
+    },
+    "drops": {
+      "type": "boolean",
+      "description": "Whether crates show: a ping where each will land, then a blip until someone takes it."
+    },
+    "powerups": {
+      "type": "boolean",
+      "description": "Whether powerups show: on the pedestal, coming soon, or dropped."
+    },
+    "countdown": {
+      "type": "boolean",
+      "description": "Whether a pickup that's gone shows the seconds until it's back."
+    },
+    "ping": {
+      "type": "object",
+      "description": "How a drop pings.",
+      "properties": {
+        "style": {
+          "type": "string",
+          "description": "pulse: rings swell out from where it will land; flash: its blip flashes; both.",
+          "enum": ["pulse", "flash", "both"]
+        },
+        "ms": {
+          "type": "integer",
+          "description": "How long it pings, in ms.",
+          "minimum": 300,
+          "maximum": 10000
+        },
+        "pulses": {
+          "type": "integer",
+          "description": "How many rings (or flashes) in that time.",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "edge": {
+          "type": "boolean",
+          "description": "Whether a drop out of range pings on the radar's rim, the way it is."
+        }
+      },
+      "additionalProperties": false,
+      "required": ["style", "ms", "pulses", "edge"]
+    },
+    "colors": {
+      "type": "object",
+      "description": "Its colours (a pickup's blip is in the piece's own colour).",
+      "properties": {
+        "disc": { "type": "string", "description": "The disc behind it.", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "rim": { "type": "string", "description": "Its rim.", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "rings": { "type": "string", "description": "The range rings.", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "you": {
+          "type": "string",
+          "description": "Your arrow in the middle.",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "drop": { "type": "string", "description": "A drop's ping.", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "crate": {
+          "type": "string",
+          "description": "A crate with a special in it.",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "healthCrate": { "type": "string", "description": "A health crate.", "pattern": "^#[0-9a-fA-F]{6}$" }
+      },
+      "additionalProperties": false,
+      "required": ["disc", "rim", "rings", "you", "drop", "crate", "healthCrate"]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "show",
+    "range",
+    "size",
+    "touchSize",
+    "turn",
+    "rings",
+    "refreshHz",
+    "pickups",
+    "drops",
+    "powerups",
+    "countdown",
+    "ping",
+    "colors"
+  ]
+}

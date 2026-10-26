@@ -1,0 +1,43 @@
+name: Notify live revision
+on:
+  workflow_run:
+    workflows: ['Playable build']
+    types: [completed]
+permissions: {}
+jobs:
+  notify:
+    # Runs from the default branch, without checking out or executing candidate code.
+    if: vars.ZIRBEL_LIVE == 'true' && github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    environment: game-publication
+    env:
+      GAME_ID: fps01
+      APP_ID: ${{ vars.ZIRBEL_DISPATCH_APP_ID }}
+      INSTALLATION_ID: ${{ vars.ZIRBEL_DISPATCH_INSTALLATION_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.ZIRBEL_DISPATCH_APP_PRIVATE_KEY }}
+      RUN_ID: ${{ github.event.workflow_run.id }}
+    steps:
+      - name: Ask Zirbel to validate the candidate
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { createPrivateKey, sign } from 'node:crypto';
+          const { APP_ID: app, INSTALLATION_ID: installation, APP_PRIVATE_KEY: pem, GAME_ID: game, RUN_ID: run } = process.env;
+          if (![app, installation, run].every((value) => /^[1-9][0-9]*$/.test(value ?? '')) || !/^[a-z][a-z0-9-]{0,63}$/.test(game ?? '')) throw new Error('Invalid dispatch configuration');
+          const now = Math.floor(Date.now() / 1000);
+          const encode = (value) => Buffer.from(JSON.stringify(value)).toString('base64url');
+          const unsigned = `${encode({ alg: 'RS256', typ: 'JWT' })}.${encode({ iat: now - 60, exp: now + 540, iss: app })}`;
+          const jwt = `${unsigned}.${sign('RSA-SHA256', Buffer.from(unsigned), createPrivateKey(pem)).toString('base64url')}`;
+          async function api(path, token, body) {
+            const response = await fetch(`https://api.github.com${path}`, { method: body ? 'POST' : 'GET', redirect: 'error', signal: AbortSignal.timeout(20000),
+              headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}`, 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' }, ...(body ? { body: JSON.stringify(body) } : {}) });
+            if (!response.ok) throw new Error(`Dispatch rejected (${response.status})`);
+            return response.status === 204 ? null : response.json();
+          }
+          const installed = await api(`/app/installations/${installation}`, jwt);
+          if (installed.account?.login !== 'matapao' || installed.suspended_at !== null) throw new Error('Installation scope mismatch');
+          const access = await api(`/app/installations/${installation}/access_tokens`, jwt, { repositories: ['zirbel'], permissions: { actions: 'write' } });
+          if (typeof access.token !== 'string' || !access.token) throw new Error('Missing dispatch token');
+          await api('/repos/matapao/zirbel/actions/workflows/import-game.yml/dispatches', access.token, { ref: 'main', inputs: { game, run } });
+          NODE

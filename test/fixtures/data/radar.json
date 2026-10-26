@@ -1,0 +1,23 @@
+{
+  "show": true,
+  "range": 30,
+  "size": 150,
+  "touchSize": 108,
+  "turn": "view",
+  "rings": 2,
+  "refreshHz": 20,
+  "pickups": "all",
+  "drops": true,
+  "powerups": true,
+  "countdown": true,
+  "ping": { "style": "pulse", "ms": 2400, "pulses": 3, "edge": true },
+  "colors": {
+    "disc": "#0e1219",
+    "rim": "#a9b2c1",
+    "rings": "#ffffff",
+    "you": "#ff8a2a",
+    "drop": "#ffd23d",
+    "crate": "#c98a3c",
+    "healthCrate": "#f4f6fa"
+  }
+}

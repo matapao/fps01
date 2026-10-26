@@ -1,0 +1,10 @@
+{
+  "name": "@zirbel/engineering",
+  "version": "1.0.0",
+  "archive": "vendor/zirbel-engineering-1.0.0.tgz",
+  "integrity": "sha512-WiRuckQSzCqdrFIrjjZsOW6BWaMtkUyg0A6+cSPDzcWJJju4+WXW0Jq7SGNhK7tfoyLxjn+EINyRN9lqDgoGiQ==",
+  "files": {
+    "dist/browser.js": "d4e9bcd059941de3083a1821544e5e25b016215fa0b654bb7615189ac2669ef8",
+    "dist/browser.d.ts": "6989fefc4cde3da547dbe9b1ed2a5305bf8ced351c2667c85f2c26b441e6620e"
+  }
+}

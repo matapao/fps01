@@ -1,0 +1,7 @@
+{
+  "crosshair": { "shape": "cross", "color": "#f4f6fa", "spread": true },
+  "fov": 75,
+  "look": { "mouse": 0.0022, "touch": 0.0055 },
+  "touch": { "reach": 56, "dead": 0.22, "side": 0.42 },
+  "ping": true
+}

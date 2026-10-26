@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>fps01</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./js/main.js"></script>
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+
+    <div class="hud" id="hud" hidden>
+      <div class="crosshair cross" id="crosshair"></div>
+      <div class="hitmarker" id="hitmarker"></div>
+      <div class="damage" id="damage"></div>
+      <div class="overlay" id="overlay"></div>
+      <div class="charge" id="charge" hidden><i></i></div>
+      <p class="powerup" id="powerup" hidden><span id="powerup-name"></span><b id="powerup-left"></b></p>
+      <div class="guide" id="guide" hidden><p id="guide-text"></p></div>
+      <div class="vitals">
+        <p class="health"><span id="health">100</span><small>HP</small></p>
+        <p class="armor" id="armor-line"><span id="armor">0</span><small>armor</small></p>
+      </div>
+      <p class="notice" id="notice" hidden></p>
+      <p class="prompt" id="prompt" hidden></p>
+      <section class="weapon-tip" id="weapon-tip" role="status" aria-live="polite" aria-atomic="true" hidden>
+        <h2 id="weapon-tip-title"></h2>
+        <p id="weapon-tip-primary"></p>
+        <p id="weapon-tip-secondary"></p>
+        <p class="weapon-tip-extra" id="weapon-tip-extra"></p>
+      </section>
+      <div class="match" id="match"></div>
+      <canvas class="radar" id="radar" aria-label="Radar: pickups and drops near you"></canvas>
+      <div class="round-over" id="round-over" hidden>
+        <p class="round-title" id="round-title"></p>
+        <p class="round-next" id="round-next"></p>
+      </div>
+      <div class="weapon" id="weapon">
+        <p class="weapon-name" id="weapon-name">Rifle</p>
+        <p class="weapon-ammo" id="weapon-ammo">∞</p>
+      </div>
+      <ol class="slots" id="slots"></ol>
+      <p class="ping" id="ping"></p>
+      <div class="death" id="death" hidden>
+        <p class="death-title" id="death-title"></p>
+        <p class="death-note" id="death-note"></p>
+        <p class="death-timer" id="death-timer"></p>
+      </div>
+    </div>
+
+    <div class="touch" id="touch" hidden>
+      <div class="stick"><i></i></div>
+      <button type="button" class="fire" data-touch="fire">Fire</button>
+      <button type="button" class="jump" data-touch="jump">Jump</button>
+      <button type="button" class="hook" data-touch="hook">Hook</button>
+      <button type="button" class="next" data-touch="next" aria-label="Next weapon">Next</button>
+      <button type="button" class="pause" data-touch="pause" aria-label="Menu">❚❚</button>
+      <p class="turn">Turn your phone sideways for more room</p>
+    </div>
+
+    <div class="strike" id="strike" hidden>
+      <p class="strike-title">Air strike · <span id="strike-floor"></span></p>
+      <canvas id="strike-map" width="492" height="492"></canvas>
+      <p class="strike-help" id="strike-help">
+        Move the mouse to aim · click to call it in · right-click to call it off
+      </p>
+    </div>
+
+    <div class="scoreboard" id="scoreboard" hidden>
+      <p class="scoreboard-title" id="scoreboard-title"></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Kills</th>
+            <th>Deaths</th>
+          </tr>
+        </thead>
+        <tbody id="scores"></tbody>
+      </table>
+    </div>
+
+    <div class="menu" id="menu">
+      <div class="panel">
+        <header class="brand">
+          <h1>fps01</h1>
+        </header>
+
+        <!-- Before you're in a game: the games to join, or a new one. On zirbel the room is the game. -->
+        <section class="browse" id="browse">
+          <div class="pick" id="games-block">
+            <p class="label">Games</p>
+            <ol class="games" id="games"></ol>
+            <p class="none" id="no-games">None yet: start one below</p>
+            <form class="code-form" id="code-form">
+              <input
+                id="code"
+                maxlength="4"
+                placeholder="Code"
+                autocomplete="off"
+                spellcheck="false"
+                aria-label="A game's code"
+              />
+              <button type="submit" class="ghost">Join</button>
+            </form>
+          </div>
+          <p class="room" id="room" hidden></p>
+          <div class="pick" id="new-game">
+            <p class="label" id="new-label">New game</p>
+            <div class="seg" id="maps" role="group" aria-label="Map"></div>
+          </div>
+          <button id="create" type="button" class="primary" disabled>Play</button>
+        </section>
+
+        <!-- In a game: back in, your settings, the controls, and leaving. -->
+        <section class="paused" id="paused" hidden>
+          <div class="in">
+            <p class="you" id="you" hidden>
+              <i id="you-color"></i><b id="you-name"></b><span id="you-team"></span>
+            </p>
+            <p class="about" id="game-about"></p>
+          </div>
+          <button id="resume" type="button" class="primary">Resume</button>
+          <div class="settings">
+            <label class="row" for="sensitivity">
+              <span>Sensitivity</span>
+              <input
+                id="sensitivity"
+                name="sensitivity"
+                type="range"
+                min="0.2"
+                max="3"
+                step="0.1"
+                value="1"
+              />
+              <output id="sensitivity-value" for="sensitivity">1.0</output>
+            </label>
+            <div class="checks">
+              <label class="check" for="invert-mouse"
+                ><input id="invert-mouse" type="checkbox" /> Invert mouse (vertical)</label
+              >
+            </div>
+            <div class="row">
+              <label for="crosshair-style">Crosshair</label>
+              <span class="crosshair-pick">
+                <select id="crosshair-style">
+                  <option value="cross">Cross</option>
+                  <option value="cross-dot">Cross and dot</option>
+                  <option value="dot">Dot</option>
+                  <option value="circle">Circle</option>
+                  <option value="t">T</option>
+                </select>
+                <select id="crosshair-color" aria-label="Crosshair colour">
+                  <option value="#f4f6fa">White</option>
+                  <option value="#5dff7a">Green</option>
+                  <option value="#ffe14d">Yellow</option>
+                  <option value="#4de8ff">Cyan</option>
+                  <option value="#ff6bd5">Pink</option>
+                  <option value="#ff4d4d">Red</option>
+                </select>
+              </span>
+              <span class="crosshair-preview"
+                ><span class="crosshair cross" id="crosshair-preview"></span
+              ></span>
+            </div>
+            <div class="checks">
+              <label class="check" for="crosshair-spread"
+                ><input id="crosshair-spread" type="checkbox" checked /> Crosshair shows spread</label
+              >
+            </div>
+          </div>
+          <details class="help">
+            <summary>Controls</summary>
+            <dl class="controls" id="keys-help">
+              <dt>WASD</dt>
+              <dd>Move</dd>
+              <dt>Space</dt>
+              <dd>Jump · hold to bunny hop</dd>
+              <dt>Shift</dt>
+              <dd>Dodge</dd>
+              <dt>Mouse</dt>
+              <dd>Aim and fire · right button: alt-fire</dd>
+              <dt>1 – 6</dt>
+              <dd>Weapons · 3 to 6 lie on pads</dd>
+              <dt>Rocket jump</dt>
+              <dd>Aim rockets at nearby ground and fire · pressure lifts you without breaking the floor</dd>
+              <dt>Wheel</dt>
+              <dd>Next weapon · middle button: the last</dd>
+              <dt>V</dt>
+              <dd>Kick</dd>
+              <dt>F</dt>
+              <dd>Juggling balls: faster on foot</dd>
+              <dt>7</dt>
+              <dd>A special, from a crate</dd>
+              <dt>E</dt>
+              <dd>Grappling hook · roofs and platforms above you</dd>
+              <dt>Tab</dt>
+              <dd>Scores</dd>
+              <dt>Esc</dt>
+              <dd>This menu</dd>
+            </dl>
+            <dl class="controls" id="pad-help" hidden>
+              <dt>Left stick</dt>
+              <dd>Move · click it to dodge</dd>
+              <dt>Right stick</dt>
+              <dd>Look and aim · click it to kick</dd>
+              <dt>Right trigger</dt>
+              <dd>Fire</dd>
+              <dt>Rocket jump</dt>
+              <dd>Aim rockets at nearby ground and fire</dd>
+              <dt>Left trigger</dt>
+              <dd>Alt-fire</dd>
+              <dt>A</dt>
+              <dd>Jump · hold to bunny hop</dd>
+              <dt>B</dt>
+              <dd>Dodge</dd>
+              <dt>X</dt>
+              <dd>Grappling hook</dd>
+              <dt>Bumpers</dt>
+              <dd>Next weapon · Y: the last</dd>
+              <dt>D-pad</dt>
+              <dd>Up: your special · down: juggling balls</dd>
+              <dt>Back</dt>
+              <dd>Scores</dd>
+              <dt>Start</dt>
+              <dd>This menu · from it, play</dd>
+            </dl>
+            <dl class="controls" id="touch-help" hidden>
+              <dt>Left thumb</dt>
+              <dd>Move</dd>
+              <dt>Right thumb</dt>
+              <dd>Look and aim</dd>
+              <dt>Fire</dt>
+              <dd>Fire · slide it to aim as you shoot</dd>
+              <dt>Rocket jump</dt>
+              <dd>Aim rockets at nearby ground and fire</dd>
+              <dt>Jump</dt>
+              <dd>Jump · hold to bunny hop</dd>
+              <dt>Hook</dt>
+              <dd>Grappling hook · roofs and platforms above you</dd>
+              <dt>Next</dt>
+              <dd>Next weapon</dd>
+              <dt>❚❚</dt>
+              <dd>This menu</dd>
+            </dl>
+          </details>
+          <p class="share" id="game-share" hidden></p>
+          <button id="leave" type="button" class="link">Leave game</button>
+        </section>
+
+        <p><a href="./audio.html" target="_blank" rel="noopener">Sounds &amp; creator credits</a></p>
+        <p class="status" id="status">Connecting…</p>
+        <div class="lan" id="lan" hidden>
+          <p>Friends open</p>
+          <p class="lan-urls" id="lan-urls"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="update" id="update" hidden>
+      <span id="update-text"></span>
+      <button id="update-button" type="button">Update <kbd>U</kbd></button>
+    </div>
+  </body>
+</html>

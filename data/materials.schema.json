@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "materials.schema.json",
+  "title": "Materials",
+  "description": "The materials.",
+  "type": "object",
+  "properties": {
+    "materials": {
+      "type": "array",
+      "description": "Every material, in order (a cell stores its place in this list).",
+      "items": {
+        "type": "object",
+        "description": "A material.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Its id: lower case letters, digits and hyphens. Other blocks refer to it by this.",
+            "pattern": "^[a-z][a-zA-Z0-9-]{0,39}$"
+          },
+          "name": {
+            "type": "string",
+            "description": "What it's called, for people.",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "about": {
+            "type": "string",
+            "description": "What it is and what it's for, for people and agents: one or two sentences.",
+            "minLength": 1,
+            "maxLength": 400
+          },
+          "color": {
+            "type": "string",
+            "description": "Its colour: #rrggbb.",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "ceiling": {
+            "type": "string",
+            "description": "The colour of its underside, if darker than its top (floors and roofs): #rrggbb.",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "breakable": {
+            "type": "boolean",
+            "description": "Whether blasts and bullets can break it. Jump pads and flag pads can't be broken."
+          },
+          "hits": {
+            "type": "integer",
+            "description": "How many bullet hits break a cell of it off: 1 (gravel, hay) to 20.",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "floor": { "type": "boolean", "description": "It's a floor: sudden death crumbles it away." },
+          "slippery": {
+            "type": "boolean",
+            "description": "You slide on it, slow to get going and slow to stop (spilt oil)."
+          },
+          "tiles": { "type": "boolean", "description": "Drawn in 1 m tiles." },
+          "rubble": {
+            "type": "boolean",
+            "description": "When what's under it is blown away, it falls and lands in heaps (gravel, hay)."
+          }
+        },
+        "additionalProperties": false,
+        "required": ["id", "name", "color", "breakable"]
+      },
+      "minItems": 4,
+      "maxItems": 120
+    }
+  },
+  "additionalProperties": false,
+  "required": ["materials"]
+}

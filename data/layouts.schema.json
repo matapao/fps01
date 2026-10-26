@@ -1,0 +1,680 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "layouts.schema.json",
+  "title": "Layouts",
+  "description": "The layouts.",
+  "type": "object",
+  "properties": {
+    "layouts": {
+      "type": "array",
+      "description": "Every layout, in the order the menu offers them: the first is the default.",
+      "items": {
+        "type": "object",
+        "description": "A layout.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Its id: lower case letters, digits and hyphens. Other blocks refer to it by this.",
+            "pattern": "^[a-z][a-zA-Z0-9-]{0,39}$"
+          },
+          "name": {
+            "type": "string",
+            "description": "What it's called, in the menu.",
+            "minLength": 1,
+            "maxLength": 30
+          },
+          "about": {
+            "type": "string",
+            "description": "What it is and what it's for, for people and agents: one or two sentences.",
+            "minLength": 1,
+            "maxLength": 400
+          },
+          "floor": {
+            "type": "string",
+            "description": "What the arena's floor is made of (a material with floor: true).",
+            "minLength": 1,
+            "maxLength": 40,
+            "x-zirbel-ref": "materials"
+          },
+          "roof": {
+            "type": "object",
+            "description": "The roof over the arena, held up by the pillars round its edge.",
+            "properties": {
+              "at": {
+                "type": "number",
+                "description": "How high its underside is, in metres: a multiple of 0.5.",
+                "minimum": 6,
+                "maximum": 18,
+                "multipleOf": 0.5
+              },
+              "m": {
+                "type": "string",
+                "description": "What it's made of.",
+                "minLength": 1,
+                "maxLength": 40,
+                "x-zirbel-ref": "materials"
+              },
+              "skylights": {
+                "type": "array",
+                "description": "Openings in the roof, open to the sky.",
+                "items": {
+                  "type": "object",
+                  "description": "A skylight.",
+                  "properties": {
+                    "at": {
+                      "type": "array",
+                      "description": "Its middle: [x, z], in metres, in quarter metres.",
+                      "prefixItems": [
+                        {
+                          "type": "number",
+                          "description": "x, in metres",
+                          "minimum": -36,
+                          "maximum": 36,
+                          "multipleOf": 0.25
+                        },
+                        {
+                          "type": "number",
+                          "description": "z, in metres",
+                          "minimum": -36,
+                          "maximum": 36,
+                          "multipleOf": 0.25
+                        }
+                      ],
+                      "items": false,
+                      "minItems": 2,
+                      "maxItems": 2
+                    },
+                    "size": {
+                      "type": "array",
+                      "description": "How big: [width along x, depth along z], in metres: multiples of 0.5.",
+                      "prefixItems": [
+                        {
+                          "type": "number",
+                          "description": "width, in metres",
+                          "minimum": 1,
+                          "maximum": 72,
+                          "multipleOf": 0.5
+                        },
+                        {
+                          "type": "number",
+                          "description": "depth, in metres",
+                          "minimum": 1,
+                          "maximum": 72,
+                          "multipleOf": 0.5
+                        }
+                      ],
+                      "items": false,
+                      "minItems": 2,
+                      "maxItems": 2
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": ["at", "size"]
+                },
+                "minItems": 0,
+                "maxItems": 20
+              }
+            },
+            "additionalProperties": false,
+            "required": ["at", "m"]
+          },
+          "look": {
+            "type": "object",
+            "description": "The light in the arena: from the sky above, the ground below, and the sun.",
+            "properties": {
+              "sky": {
+                "type": "string",
+                "description": "The light from above.",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "ground": {
+                "type": "string",
+                "description": "The light from below.",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "sun": { "type": "string", "description": "The sun's colour.", "pattern": "^#[0-9a-fA-F]{6}$" }
+            },
+            "additionalProperties": false,
+            "required": ["sky", "ground", "sun"]
+          },
+          "parts": {
+            "type": "array",
+            "description": "What stands in the arena, part by part, in the order they're laid: a later part replaces what an earlier one filled, so holes come after what they cut.",
+            "items": { "$ref": "geometry.schema.json#/$defs/part" },
+            "minItems": 0,
+            "maxItems": 400
+          },
+          "spawns": {
+            "type": "array",
+            "description": "Where players can spawn, standing, in the open with floor under them. Players spawn at the one farthest from everyone; in capture the flag, a team uses those well into its own half.",
+            "items": {
+              "type": "object",
+              "description": "A spawn point.",
+              "properties": {
+                "at": {
+                  "type": "array",
+                  "description": "Where someone stands: [x, y, z] of their feet, in metres, inside the arena (-36 to 36 on x and z), on the floor (y = 0) or on something (y in half metres, on top of a cell).",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "description": "x (west to east), in metres",
+                      "minimum": -36,
+                      "maximum": 36,
+                      "multipleOf": 0.25
+                    },
+                    {
+                      "type": "number",
+                      "description": "y (up), in metres",
+                      "minimum": -1,
+                      "maximum": 18,
+                      "multipleOf": 0.5
+                    },
+                    {
+                      "type": "number",
+                      "description": "z (north to south), in metres",
+                      "minimum": -36,
+                      "maximum": 36,
+                      "multipleOf": 0.25
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 3,
+                  "maxItems": 3
+                },
+                "mirror": {
+                  "type": "string",
+                  "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+                  "enum": ["x", "z", "xz", "point"]
+                },
+                "repeat": {
+                  "type": "object",
+                  "description": "Lay it again in a row: count copies in all, each step further on.",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "description": "How many copies, the first included.",
+                      "minimum": 1,
+                      "maximum": 40
+                    },
+                    "step": {
+                      "type": "array",
+                      "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+                      "prefixItems": [
+                        {
+                          "type": "number",
+                          "description": "x, in metres",
+                          "minimum": -40,
+                          "maximum": 40,
+                          "multipleOf": 0.25
+                        },
+                        {
+                          "type": "number",
+                          "description": "y, in metres",
+                          "minimum": -40,
+                          "maximum": 40,
+                          "multipleOf": 0.25
+                        },
+                        {
+                          "type": "number",
+                          "description": "z, in metres",
+                          "minimum": -40,
+                          "maximum": 40,
+                          "multipleOf": 0.25
+                        }
+                      ],
+                      "items": false,
+                      "minItems": 3,
+                      "maxItems": 3
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": ["count", "step"]
+                },
+                "about": {
+                  "type": "string",
+                  "description": "What it is and what it's for, for people and agents: one or two sentences.",
+                  "minLength": 1,
+                  "maxLength": 400
+                }
+              },
+              "additionalProperties": false,
+              "required": ["at"]
+            },
+            "minItems": 1,
+            "maxItems": 120
+          },
+          "pickups": {
+            "type": "array",
+            "description": "Pickups lying around: a piece with a pickup component, where it lies.",
+            "items": {
+              "type": "object",
+              "description": "A pickup.",
+              "properties": {
+                "piece": {
+                  "type": "string",
+                  "description": "Which piece: one with a pickup component.",
+                  "minLength": 1,
+                  "maxLength": 40,
+                  "x-zirbel-ref": "pieces"
+                },
+                "at": {
+                  "type": "array",
+                  "description": "Where someone stands: [x, y, z] of their feet, in metres, inside the arena (-36 to 36 on x and z), on the floor (y = 0) or on something (y in half metres, on top of a cell).",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "description": "x (west to east), in metres",
+                      "minimum": -36,
+                      "maximum": 36,
+                      "multipleOf": 0.25
+                    },
+                    {
+                      "type": "number",
+                      "description": "y (up), in metres",
+                      "minimum": -1,
+                      "maximum": 18,
+                      "multipleOf": 0.5
+                    },
+                    {
+                      "type": "number",
+                      "description": "z (north to south), in metres",
+                      "minimum": -36,
+                      "maximum": 36,
+                      "multipleOf": 0.25
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 3,
+                  "maxItems": 3
+                },
+                "mirror": {
+                  "type": "string",
+                  "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+                  "enum": ["x", "z", "xz", "point"]
+                },
+                "repeat": {
+                  "type": "object",
+                  "description": "Lay it again in a row: count copies in all, each step further on.",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "description": "How many copies, the first included.",
+                      "minimum": 1,
+                      "maximum": 40
+                    },
+                    "step": {
+                      "type": "array",
+                      "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+                      "prefixItems": [
+                        {
+                          "type": "number",
+                          "description": "x, in metres",
+                          "minimum": -40,
+                          "maximum": 40,
+                          "multipleOf": 0.25
+                        },
+                        {
+                          "type": "number",
+                          "description": "y, in metres",
+                          "minimum": -40,
+                          "maximum": 40,
+                          "multipleOf": 0.25
+                        },
+                        {
+                          "type": "number",
+                          "description": "z, in metres",
+                          "minimum": -40,
+                          "maximum": 40,
+                          "multipleOf": 0.25
+                        }
+                      ],
+                      "items": false,
+                      "minItems": 3,
+                      "maxItems": 3
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": ["count", "step"]
+                },
+                "about": {
+                  "type": "string",
+                  "description": "What it is and what it's for, for people and agents: one or two sentences.",
+                  "minLength": 1,
+                  "maxLength": 400
+                }
+              },
+              "additionalProperties": false,
+              "required": ["piece", "at"]
+            },
+            "minItems": 0,
+            "maxItems": 120
+          },
+          "pads": {
+            "type": "array",
+            "description": "Jump pads: step on one at at and it throws you onto to.",
+            "items": {
+              "type": "object",
+              "description": "A jump pad.",
+              "properties": {
+                "piece": {
+                  "type": "string",
+                  "description": "Which piece (one with a jumpPad component). Default jump-pad.",
+                  "minLength": 1,
+                  "maxLength": 40,
+                  "x-zirbel-ref": "pieces"
+                },
+                "at": {
+                  "type": "array",
+                  "description": "Where someone stands: [x, y, z] of their feet, in metres, inside the arena (-36 to 36 on x and z), on the floor (y = 0) or on something (y in half metres, on top of a cell).",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "description": "x (west to east), in metres",
+                      "minimum": -36,
+                      "maximum": 36,
+                      "multipleOf": 0.25
+                    },
+                    {
+                      "type": "number",
+                      "description": "y (up), in metres",
+                      "minimum": -1,
+                      "maximum": 18,
+                      "multipleOf": 0.5
+                    },
+                    {
+                      "type": "number",
+                      "description": "z (north to south), in metres",
+                      "minimum": -36,
+                      "maximum": 36,
+                      "multipleOf": 0.25
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 3,
+                  "maxItems": 3
+                },
+                "to": {
+                  "type": "array",
+                  "description": "Where it throws you: [x, y, z], somewhere to land (y in half metres, on top of a cell).",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "description": "x, in metres",
+                      "minimum": -36,
+                      "maximum": 36,
+                      "multipleOf": 0.25
+                    },
+                    {
+                      "type": "number",
+                      "description": "y, in metres",
+                      "minimum": -1,
+                      "maximum": 18,
+                      "multipleOf": 0.5
+                    },
+                    {
+                      "type": "number",
+                      "description": "z, in metres",
+                      "minimum": -36,
+                      "maximum": 36,
+                      "multipleOf": 0.25
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 3,
+                  "maxItems": 3
+                },
+                "clear": {
+                  "type": "number",
+                  "description": "How far above the spot the arc peaks, in metres: the piece's, if left out.",
+                  "minimum": 0.5,
+                  "maximum": 6
+                },
+                "mirror": {
+                  "type": "string",
+                  "description": "Also lay mirror images of it across the middle of what it's in: x (across x = 0: east and west), z (across z = 0: north and south), xz (all four quarters), point (both halves, each the other turned round the middle). Maps are fair from every side this way.",
+                  "enum": ["x", "z", "xz", "point"]
+                },
+                "repeat": {
+                  "type": "object",
+                  "description": "Lay it again in a row: count copies in all, each step further on.",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "description": "How many copies, the first included.",
+                      "minimum": 1,
+                      "maximum": 40
+                    },
+                    "step": {
+                      "type": "array",
+                      "description": "How far on each copy is from the one before: [x, y, z] in metres (quarter metres; boxes stay on the half-metre grid).",
+                      "prefixItems": [
+                        {
+                          "type": "number",
+                          "description": "x, in metres",
+                          "minimum": -40,
+                          "maximum": 40,
+                          "multipleOf": 0.25
+                        },
+                        {
+                          "type": "number",
+                          "description": "y, in metres",
+                          "minimum": -40,
+                          "maximum": 40,
+                          "multipleOf": 0.25
+                        },
+                        {
+                          "type": "number",
+                          "description": "z, in metres",
+                          "minimum": -40,
+                          "maximum": 40,
+                          "multipleOf": 0.25
+                        }
+                      ],
+                      "items": false,
+                      "minItems": 3,
+                      "maxItems": 3
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": ["count", "step"]
+                },
+                "about": {
+                  "type": "string",
+                  "description": "What it is and what it's for, for people and agents: one or two sentences.",
+                  "minLength": 1,
+                  "maxLength": 400
+                }
+              },
+              "additionalProperties": false,
+              "required": ["at", "to"]
+            },
+            "minItems": 0,
+            "maxItems": 40
+          },
+          "zones": {
+            "type": "object",
+            "description": "Special places on the map.",
+            "properties": {
+              "flags": {
+                "type": "object",
+                "description": "Capture the flag: where each team's flag stands, on a pad nothing breaks. Red's base is at the west end, Blue's at the east.",
+                "properties": {
+                  "red": {
+                    "type": "array",
+                    "description": "Where someone stands: [x, y, z] of their feet, in metres, inside the arena (-36 to 36 on x and z), on the floor (y = 0) or on something (y in half metres, on top of a cell).",
+                    "prefixItems": [
+                      {
+                        "type": "number",
+                        "description": "x (west to east), in metres",
+                        "minimum": -36,
+                        "maximum": 36,
+                        "multipleOf": 0.25
+                      },
+                      {
+                        "type": "number",
+                        "description": "y (up), in metres",
+                        "minimum": -1,
+                        "maximum": 18,
+                        "multipleOf": 0.5
+                      },
+                      {
+                        "type": "number",
+                        "description": "z (north to south), in metres",
+                        "minimum": -36,
+                        "maximum": 36,
+                        "multipleOf": 0.25
+                      }
+                    ],
+                    "items": false,
+                    "minItems": 3,
+                    "maxItems": 3
+                  },
+                  "blue": {
+                    "type": "array",
+                    "description": "Where someone stands: [x, y, z] of their feet, in metres, inside the arena (-36 to 36 on x and z), on the floor (y = 0) or on something (y in half metres, on top of a cell).",
+                    "prefixItems": [
+                      {
+                        "type": "number",
+                        "description": "x (west to east), in metres",
+                        "minimum": -36,
+                        "maximum": 36,
+                        "multipleOf": 0.25
+                      },
+                      {
+                        "type": "number",
+                        "description": "y (up), in metres",
+                        "minimum": -1,
+                        "maximum": 18,
+                        "multipleOf": 0.5
+                      },
+                      {
+                        "type": "number",
+                        "description": "z (north to south), in metres",
+                        "minimum": -36,
+                        "maximum": 36,
+                        "multipleOf": 0.25
+                      }
+                    ],
+                    "items": false,
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                },
+                "additionalProperties": false,
+                "required": ["red", "blue"]
+              },
+              "pedestal": {
+                "type": "array",
+                "description": "Where the powerups appear: [x, y, z]. Leave it out for none.",
+                "prefixItems": [
+                  {
+                    "type": "number",
+                    "description": "x (west to east), in metres",
+                    "minimum": -36,
+                    "maximum": 36,
+                    "multipleOf": 0.25
+                  },
+                  {
+                    "type": "number",
+                    "description": "y (up), in metres",
+                    "minimum": -1,
+                    "maximum": 18,
+                    "multipleOf": 0.5
+                  },
+                  {
+                    "type": "number",
+                    "description": "z (north to south), in metres",
+                    "minimum": -36,
+                    "maximum": 36,
+                    "multipleOf": 0.25
+                  }
+                ],
+                "items": false,
+                "minItems": 3,
+                "maxItems": 3
+              },
+              "pool": {
+                "type": "object",
+                "description": "Water in a basin, on a map with some: you wade and swim in it, and blow a hole in the basin and it runs out.",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "What it's called: the canal, the pond.",
+                    "minLength": 1,
+                    "maxLength": 40
+                  },
+                  "min": {
+                    "type": "array",
+                    "description": "The water's lowest corner when it's full: [x, y, z].",
+                    "prefixItems": [
+                      { "type": "number", "description": "x, in metres", "minimum": -36, "maximum": 36 },
+                      { "type": "number", "description": "y, in metres", "minimum": -1, "maximum": 18 },
+                      { "type": "number", "description": "z, in metres", "minimum": -36, "maximum": 36 }
+                    ],
+                    "items": false,
+                    "minItems": 3,
+                    "maxItems": 3
+                  },
+                  "max": {
+                    "type": "array",
+                    "description": "The water's highest corner when it's full: [x, y, z].",
+                    "prefixItems": [
+                      { "type": "number", "description": "x, in metres", "minimum": -36, "maximum": 36 },
+                      { "type": "number", "description": "y, in metres", "minimum": -1, "maximum": 18 },
+                      { "type": "number", "description": "z, in metres", "minimum": -36, "maximum": 36 }
+                    ],
+                    "items": false,
+                    "minItems": 3,
+                    "maxItems": 3
+                  },
+                  "basin": {
+                    "type": "object",
+                    "description": "The basin it's in, up to its rim.",
+                    "properties": {
+                      "min": {
+                        "type": "array",
+                        "description": "Its lowest corner.",
+                        "prefixItems": [
+                          { "type": "number", "description": "x, in metres", "minimum": -38, "maximum": 38 },
+                          { "type": "number", "description": "y, in metres", "minimum": -1, "maximum": 18 },
+                          { "type": "number", "description": "z, in metres", "minimum": -38, "maximum": 38 }
+                        ],
+                        "items": false,
+                        "minItems": 3,
+                        "maxItems": 3
+                      },
+                      "max": {
+                        "type": "array",
+                        "description": "Its highest corner.",
+                        "prefixItems": [
+                          { "type": "number", "description": "x, in metres", "minimum": -38, "maximum": 38 },
+                          { "type": "number", "description": "y, in metres", "minimum": -1, "maximum": 18 },
+                          { "type": "number", "description": "z, in metres", "minimum": -38, "maximum": 38 }
+                        ],
+                        "items": false,
+                        "minItems": 3,
+                        "maxItems": 3
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": ["min", "max"]
+                  }
+                },
+                "additionalProperties": false,
+                "required": ["name", "min", "max", "basin"]
+              }
+            },
+            "additionalProperties": false,
+            "required": []
+          }
+        },
+        "additionalProperties": false,
+        "required": ["id", "name", "floor", "roof", "look", "parts", "spawns"]
+      },
+      "minItems": 1,
+      "maxItems": 12
+    }
+  },
+  "additionalProperties": false,
+  "required": ["layouts"]
+}

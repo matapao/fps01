@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sky.schema.json",
+  "title": "Sky",
+  "description": "The sky.",
+  "type": "object",
+  "properties": {
+    "planets": {
+      "type": "array",
+      "description": "The planets.",
+      "items": {
+        "type": "object",
+        "description": "A planet.",
+        "properties": {
+          "name": { "type": "string", "description": "What it's called.", "minLength": 1, "maxLength": 40 },
+          "dir": {
+            "type": "array",
+            "description": "Which way it is from the arena: [x, y, z] (made a unit vector).",
+            "prefixItems": [
+              { "type": "number", "description": "x, in metres", "minimum": -1, "maximum": 1 },
+              { "type": "number", "description": "y, in metres", "minimum": -1, "maximum": 1 },
+              { "type": "number", "description": "z, in metres", "minimum": -1, "maximum": 1 }
+            ],
+            "items": false,
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "size": {
+            "type": "number",
+            "description": "How big it looks: its angular radius, in radians.",
+            "minimum": 0.02,
+            "maximum": 0.4
+          },
+          "look": {
+            "type": "string",
+            "description": "What it looks like: a model from the asset catalogue.",
+            "enum": [
+              "sky/planet-ringed",
+              "sky/planet-rocky",
+              "sky/planet-icy",
+              "sky/planet-moon",
+              "sky/planet-violet"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "required": ["name", "dir", "size", "look"]
+      },
+      "minItems": 0,
+      "maxItems": 12
+    },
+    "debris": {
+      "type": "object",
+      "description": "A planet's pieces, when it blows up.",
+      "properties": {
+        "strikes": {
+          "type": "integer",
+          "description": "How many strike the arena.",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "radius": {
+          "type": "array",
+          "description": "How big a bit each chips off: [smallest, biggest], in metres.",
+          "prefixItems": [
+            { "type": "number", "description": "smallest, in metres", "minimum": 0.1, "maximum": 3 },
+            { "type": "number", "description": "biggest, in metres", "minimum": 0.1, "maximum": 3 }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "arriveMs": {
+          "type": "array",
+          "description": "How long after it blows up they strike: [first, last], in ms.",
+          "prefixItems": [
+            { "type": "number", "description": "first, in metres", "minimum": 0, "maximum": 20000 },
+            { "type": "number", "description": "last, in metres", "minimum": 0, "maximum": 20000 }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        }
+      },
+      "additionalProperties": false,
+      "required": ["strikes", "radius", "arriveMs"]
+    }
+  },
+  "additionalProperties": false,
+  "required": ["planets", "debris"]
+}

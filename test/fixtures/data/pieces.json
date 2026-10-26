@@ -1,0 +1,191 @@
+{
+  "pieces": [
+    {
+      "id": "health",
+      "name": "+25 health",
+      "about": "A white box with a red cross, turning over a ring: +25 health, up to 100.",
+      "asset": "pickups/health",
+      "color": "#f4f6fa",
+      "sound": "sounds/pickup-health",
+      "components": [{ "type": "pickup", "gives": "health", "amount": 25, "cap": 100, "respawnMs": 20000 }]
+    },
+    {
+      "id": "armor",
+      "name": "+50 armor",
+      "about": "A yellow shard: +50 armor, up to 150. Armor takes two thirds of the damage you take, while it lasts.",
+      "asset": "pickups/armor",
+      "color": "#ffc933",
+      "sound": "sounds/pickup-armor",
+      "components": [{ "type": "pickup", "gives": "armor", "amount": 50, "cap": 150, "respawnMs": 25000 }]
+    },
+    {
+      "id": "orb",
+      "name": "Health Orb",
+      "about": "A blue sphere: +100 health, up to 200. The radar shows when it comes back.",
+      "asset": "pickups/orb",
+      "color": "#3d7bff",
+      "sound": "sounds/pickup-orb",
+      "components": [
+        { "type": "pickup", "gives": "health", "amount": 100, "cap": 200, "respawnMs": 35000, "warnMs": 3000 }
+      ]
+    },
+    {
+      "id": "weapon-launcher",
+      "name": "Grenade launcher",
+      "about": "The grenade launcher on its pad, with a full load. One you have already tops you up.",
+      "asset": "pickups/weapon",
+      "color": "#5fa83f",
+      "sound": "sounds/pickup-weapon",
+      "components": [{ "type": "pickup", "gives": "weapon", "weapon": "launcher", "respawnMs": 10000 }]
+    },
+    {
+      "id": "weapon-rocket",
+      "name": "Rocket launcher",
+      "about": "The rocket launcher on its pad, with a full load. One you have already tops you up.",
+      "asset": "pickups/weapon",
+      "color": "#e8452c",
+      "sound": "sounds/pickup-weapon",
+      "components": [{ "type": "pickup", "gives": "weapon", "weapon": "rocket", "respawnMs": 10000 }]
+    },
+    {
+      "id": "weapon-spark",
+      "name": "Spark gun",
+      "about": "The spark gun on its pad, with a full load. One you have already tops you up.",
+      "asset": "pickups/weapon",
+      "color": "#6fd3ff",
+      "sound": "sounds/pickup-weapon",
+      "components": [{ "type": "pickup", "gives": "weapon", "weapon": "spark", "respawnMs": 10000 }]
+    },
+    {
+      "id": "weapon-rail",
+      "name": "Railgun",
+      "about": "The railgun on its pad, with a full load. One you have already tops you up.",
+      "asset": "pickups/weapon",
+      "color": "#7dff5a",
+      "sound": "sounds/pickup-weapon",
+      "components": [{ "type": "pickup", "gives": "weapon", "weapon": "rail", "respawnMs": 10000 }]
+    },
+    {
+      "id": "jump-pad",
+      "name": "Jump pad",
+      "about": "A glowing ring, 2 m across, with a column of light over it: it throws whoever steps on it onto the spot its placement names. Nothing breaks it.",
+      "asset": "props/jump-pad",
+      "color": "#2fd0ff",
+      "sound": "sounds/pad",
+      "components": [{ "type": "jumpPad", "clear": 1.5 }]
+    },
+    {
+      "id": "crate",
+      "name": "Crate",
+      "about": "A wooden crate, 2 m on a side. Three bullets break each half-metre of it off.",
+      "cells": [{ "type": "block", "at": [0, 0, 0], "size": [2, 2, 2], "m": "crate" }]
+    },
+    {
+      "id": "low-crate",
+      "name": "Low crate",
+      "about": "A crate 2 m across and 1 m high: you jump onto it.",
+      "cells": [{ "type": "block", "at": [0, 0, 0], "size": [2, 1, 2], "m": "crate" }]
+    },
+    {
+      "id": "box",
+      "name": "Box",
+      "about": "A dark wooden box, 1 m on a side: you jump onto it.",
+      "cells": [{ "type": "block", "at": [0, 0, 0], "size": [1, 1, 1], "m": "box" }]
+    },
+    {
+      "id": "barrier",
+      "name": "Barrier",
+      "about": "A concrete barrier, 4 m long, waist high: cover to crouch behind.",
+      "cells": [{ "type": "block", "at": [0, 0, 0], "size": [4, 1, 0.5], "m": "concrete" }]
+    },
+    {
+      "id": "cover-wall",
+      "name": "Cover wall",
+      "about": "A brick wall, 3 m long and 2 m high: cover to stand behind.",
+      "cells": [{ "type": "block", "at": [0, 0, 0], "size": [3, 2, 0.5], "m": "brick" }]
+    },
+    {
+      "id": "sleepers",
+      "name": "Stack of sleepers",
+      "about": "Railway sleepers in a stack, 4 by 2 m and 1.5 m high, a step on top.",
+      "cells": [
+        { "type": "block", "at": [0, 0, 0], "size": [4, 1, 2], "m": "wood" },
+        { "type": "block", "at": [0, 1, 0], "size": [2, 0.5, 2], "m": "wood" }
+      ]
+    },
+    {
+      "id": "bench",
+      "name": "Bench",
+      "about": "A wooden bench, 2 m long.",
+      "cells": [{ "type": "block", "at": [0, 0, 0], "size": [2, 0.5, 1], "m": "wood" }]
+    },
+    {
+      "id": "lamp-post",
+      "name": "Lamp post",
+      "about": "A steel post, 3 m high.",
+      "cells": [{ "type": "block", "at": [0, 0, 0], "size": [0.5, 3, 0.5], "m": "steel" }]
+    },
+    {
+      "id": "planter",
+      "name": "Planter",
+      "about": "A hedge in a square, 2 m across and 1 m high.",
+      "cells": [{ "type": "block", "at": [0, 0, 0], "size": [2, 1, 2], "m": "hedge" }]
+    },
+    {
+      "id": "haystack",
+      "name": "Haystack",
+      "about": "Hay in two tiers, 3 m across: one hit takes each bit off, and blown loose it falls in heaps.",
+      "cells": [
+        { "type": "tiers", "at": [0, 0, 0], "m": "hay", "layers": [{ "size": [3, 1, 3] }, { "size": [2, 1, 2] }] }
+      ]
+    },
+    {
+      "id": "boulder",
+      "name": "Boulder",
+      "about": "A rock in two tiers, 3 by 2 m and 2 m high.",
+      "cells": [
+        { "type": "tiers", "at": [0, 0, 0], "m": "rock", "layers": [{ "size": [3, 1, 2] }, { "size": [2, 1, 1] }] }
+      ]
+    },
+    {
+      "id": "tree",
+      "name": "Tree",
+      "about": "A trunk 1 m thick and 4 m high under a crown of leaves in three tiers. Cut through the trunk and the top falls.",
+      "cells": [
+        { "type": "block", "at": [0, 0, 0], "size": [1, 4, 1], "m": "bark" },
+        {
+          "type": "tiers",
+          "at": [0, 3.5, 0],
+          "m": "foliage",
+          "layers": [{ "size": [5, 1, 5] }, { "size": [4, 1, 4] }, { "size": [2, 0.5, 2] }]
+        }
+      ]
+    },
+    {
+      "id": "tall-tree",
+      "name": "Tall tree",
+      "about": "A tree with a trunk 5 m high.",
+      "cells": [
+        { "type": "block", "at": [0, 0, 0], "size": [1, 5, 1], "m": "bark" },
+        {
+          "type": "tiers",
+          "at": [0, 4.5, 0],
+          "m": "foliage",
+          "layers": [{ "size": [5, 1, 5] }, { "size": [4, 1, 4] }, { "size": [2, 0.5, 2] }]
+        }
+      ]
+    },
+    {
+      "id": "doorway",
+      "name": "Doorway",
+      "about": "A hole 2 m wide and 2.5 m high through a wall half a metre thick: place it on the wall, after the wall.",
+      "cells": [{ "type": "hole", "at": [0, 0, 0], "size": [2, 2.5, 0.5] }]
+    },
+    {
+      "id": "window",
+      "name": "Window",
+      "about": "A hole 2 m wide and 1 m high, 1.5 m up a wall half a metre thick: place it on the wall, after the wall.",
+      "cells": [{ "type": "hole", "at": [0, 1.5, 0], "size": [2, 1, 0.5] }]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "planets": [
+    { "name": "the ringed planet", "dir": [0.62, 0.18, -0.76], "size": 0.15, "look": "sky/planet-ringed" },
+    { "name": "the red planet", "dir": [-0.72, 0.07, -0.69], "size": 0.09, "look": "sky/planet-rocky" },
+    { "name": "the ice planet", "dir": [-0.86, 0.1, 0.5], "size": 0.1, "look": "sky/planet-icy" },
+    { "name": "the green planet", "dir": [0.55, 0.14, 0.82], "size": 0.08, "look": "sky/planet-moon" },
+    { "name": "the violet planet", "dir": [0.12, 0.98, -0.16], "size": 0.12, "look": "sky/planet-violet" }
+  ],
+  "debris": { "strikes": 24, "radius": [0.6, 1.1], "arriveMs": [1200, 3600] }
+}

@@ -1,0 +1,18 @@
+{
+  "extends": "./docs/engineering/tsconfig.portable.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "resolveJsonModule": true,
+    "types": [],
+    "paths": {
+      "/shared/*": ["./shared/*"],
+      "/zirbel-net.js": ["./src/agent/zirbel-net.d.ts"],
+      "/three.js": ["./node_modules/@types/three/index.d.ts"]
+    },
+    "module": "ESNext",
+    "moduleResolution": "Bundler"
+  },
+  "include": ["public/js/**/*.js", "zirbel/**/*.js"]
+}

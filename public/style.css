@@ -1,0 +1,1420 @@
+:root {
+  --ink: #f4f6fa;
+  --muted: #a9b2c1;
+  --panel: rgb(14 18 25 / 0.8);
+  --line: rgb(255 255 255 / 0.12);
+  --accent: #ff8a2a;
+  --danger: #ff4d4d;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  /* Keeps HUD text readable over bright floors and walls. */
+  --hud-shadow: 0 0 2px rgb(0 0 0 / 0.9), 0 1px 3px rgb(0 0 0 / 0.8), 0 2px 10px rgb(0 0 0 / 0.5);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #0d1117;
+  color: var(--ink);
+  font: 15px/1.4 var(--font);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+#game {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* In-game HUD */
+
+.hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.crosshair,
+.hitmarker {
+  --top: linear-gradient(currentColor, currentColor) center top / 2px 7px no-repeat;
+  --bottom: linear-gradient(currentColor, currentColor) center bottom / 2px 7px no-repeat;
+  --left: linear-gradient(currentColor, currentColor) left center / 7px 2px no-repeat;
+  --right: linear-gradient(currentColor, currentColor) right center / 7px 2px no-repeat;
+  --dot: radial-gradient(circle, currentColor 0 1.6px, transparent 2.3px) center / 8px 8px no-repeat;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  filter: drop-shadow(0 0 1px rgb(0 0 0 / 0.9));
+}
+
+.hitmarker {
+  background: var(--top), var(--bottom), var(--left), var(--right);
+}
+
+/* The crosshair's shapes. Its size is the cone your shots land in, unless you keep it still. */
+.crosshair {
+  width: 22px;
+  height: 22px;
+  color: var(--ink);
+  transition:
+    width 60ms linear,
+    height 60ms linear;
+}
+
+.crosshair.cross {
+  background: var(--top), var(--bottom), var(--left), var(--right);
+}
+
+.crosshair.cross-dot {
+  background: var(--top), var(--bottom), var(--left), var(--right), var(--dot);
+}
+
+.crosshair.dot {
+  background: var(--dot);
+}
+
+.crosshair.circle {
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: var(--dot);
+}
+
+.crosshair.t {
+  background: var(--bottom), var(--left), var(--right);
+}
+
+.hitmarker {
+  width: 30px;
+  height: 30px;
+  rotate: 45deg;
+  color: var(--ink);
+  opacity: 0;
+}
+
+.hitmarker.head {
+  color: var(--danger);
+}
+
+.hitmarker.show {
+  animation: flash 180ms ease-out;
+}
+
+.damage {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgb(255 40 40 / 0.55));
+  opacity: 0;
+}
+
+.damage.show {
+  animation: flash 450ms ease-out;
+}
+
+@keyframes flash {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.weapon {
+  position: absolute;
+  right: 24px;
+  bottom: 20px;
+  margin: 0;
+  text-align: right;
+  text-shadow: var(--hud-shadow);
+}
+
+.weapon p {
+  margin: 0;
+}
+
+.weapon-name {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.weapon-ammo {
+  color: var(--accent);
+  font: 700 26px/1.2 var(--mono);
+  letter-spacing: 0.08em;
+}
+
+.weapon-ammo.empty {
+  color: var(--danger);
+}
+
+.slots {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  translate: -50% 0;
+  list-style: none;
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px 3px 4px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.slot kbd {
+  padding: 0 4px;
+  border-radius: 3px;
+  background: rgb(255 255 255 / 0.1);
+  font: 700 11px var(--mono);
+}
+
+.slot b {
+  color: var(--ink);
+  font: 700 12px var(--mono);
+}
+
+.slot.current {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.slot.missing {
+  opacity: 0.35;
+}
+
+/* Your trick item, on F. */
+.slot.trick kbd {
+  background: rgb(255 138 42 / 0.3);
+}
+
+/* The railgun's charge, under the crosshair. */
+.charge {
+  position: absolute;
+  top: calc(50% + 22px);
+  left: 50%;
+  width: 60px;
+  height: 4px;
+  translate: -50% 0;
+  border-radius: 2px;
+  background: rgb(255 255 255 / 0.2);
+}
+
+.charge i {
+  display: block;
+  width: calc(var(--charge, 0) * 100%);
+  height: 100%;
+  border-radius: 2px;
+  background: #7dff5a;
+}
+
+.charge.full i {
+  box-shadow: 0 0 8px #7dff5a;
+}
+
+/* A powerup you're carrying, and how long it has left. */
+.powerup {
+  position: absolute;
+  left: 24px;
+  bottom: 106px;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 4px 12px;
+  border-radius: 7px;
+  background: var(--panel);
+  color: var(--powerup, #fff);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px var(--powerup, #fff);
+}
+
+.powerup b {
+  color: var(--ink);
+  font-family: var(--mono);
+  text-shadow: none;
+}
+
+/* Steering a pilot missile, or a woolly on the run: what the click does now. */
+.guide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: end center;
+  padding-bottom: 120px;
+}
+
+.guide p {
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: var(--panel);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.guide.pilot {
+  box-shadow:
+    inset 0 0 0 3px rgb(120 255 140 / 0.6),
+    inset 0 0 160px rgb(40 255 90 / 0.35);
+  background: repeating-linear-gradient(transparent 0 3px, rgb(0 40 10 / 0.12) 3px 4px);
+}
+
+/* The air strike's map. */
+.strike {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  translate: -50% -50%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgb(14 18 25 / 0.92);
+  pointer-events: none;
+}
+
+.strike p {
+  margin: 0;
+}
+
+.strike-title {
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.strike-help {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.strike canvas {
+  width: min(492px, 70vh);
+  height: min(492px, 70vh);
+  border-radius: 6px;
+  image-rendering: pixelated;
+}
+
+/* Tints over the whole view. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Under water: blue and murky at the edges. */
+.overlay.water {
+  background: radial-gradient(ellipse at center, rgb(40 140 220 / 0.18) 30%, rgb(5 40 90 / 0.6));
+}
+
+.slot.empty b {
+  color: var(--danger);
+}
+
+.notice {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  margin: 0;
+  padding: 6px 14px;
+  translate: -50% 0;
+  border-radius: 8px;
+  background: var(--panel);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* A brief first-use lesson, near the aim point without covering it or the weapon bar. */
+.weapon-tip {
+  position: absolute;
+  top: calc(50% + 72px);
+  left: 50%;
+  translate: -50% 0;
+  width: min(440px, calc(100% - 28px));
+  padding: 12px 16px;
+  border: 1px solid rgb(255 255 255 / 0.25);
+  border-top: 3px solid var(--accent);
+  border-radius: 8px;
+  background: rgb(10 15 22 / 0.95);
+  box-shadow: 0 4px 24px rgb(0 0 0 / 0.3);
+  color: var(--ink);
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.weapon-tip h2 {
+  margin: 0 0 5px;
+  color: #ffad66;
+  font-size: 16px;
+}
+.weapon-tip p {
+  margin: 3px 0;
+}
+.weapon-tip .weapon-tip-extra {
+  margin-top: 7px;
+  color: #cfebff;
+}
+/* Keep lessons below the radar on a phone held upright. */
+@media (orientation: portrait) {
+  [data-input='touch'] .weapon-tip {
+    top: max(128px, calc(env(safe-area-inset-top) + 118px));
+  }
+}
+/* Short screens need a compact card above the crosshair, between the thumb controls. */
+@media (max-height: 500px) {
+  .weapon-tip {
+    top: max(48px, calc(env(safe-area-inset-top) + 38px));
+    width: min(560px, calc(100% - 240px));
+    padding: 6px 12px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3px 12px;
+    font-size: 12px;
+  }
+  .weapon-tip h2 {
+    margin: 0;
+    font-size: 14px;
+  }
+  .weapon-tip p,
+  .weapon-tip .weapon-tip-extra {
+    margin: 0;
+  }
+  #weapon-tip-secondary,
+  #weapon-tip-extra {
+    grid-column: 1 / -1;
+  }
+}
+
+/* The bar at the top: what the round is played to, and how it stands. */
+.match {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 5px 14px;
+  translate: -50% 0;
+  border-radius: 8px;
+  background: var(--panel);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.match:empty {
+  display: none;
+}
+
+.match-goal {
+  color: var(--muted);
+}
+
+.match-team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.match-team.blue {
+  flex-direction: row-reverse;
+}
+
+.match-team.red .match-name,
+.match-team.red .match-flag {
+  color: #ff7b72;
+}
+
+.match-team.blue .match-name,
+.match-team.blue .match-flag {
+  color: #79b4ff;
+}
+
+.match-score {
+  font: 800 20px var(--mono);
+}
+
+.match-flag {
+  font-size: 12px;
+}
+
+.match-flag.carried {
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+.match-flag.dropped {
+  opacity: 0.6;
+}
+
+.match-clock {
+  color: var(--ink);
+  font: 700 14px var(--mono);
+}
+
+.match-clock.sudden {
+  color: var(--danger);
+  font-family: var(--font);
+  text-transform: uppercase;
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+.round-over {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  translate: -50% 0;
+  text-align: center;
+  text-shadow: 0 2px 10px rgb(0 0 0 / 0.7);
+}
+
+.round-over p {
+  margin: 0;
+}
+
+.round-title {
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.round-next {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.scoreboard-title {
+  margin: 0 0 10px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.prompt {
+  position: absolute;
+  top: calc(50% + 34px);
+  left: 50%;
+  margin: 0;
+  padding: 4px 10px;
+  translate: -50% 0;
+  border-radius: 6px;
+  background: var(--panel);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vitals {
+  position: absolute;
+  left: 24px;
+  bottom: 20px;
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+}
+
+.health,
+.armor {
+  margin: 0;
+  font: 700 44px/1 var(--mono);
+  font-variant-numeric: tabular-nums;
+  text-shadow: var(--hud-shadow);
+}
+
+.armor {
+  color: #ffd54d;
+  font-size: 30px;
+}
+
+.armor small {
+  margin-left: 6px;
+  color: var(--muted);
+  font: 600 14px var(--font);
+}
+
+.armor.none {
+  opacity: 0.6;
+}
+
+.health.over {
+  color: #7fb2ff;
+}
+
+.health small {
+  margin-left: 6px;
+  color: var(--muted);
+  font: 600 14px var(--font);
+}
+
+.health.low {
+  color: var(--danger);
+}
+
+.ping {
+  position: absolute;
+  left: 16px;
+  top: 12px;
+  margin: 0;
+  color: var(--muted);
+  font: 12px var(--mono);
+  text-shadow: 0 1px 4px rgb(0 0 0 / 0.6);
+}
+
+/* The radar, top right: what's round you, out to its range. On a phone it's smaller, and the
+   match line moves over to make room for it. */
+.radar {
+  position: absolute;
+  top: max(10px, env(safe-area-inset-top));
+  right: max(14px, calc(env(safe-area-inset-right) + 8px));
+  border-radius: 50%;
+  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.45));
+}
+
+.touch-device .match {
+  left: calc(50% - var(--radar, 0px) / 2 - 6px);
+  gap: 10px;
+  font-size: 12px;
+}
+
+.death {
+  position: absolute;
+  left: 50%;
+  top: 36%;
+  translate: -50% -50%;
+  padding: 14px 24px;
+  border-radius: 10px;
+  background: var(--panel);
+  text-align: center;
+}
+
+.death p {
+  margin: 0;
+}
+
+.death-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.death-timer {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.death-note {
+  color: #ffd27a;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.death-note:empty {
+  display: none;
+}
+
+/* Scoreboard (hold Tab) */
+
+.scoreboard {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: min(440px, calc(100% - 32px));
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  pointer-events: none;
+}
+
+.scoreboard.low {
+  top: auto;
+  bottom: 96px;
+  translate: -50% 0;
+}
+
+.scoreboard table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.scoreboard th {
+  padding: 0 0 8px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.scoreboard td {
+  padding: 7px 0;
+  border-top: 1px solid var(--line);
+}
+
+.scoreboard th:not(:first-child),
+.scoreboard td:not(:first-child) {
+  width: 4.5em;
+  text-align: right;
+}
+
+.scoreboard .me td {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 8px;
+  border-radius: 3px;
+}
+
+/* Update banner (top middle) */
+
+.update {
+  position: fixed;
+  top: 54px;
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100% - 32px);
+  padding: 6px 16px;
+  translate: -50% 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 0.35);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.update[data-mode='ready'] {
+  padding-right: 6px;
+  border-color: rgb(255 138 42 / 0.5);
+}
+
+.update[data-mode='ready']::before {
+  content: '';
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.update button {
+  flex: none;
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.update kbd {
+  margin-left: 4px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgb(0 0 0 / 0.18);
+  font: 700 11px var(--mono);
+}
+
+/* Menu */
+
+.menu {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  overflow-y: auto;
+  background: rgb(8 10 14 / 0.5);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.panel {
+  display: grid;
+  gap: 18px;
+  width: min(360px, 100%);
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.4);
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.browse,
+.paused,
+.pick,
+.settings {
+  display: grid;
+  gap: 8px;
+}
+
+.browse,
+.paused {
+  gap: 14px;
+}
+
+.label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Buttons: one primary action per menu, quieter ones around it. */
+button {
+  margin-top: 10px;
+  padding: 12px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #1a1006;
+  font: 800 16px var(--font);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+button.primary {
+  width: 100%;
+  margin: 0;
+  padding: 13px;
+  border-radius: 10px;
+}
+
+button.ghost {
+  margin: 0;
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: 600 13px var(--font);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+button.ghost:hover {
+  border-color: rgb(255 255 255 / 0.3);
+  filter: none;
+}
+
+button.link {
+  justify-self: center;
+  margin: -4px 0 0;
+  padding: 4px 8px;
+  background: none;
+  color: var(--muted);
+  font: 600 13px var(--font);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+button.link:hover {
+  color: var(--ink);
+  filter: none;
+}
+
+/* A question with a few answers: one row, the picked one lit. */
+.seg {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 0.06);
+}
+
+.seg button {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  padding: 8px 6px;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted);
+  font: 600 13px var(--font);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.seg button:hover {
+  color: var(--ink);
+  filter: none;
+}
+
+.seg button.current {
+  background: rgb(255 255 255 / 0.14);
+  color: var(--ink);
+}
+
+/* At a LAN party: the games on the server, and joining one by its code. */
+.games {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.games button {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 10px;
+  width: 100%;
+  margin: 0;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgb(255 255 255 / 0.05);
+  color: var(--ink);
+  font: 600 14px var(--font);
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: none;
+}
+
+.games button:hover {
+  border-color: rgb(255 255 255 / 0.3);
+  filter: none;
+}
+
+.games button.picked {
+  border-color: var(--accent);
+}
+
+.games b {
+  color: var(--muted);
+  font: 600 12px var(--mono);
+  letter-spacing: 0.1em;
+}
+
+.games small {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.none {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.code-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+}
+
+#code {
+  min-width: 0;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.06);
+  color: var(--ink);
+  font: 700 14px var(--mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* On zirbel: the game in this room, to join. */
+.room {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 0.06);
+  font-size: 14px;
+}
+
+.room span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* The pause menu: you first, then the game. */
+.in {
+  display: grid;
+  gap: 4px;
+}
+
+.you {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  font-size: 18px;
+}
+
+.you i {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 0.15);
+}
+
+.you b {
+  font-weight: 800;
+}
+
+.you span {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.about {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.settings .row {
+  display: grid;
+  grid-template-columns: 84px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.settings .row label {
+  color: inherit;
+}
+
+.settings output {
+  min-width: 2.2em;
+  color: var(--ink);
+  font: 600 12px var(--mono);
+  text-align: right;
+}
+
+input[type='range'],
+input[type='checkbox'] {
+  accent-color: var(--accent);
+}
+
+input[type='range'] {
+  width: 100%;
+  margin: 0;
+}
+
+.crosshair-pick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  min-width: 0;
+}
+
+select {
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: rgb(255 255 255 / 0.06);
+  color: var(--ink);
+  font: 13px var(--font);
+}
+
+select option {
+  background: #1b1f27;
+}
+
+.crosshair-preview {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgb(0 0 0 / 0.35);
+}
+
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+}
+
+label.check {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+label.check input {
+  margin: 0;
+}
+
+/* The controls, folded away until you want them. */
+.help summary {
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.help summary::-webkit-details-marker {
+  display: none;
+}
+
+.help summary::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 9px 2px 2px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.15s;
+}
+
+.help[open] summary::before {
+  transform: rotate(45deg);
+}
+
+.help summary:hover {
+  color: var(--ink);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px 12px;
+  margin: 10px 0 0;
+  font-size: 13px;
+}
+
+.controls dt {
+  justify-self: start;
+  align-self: start;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 0.08);
+  font: 600 12px var(--mono);
+}
+
+.controls dd {
+  align-self: center;
+  margin: 0;
+  color: var(--muted);
+}
+
+.share {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.share .code,
+.share .url {
+  color: var(--ink);
+  font: 600 12px var(--mono);
+  user-select: all;
+}
+
+.status {
+  margin: -4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.status.error {
+  color: var(--danger);
+}
+
+#code:focus-visible,
+button:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+input[type='checkbox']:focus-visible,
+input[type='range']:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.lan {
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.lan p {
+  margin: 0;
+}
+
+.lan-urls span {
+  display: block;
+  margin-top: 4px;
+  color: var(--ink);
+  font: 600 14px var(--mono);
+  user-select: all;
+}
+
+/* Touch controls: the left thumb moves, the right one looks, the buttons do the rest. */
+
+.touch {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* The stick waits low on the left, and comes to wherever the left thumb lands. */
+.touch .stick {
+  position: absolute;
+  left: max(96px, calc(env(safe-area-inset-left) + 80px));
+  top: calc(100% - 150px);
+  width: 120px;
+  height: 120px;
+  margin: -60px 0 0 -60px;
+  border: 2px solid rgb(255 255 255 / 0.22);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.05);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.touch .stick.on {
+  opacity: 1;
+}
+
+.touch .stick i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  margin: -26px 0 0 -26px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.35);
+}
+
+.touch button {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: 2px solid rgb(255 255 255 / 0.3);
+  border-radius: 50%;
+  background: rgb(14 18 25 / 0.35);
+  color: var(--ink);
+  font: 700 12px/1 var(--font);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: var(--hud-shadow);
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.touch button.on {
+  border-color: var(--accent);
+  background: rgb(255 138 42 / 0.5);
+}
+
+.touch .fire {
+  right: max(28px, calc(env(safe-area-inset-right) + 12px));
+  bottom: 76px;
+  width: 92px;
+  height: 92px;
+  font-size: 14px;
+}
+
+.touch .jump {
+  right: max(140px, calc(env(safe-area-inset-right) + 124px));
+  bottom: 36px;
+}
+
+.touch .hook {
+  right: max(44px, calc(env(safe-area-inset-right) + 28px));
+  bottom: 186px;
+  width: 58px;
+  height: 58px;
+}
+
+.touch .next {
+  right: max(140px, calc(env(safe-area-inset-right) + 124px));
+  bottom: 122px;
+  width: 54px;
+  height: 54px;
+}
+
+/* Under the ping, clear of the match line at the top. */
+.touch .pause {
+  left: max(12px, env(safe-area-inset-left));
+  top: 32px;
+  width: 44px;
+  height: 44px;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+/* Keep the weapon name below the Jump button, beside its ammo. */
+[data-input='touch'] .weapon {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+[data-input='touch'] .weapon-name {
+  font-size: 11px;
+  line-height: 1;
+}
+@media (max-width: 760px) {
+  .slots {
+    display: none;
+  }
+  .vitals {
+    left: 12px;
+    gap: 8px;
+  }
+  .health {
+    font-size: 32px;
+  }
+  .armor {
+    font-size: 20px;
+  }
+  .armor small {
+    font-size: 11px;
+  }
+  .weapon {
+    right: 12px;
+  }
+}
+
+/* On a phone the weapon line keeps to what you have, so it stays clear of your health and the buttons. */
+.touch-device .slot.missing {
+  display: none;
+}
+
+@media (orientation: portrait) {
+  .touch-device .slots {
+    display: none;
+  }
+}
+
+.touch .turn {
+  position: absolute;
+  left: 50%;
+  top: max(128px, calc(env(safe-area-inset-top) + 118px));
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 13px;
+  white-space: nowrap;
+  translate: -50% 0;
+  pointer-events: none;
+}
+
+body:has(.weapon-tip:not([hidden])) .touch .turn {
+  display: none;
+}
+
+@media (orientation: landscape) {
+  .touch .turn {
+    display: none;
+  }
+}
+
+/* Keep the radar above Hook when a browser leaves very little vertical space. */
+@media (max-height: 350px) {
+  .touch-device .radar {
+    max-width: 64px;
+    max-height: 64px;
+  }
+}
+@media (orientation: portrait) and (max-width: 760px) {
+  .touch-device .match {
+    left: 68px;
+    right: calc(var(--radar, 108px) + 24px);
+    translate: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px 8px;
+    padding: 5px 8px;
+    font-size: 11px;
+    white-space: normal;
+  }
+  .touch-device .match-goal {
+    grid-column: 1 / -1;
+  }
+  .touch-device .match-lead {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

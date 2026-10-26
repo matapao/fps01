@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hud.schema.json",
+  "title": "HUD",
+  "description": "The HUD.",
+  "type": "object",
+  "properties": {
+    "crosshair": {
+      "type": "object",
+      "description": "The crosshair players start with.",
+      "properties": {
+        "shape": {
+          "type": "string",
+          "description": "Its shape.",
+          "enum": ["cross", "cross-dot", "dot", "circle", "t"]
+        },
+        "color": { "type": "string", "description": "Its colour.", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "spread": { "type": "boolean", "description": "Whether it opens up to show how far shots can stray." }
+      },
+      "additionalProperties": false,
+      "required": ["shape", "color", "spread"]
+    },
+    "fov": {
+      "type": "number",
+      "description": "The field of view, in degrees.",
+      "minimum": 60,
+      "maximum": 100
+    },
+    "look": {
+      "type": "object",
+      "description": "How far the view turns per pixel moved, in radians, before the player's sensitivity.",
+      "properties": {
+        "mouse": { "type": "number", "description": "With a mouse.", "minimum": 0.0005, "maximum": 0.01 },
+        "touch": {
+          "type": "number",
+          "description": "With a finger: it travels less than a mouse.",
+          "minimum": 0.001,
+          "maximum": 0.02
+        }
+      },
+      "additionalProperties": false,
+      "required": ["mouse", "touch"]
+    },
+    "touch": {
+      "type": "object",
+      "description": "The touch stick, under the left thumb.",
+      "properties": {
+        "reach": {
+          "type": "integer",
+          "description": "How far its knob goes, in CSS pixels.",
+          "minimum": 30,
+          "maximum": 120
+        },
+        "dead": {
+          "type": "number",
+          "description": "The share of its reach a resting thumb can move without walking.",
+          "minimum": 0,
+          "maximum": 0.6
+        },
+        "side": {
+          "type": "number",
+          "description": "The share of the screen's width, from the left, where a touch takes the stick.",
+          "minimum": 0.2,
+          "maximum": 0.6
+        }
+      },
+      "additionalProperties": false,
+      "required": ["reach", "dead", "side"]
+    },
+    "ping": { "type": "boolean", "description": "Whether the round trip to the host shows in the corner." },
+    "pad": {
+      "type": "object",
+      "description": "A gamepad: how fast its right stick turns the view, and how it feels. Optional: these are the numbers without it.",
+      "properties": {
+        "look": {
+          "type": "number",
+          "description": "How fast the view turns with the right stick right over, in radians a second, before the player's sensitivity.",
+          "minimum": 0.5,
+          "maximum": 12
+        },
+        "dead": {
+          "type": "number",
+          "description": "The share of a stick's travel a resting stick may drift without moving you or the view.",
+          "minimum": 0,
+          "maximum": 0.5
+        },
+        "curve": {
+          "type": "number",
+          "description": "How the right stick's tilt turns into turning speed: 1 straight, more for finer aim near the middle.",
+          "minimum": 1,
+          "maximum": 3
+        }
+      },
+      "required": ["look", "dead", "curve"],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "required": ["crosshair", "fov", "look", "touch", "ping"]
+}

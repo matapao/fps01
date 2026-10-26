@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "loot.schema.json",
+  "title": "Loot",
+  "description": "The loot.",
+  "type": "object",
+  "properties": {
+    "powerups": {
+      "type": "object",
+      "description": "Powerups: one at a time on the pedestal; whoever takes it has it for a while, and drops it when they die.",
+      "properties": {
+        "firstMs": {
+          "type": "integer",
+          "description": "When the first appears after a round starts, in ms.",
+          "minimum": 0,
+          "maximum": 3600000
+        },
+        "everyMs": {
+          "type": "integer",
+          "description": "When the next appears after someone takes one, in ms.",
+          "minimum": 1000,
+          "maximum": 3600000
+        },
+        "warningMs": {
+          "type": "integer",
+          "description": "How long before one appears everyone sees it coming, in ms.",
+          "minimum": 0,
+          "maximum": 60000
+        },
+        "lastsMs": {
+          "type": "integer",
+          "description": "How long one lasts, in ms.",
+          "minimum": 1000,
+          "maximum": 300000
+        },
+        "droppedMs": {
+          "type": "integer",
+          "description": "How long one dropped by its dead carrier lies there, in ms.",
+          "minimum": 1000,
+          "maximum": 120000
+        },
+        "kinds": {
+          "type": "array",
+          "description": "The powerups: their names, colours and numbers. Which do what is the engine's.",
+          "items": {
+            "type": "object",
+            "description": "A powerup.",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Which: triple (more damage), rush (faster running and firing), mend (health back), shimmer (almost invisible), guard (no damage from blasts or fire, less from the rest), lift (hold jump to fly).",
+                "enum": ["triple", "rush", "mend", "shimmer", "guard", "lift"]
+              },
+              "name": {
+                "type": "string",
+                "description": "What it's called.",
+                "minLength": 1,
+                "maxLength": 30
+              },
+              "color": {
+                "type": "string",
+                "description": "Its colour: its glow, its gem, its radar blip.",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "damage": {
+                "type": "number",
+                "description": "triple: how many times the damage.",
+                "minimum": 1,
+                "maximum": 10
+              },
+              "speed": {
+                "type": "number",
+                "description": "rush: how much faster.",
+                "minimum": 1,
+                "maximum": 3
+              },
+              "perSecond": {
+                "type": "integer",
+                "description": "mend: health a second.",
+                "minimum": 1,
+                "maximum": 50
+              },
+              "cap": { "type": "integer", "description": "mend: up to.", "minimum": 10, "maximum": 400 },
+              "share": {
+                "type": "number",
+                "description": "guard: the share of damage you still take.",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "additionalProperties": false,
+            "required": ["id", "name", "color"]
+          },
+          "minItems": 1,
+          "maxItems": 6
+        }
+      },
+      "additionalProperties": false,
+      "required": ["firstMs", "everyMs", "warningMs", "lastsMs", "droppedMs", "kinds"]
+    },
+    "crates": {
+      "type": "object",
+      "description": "Crates: every so often one drifts down onto somewhere open, and the radar pings where.",
+      "properties": {
+        "firstMs": {
+          "type": "integer",
+          "description": "When the first comes after a round starts, in ms.",
+          "minimum": 0,
+          "maximum": 3600000
+        },
+        "everyMs": {
+          "type": "array",
+          "description": "How long between crates: [shortest, longest], in ms.",
+          "prefixItems": [
+            { "type": "number", "description": "shortest, in metres", "minimum": 1000, "maximum": 3600000 },
+            { "type": "number", "description": "longest, in metres", "minimum": 1000, "maximum": 3600000 }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "fallSpeed": {
+          "type": "number",
+          "description": "How fast it drifts down, in m/s.",
+          "minimum": 0.5,
+          "maximum": 20
+        },
+        "lastsMs": {
+          "type": "integer",
+          "description": "How long an untouched crate stays, in ms.",
+          "minimum": 1000,
+          "maximum": 600000
+        },
+        "reach": {
+          "type": "number",
+          "description": "How close you have to get to take it, in metres.",
+          "minimum": 0.5,
+          "maximum": 4
+        },
+        "dropHeight": {
+          "type": "number",
+          "description": "How far above where it lands it starts, in metres.",
+          "minimum": 2,
+          "maximum": 18
+        },
+        "items": {
+          "type": "array",
+          "description": "What can be in a crate, with how likely each is.",
+          "items": {
+            "type": "object",
+            "description": "What can be in a crate.",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Which: a special (one use, on key 7) or a health crate.",
+                "enum": ["woolly", "splitter", "choir", "airstrike", "pilot", "teleport", "health"]
+              },
+              "name": {
+                "type": "string",
+                "description": "What it's called.",
+                "minLength": 1,
+                "maxLength": 30
+              },
+              "chance": {
+                "type": "integer",
+                "description": "How likely, against the others.",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "about": {
+                "type": "string",
+                "description": "What it does, under the screen when you get it.",
+                "minLength": 1,
+                "maxLength": 120
+              },
+              "health": {
+                "type": "integer",
+                "description": "Health it gives (the health crate).",
+                "minimum": 1,
+                "maximum": 200
+              },
+              "cap": {
+                "type": "integer",
+                "description": "The most health it takes you up to.",
+                "minimum": 1,
+                "maximum": 400
+              }
+            },
+            "additionalProperties": false,
+            "required": ["id", "name", "chance", "about"]
+          },
+          "minItems": 1,
+          "maxItems": 7
+        }
+      },
+      "additionalProperties": false,
+      "required": ["firstMs", "everyMs", "fallSpeed", "lastsMs", "reach", "dropHeight", "items"]
+    },
+    "woolly": {
+      "type": "object",
+      "description": "The woolly: runs off the way you throw it, and goes off.",
+      "properties": {
+        "speed": {
+          "type": "number",
+          "description": "How fast it runs, in m/s.",
+          "minimum": 0.5,
+          "maximum": 15
+        },
+        "hop": { "type": "number", "description": "How high it hops, in m/s.", "minimum": 1, "maximum": 15 },
+        "ms": {
+          "type": "integer",
+          "description": "When it goes off by itself, in ms.",
+          "minimum": 1000,
+          "maximum": 30000
+        },
+        "blast": {
+          "type": "object",
+          "description": "The blast where it goes off: full damage at the centre, nothing at the radius; walls shield you.",
+          "properties": {
+            "damage": {
+              "type": "integer",
+              "description": "Damage at the centre.",
+              "minimum": 1,
+              "maximum": 400
+            },
+            "radius": {
+              "type": "number",
+              "description": "How far it reaches, in metres.",
+              "minimum": 0.5,
+              "maximum": 12
+            },
+            "hole": {
+              "type": "number",
+              "description": "The hole it tears, its radius in metres (0: none).",
+              "minimum": 0,
+              "maximum": 4
+            },
+            "push": {
+              "type": "number",
+              "description": "How hard it throws people and grenades, in m/s.",
+              "minimum": 0,
+              "maximum": 40
+            }
+          },
+          "additionalProperties": false,
+          "required": ["damage", "radius", "hole", "push"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["speed", "hop", "ms", "blast"]
+    },
+    "airstrike": {
+      "type": "object",
+      "description": "The air strike: missiles in a line across your view.",
+      "properties": {
+        "missiles": { "type": "integer", "description": "How many.", "minimum": 1, "maximum": 12 },
+        "spacing": {
+          "type": "number",
+          "description": "How far apart, in metres.",
+          "minimum": 0.5,
+          "maximum": 10
+        }
+      },
+      "additionalProperties": false,
+      "required": ["missiles", "spacing"]
+    },
+    "pilot": {
+      "type": "object",
+      "description": "The pilot missile: a slow missile you fly yourself.",
+      "properties": {
+        "turn": {
+          "type": "number",
+          "description": "How fast you can steer it, in radians a second.",
+          "minimum": 0.2,
+          "maximum": 10
+        }
+      },
+      "additionalProperties": false,
+      "required": ["turn"]
+    },
+    "teleport": {
+      "type": "object",
+      "description": "The teleport: puts you where you aim.",
+      "properties": {
+        "range": { "type": "number", "description": "How far, in metres.", "minimum": 5, "maximum": 120 }
+      },
+      "additionalProperties": false,
+      "required": ["range"]
+    }
+  },
+  "additionalProperties": false,
+  "required": ["powerups", "crates", "woolly", "airstrike", "pilot", "teleport"]
+}

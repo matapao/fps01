@@ -1,0 +1,512 @@
+{
+  "layouts": [
+    {
+      "id": "depot",
+      "name": "Depot",
+      "about": "Trains and engine sheds under a high roof, catwalks and footbridges 8 m up",
+      "floor": "asphalt",
+      "roof": {
+        "at": 15,
+        "m": "slate",
+        "skylights": [
+          { "at": [0, -10], "size": [44, 4] },
+          { "at": [0, 10], "size": [44, 4] },
+          { "at": [0, 0], "size": [8, 8] }
+        ]
+      },
+      "look": { "sky": "#ece6dc", "ground": "#6e6960", "sun": "#ffe8c8" },
+      "parts": [
+        {
+          "type": "group",
+          "about": "The tracks along z = ±10, from wall to wall: rails on a bed of ballast.",
+          "at": [0, 0, 10],
+          "mirror": "z",
+          "parts": [
+            { "type": "block", "at": [0, -0.5, 0], "size": [72, 0.5, 3], "m": "ballast" },
+            { "type": "block", "at": [0, -0.5, 0.75], "size": [72, 0.5, 0.5], "m": "rail", "mirror": "z" }
+          ]
+        },
+        {
+          "type": "group",
+          "about": "The platform between the tracks, 1 m up, a yellow line along both edges, steps up at both ends and in the middle of each side.",
+          "parts": [
+            { "type": "block", "at": [0, 0, 0], "size": [32, 1, 12], "m": "concrete" },
+            { "type": "block", "at": [0, 0.5, 5.75], "size": [32, 0.5, 0.5], "m": "yellow-line", "mirror": "z" },
+            {
+              "type": "stairs",
+              "at": [17, 0, 0],
+              "dir": "west",
+              "steps": 2,
+              "run": 0.5,
+              "rise": 0.5,
+              "width": 12,
+              "m": "concrete",
+              "mirror": "x"
+            },
+            {
+              "type": "stairs",
+              "at": [8, 0, 7],
+              "dir": "north",
+              "steps": 2,
+              "run": 0.5,
+              "rise": 0.5,
+              "width": 3,
+              "m": "concrete",
+              "mirror": "xz"
+            }
+          ]
+        },
+        {
+          "type": "prefab",
+          "id": "waiting-room",
+          "about": "A waiting room at each end of the platform.",
+          "at": [9.5, 1, 0],
+          "mirror": "x"
+        },
+        {
+          "type": "group",
+          "about": "Lamp posts and benches along the platform.",
+          "mirror": "xz",
+          "parts": [
+            { "type": "block", "at": [3.25, 1, 4.25], "size": [0.5, 3, 0.5], "m": "steel" },
+            { "type": "block", "at": [14.25, 1, 4.25], "size": [0.5, 3, 0.5], "m": "steel" },
+            { "type": "block", "at": [5.5, 1, 4.5], "size": [2, 0.5, 1], "m": "wood" }
+          ]
+        },
+        {
+          "type": "group",
+          "about": "The trains: a box wagon either side of the way across in the middle, and a tank wagon beyond each. Red wagons north-west and south-east.",
+          "mirror": "point",
+          "parts": [
+            { "type": "prefab", "id": "box-wagon", "at": [6.5, 0, 10] },
+            { "type": "prefab", "id": "tank-wagon", "at": [16.5, 0, 10] }
+          ]
+        },
+        {
+          "type": "group",
+          "about": "Green box wagons north-east and south-west.",
+          "mirror": "point",
+          "parts": [
+            { "type": "prefab", "id": "box-wagon", "at": [-6.5, 0, 10], "swap": { "wagon": "green-wagon" } },
+            { "type": "prefab", "id": "tank-wagon", "at": [-16.5, 0, 10] }
+          ]
+        },
+        {
+          "type": "prefab",
+          "id": "engine-shed",
+          "about": "Each team's base: an engine shed at its end of the tracks.",
+          "at": [31, 0, 0],
+          "mirror": "x"
+        },
+        {
+          "type": "prefab",
+          "id": "signal-box",
+          "about": "A signal box in the middle of each yard, its window onto the tracks.",
+          "at": [0, 0, 24],
+          "mirror": "z"
+        },
+        {
+          "type": "group",
+          "about": "Out in the yards: the gravel bunkers, stacks of sleepers, concrete barriers, crates, and a hut in each corner.",
+          "mirror": "xz",
+          "parts": [
+            { "type": "prefab", "id": "gravel-bunker", "at": [18, 0, 25] },
+            { "type": "block", "at": [9, 0, 16.5], "size": [4, 1, 2], "m": "wood" },
+            { "type": "block", "at": [9, 1, 16.5], "size": [2, 0.5, 2], "m": "wood" },
+            { "type": "block", "at": [23, 0, 17.25], "size": [4, 1, 0.5], "m": "concrete" },
+            { "type": "block", "at": [9, 0, 31.25], "size": [6, 1, 0.5], "m": "concrete" },
+            { "type": "block", "at": [13, 0, 21], "size": [2, 1, 2], "m": "crate" },
+            { "type": "block", "at": [26.75, 0, 23], "size": [0.5, 2, 6], "m": "brick" },
+            {
+              "type": "block",
+              "at": [27.5, 0, 15.5],
+              "size": [1, 1, 1],
+              "m": "tank",
+              "repeat": { "count": 3, "step": [1, 0, 0] }
+            },
+            { "type": "block", "at": [22, 0, 4], "size": [2, 2, 2], "m": "crate" },
+            { "type": "block", "at": [20.5, 0, 4.5], "size": [1, 1, 1], "m": "box" },
+            { "type": "block", "at": [30, 0, 19], "size": [2, 2, 2], "m": "crate" },
+            { "type": "block", "at": [28.5, 0, 19.5], "size": [1, 1, 1], "m": "box" },
+            { "type": "prefab", "id": "hut", "at": [33, 0, 30] }
+          ]
+        },
+        {
+          "type": "block",
+          "about": "The catwalks along the north and south edges, 8 m up.",
+          "at": [0, 7.5, 34.5],
+          "size": [64, 0.5, 3],
+          "m": "steel",
+          "mirror": "z"
+        },
+        {
+          "type": "block",
+          "about": "The footbridges across between them.",
+          "at": [14, 7.5, 0],
+          "size": [3, 0.5, 66],
+          "m": "steel",
+          "mirror": "x"
+        }
+      ],
+      "spawns": [
+        { "at": [33.5, 0, 1.5], "mirror": "x" },
+        { "at": [33.5, 0, -1.5], "mirror": "x" },
+        { "at": [28.5, 0, 0], "mirror": "x" },
+        { "at": [33.5, 0, 17], "mirror": "xz" },
+        { "at": [24, 0, 21], "mirror": "xz" },
+        { "at": [22, 0, 32], "mirror": "xz" },
+        { "at": [10, 0, 21], "mirror": "xz" },
+        { "at": [15, 0, 33], "mirror": "xz" }
+      ],
+      "pickups": [
+        { "piece": "orb", "at": [0, 0, -24], "mirror": "z" },
+        { "piece": "armor", "at": [9.5, 1, 0], "mirror": "x" },
+        { "piece": "health", "at": [23, 0, 13.5], "mirror": "xz" },
+        { "piece": "health", "at": [4, 0, 33], "mirror": "xz" },
+        { "piece": "weapon-rocket", "at": [16.25, 1, 0], "mirror": "x" },
+        { "piece": "weapon-launcher", "at": [31, 5.5, -4], "mirror": "point" },
+        { "piece": "weapon-rail", "at": [18, 6, 25], "mirror": "point" },
+        { "piece": "weapon-spark", "at": [22, 8, 34.5], "mirror": "point" }
+      ],
+      "pads": [
+        { "at": [7.5, 1, 4.5], "to": [7.5, 3.5, 10], "mirror": "xz" },
+        { "at": [24, 0, 30.5], "to": [24, 8, 34.5], "mirror": "xz" },
+        { "at": [20, 0, 6.5], "to": [29, 5.5, 6.5], "mirror": "point" }
+      ],
+      "zones": { "flags": { "red": [-31, 0, 0], "blue": [31, 0, 0] }, "pedestal": [0, 1, 0] }
+    },
+    {
+      "id": "canal",
+      "name": "Canal",
+      "about": "A canal town under a high roof: two-storey houses, bridges 8 m up between their roofs",
+      "floor": "cobbles",
+      "roof": {
+        "at": 13,
+        "m": "roof-tiles",
+        "skylights": [
+          { "at": [0, 0], "size": [8, 72] },
+          { "at": [30.5, 0], "size": [11, 16] },
+          { "at": [-30.5, 0], "size": [11, 16] }
+        ]
+      },
+      "look": { "sky": "#eef3ff", "ground": "#857a6c", "sun": "#fff1da" },
+      "parts": [
+        {
+          "type": "group",
+          "about": "The canal, north to south: its bottom, the quays either side of it 2 m high, a lock gate at each end.",
+          "parts": [
+            { "type": "block", "at": [0, -0.5, 0], "size": [8, 0.5, 72], "m": "canal-bed" },
+            { "type": "block", "at": [5.5, 0, 0], "size": [3, 2, 72], "m": "stone", "mirror": "x" },
+            {
+              "type": "group",
+              "mirror": "z",
+              "parts": [
+                { "type": "block", "at": [0, 0, 35.75], "size": [8, 2, 0.5], "m": "wood" },
+                { "type": "block", "at": [0, 0, 35.75], "size": [1, 3, 0.5], "m": "steel" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "prefab",
+          "id": "wide-bridge",
+          "about": "Three bridges cross the canal: the wide one in the middle, with the pedestal on it.",
+          "at": [0, 0, 0]
+        },
+        { "type": "prefab", "id": "bridge", "at": [0, 0, -22], "mirror": "z" },
+        {
+          "type": "group",
+          "about": "Steps up onto each quay from the street, and steps in the canal up out of the water.",
+          "mirror": "xz",
+          "parts": [
+            {
+              "type": "stairs",
+              "at": [9, 0, 12],
+              "dir": "west",
+              "steps": 4,
+              "run": 0.5,
+              "rise": 0.5,
+              "width": 3,
+              "m": "stone"
+            },
+            {
+              "type": "stairs",
+              "at": [2, 0, 12],
+              "dir": "east",
+              "steps": 4,
+              "run": 0.5,
+              "rise": 0.5,
+              "width": 2,
+              "m": "stone"
+            },
+            {
+              "type": "stairs",
+              "at": [9, 0, 31],
+              "dir": "west",
+              "steps": 4,
+              "run": 0.5,
+              "rise": 0.5,
+              "width": 3,
+              "m": "stone"
+            },
+            {
+              "type": "stairs",
+              "at": [2, 0, 31],
+              "dir": "east",
+              "steps": 4,
+              "run": 0.5,
+              "rise": 0.5,
+              "width": 2,
+              "m": "stone"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "about": "Boats along the quays.",
+          "mirror": "point",
+          "parts": [
+            { "type": "prefab", "id": "boat", "at": [2.5, 0, 7.5] },
+            { "type": "prefab", "id": "boat", "at": [-2.5, 0, 27] }
+          ]
+        },
+        {
+          "type": "prefab",
+          "id": "town-house",
+          "about": "The houses in the middle of each row.",
+          "at": [19, 0, 11.5],
+          "mirror": "xz"
+        },
+        {
+          "type": "prefab",
+          "id": "end-house",
+          "about": "The houses at the ends of the rows, against the north and south walls.",
+          "at": [19, 0, 30],
+          "mirror": "xz"
+        },
+        {
+          "type": "group",
+          "about": "Along the streets: lamp posts, benches and planters.",
+          "mirror": "xz",
+          "parts": [
+            { "type": "block", "at": [12.25, 0, 5.25], "size": [0.5, 3, 0.5], "m": "steel" },
+            { "type": "block", "at": [12.25, 0, 25.75], "size": [0.5, 3, 0.5], "m": "steel" },
+            { "type": "block", "at": [11.5, 0, 17], "size": [1, 0.5, 2], "m": "wood" },
+            { "type": "block", "at": [11, 0, 29], "size": [2, 1, 2], "m": "hedge" }
+          ]
+        },
+        {
+          "type": "group",
+          "about": "The squares at the ends of the town: market stalls, a fountain north and south of the flag, planters and barrels.",
+          "mirror": "xz",
+          "parts": [
+            { "type": "prefab", "id": "market-stall", "at": [29, 0, 8] },
+            { "type": "prefab", "id": "fountain", "at": [30, 0, 19] },
+            { "type": "prefab", "id": "market-stall", "at": [31, 0, 29] },
+            { "type": "block", "at": [34.5, 0, 13], "size": [3, 1, 2], "m": "hedge" },
+            { "type": "block", "at": [27, 0, 24.5], "size": [1, 1, 1], "m": "box" },
+            { "type": "block", "at": [35, 0, 35], "size": [2, 2, 2], "m": "crate" }
+          ]
+        },
+        {
+          "type": "prefab",
+          "id": "town-house-upper",
+          "about": "The middle houses go up a storey, with roofs 8 m up.",
+          "at": [19, 0, 11.5],
+          "mirror": "xz"
+        },
+        {
+          "type": "block",
+          "about": "The bridges between their roofs, over the canal.",
+          "at": [0, 7.5, 11.5],
+          "size": [26, 0.5, 3],
+          "m": "stone",
+          "mirror": "z"
+        },
+        {
+          "type": "group",
+          "about": "A tower in each square, too tall to climb: only the hook gets you up.",
+          "mirror": "point",
+          "parts": [
+            { "type": "block", "at": [32, 0, 24], "size": [4, 10, 4], "m": "stone" },
+            { "type": "block", "at": [32, 10, 24], "size": [5, 0.5, 5], "m": "stone" }
+          ]
+        }
+      ],
+      "spawns": [
+        { "at": [33, 0, 4.5], "mirror": "xz" },
+        { "at": [28, 0, 13], "mirror": "xz" },
+        { "at": [26.5, 0, 20], "mirror": "xz" },
+        { "at": [27, 0, 33], "mirror": "xz" },
+        { "at": [16, 0, 7], "mirror": "xz" },
+        { "at": [21, 0, 29], "mirror": "xz" },
+        { "at": [11, 0, 22], "mirror": "xz" }
+      ],
+      "pickups": [
+        { "piece": "orb", "at": [0, 0, 0] },
+        { "piece": "armor", "at": [21, 0, 17], "mirror": "point" },
+        { "piece": "health", "at": [18, 0, 8], "mirror": "point" },
+        { "piece": "health", "at": [-5.5, 2, 17], "mirror": "point" },
+        { "piece": "health", "at": [30, 0, 13], "mirror": "point" },
+        { "piece": "health", "at": [-18, 0, 30], "mirror": "point" },
+        { "piece": "weapon-rocket", "at": [0, 8, 11.5], "mirror": "z" },
+        { "piece": "weapon-rail", "at": [32, 10.5, 24], "mirror": "point" },
+        { "piece": "weapon-spark", "at": [21, 4, 8], "mirror": "point" },
+        { "piece": "weapon-launcher", "at": [5.5, 2, 28], "mirror": "point" }
+      ],
+      "pads": [
+        { "at": [31, 0, 12], "to": [22, 8, 12], "mirror": "xz" },
+        { "at": [8.5, 0, 15], "to": [16, 8, 15], "mirror": "xz" }
+      ],
+      "zones": {
+        "flags": { "red": [-31, 0, 0], "blue": [31, 0, 0] },
+        "pedestal": [0, 2.5, 0],
+        "pool": {
+          "name": "canal",
+          "min": [-4, 0, -35.5],
+          "max": [4, 1.75, 35.5],
+          "basin": { "min": [-7, -0.5, -36], "max": [7, 2, 36] }
+        }
+      }
+    },
+    {
+      "id": "fort",
+      "name": "Fort",
+      "about": "Two forts in a cavern 17 m high, a bridge 8 m up between their gatehouses",
+      "floor": "grass",
+      "roof": {
+        "at": 17,
+        "m": "rock",
+        "skylights": [
+          { "at": [0, 0], "size": [14, 10] },
+          { "at": [30, 0], "size": [12, 26] },
+          { "at": [-30, 0], "size": [12, 26] }
+        ]
+      },
+      "look": { "sky": "#eaf4e2", "ground": "#6f7b58", "sun": "#fff5dc" },
+      "parts": [
+        {
+          "type": "block",
+          "about": "A dirt road from gate to gate, through the chapel.",
+          "at": [0, -0.5, 0],
+          "size": [44, 0.5, 3],
+          "m": "dirt"
+        },
+        {
+          "type": "prefab",
+          "id": "fort",
+          "about": "Each team's fort, at its end of the field.",
+          "at": [0, 0, 0],
+          "mirror": "x"
+        },
+        {
+          "type": "prefab",
+          "id": "stable",
+          "about": "In each courtyard, a stable against each side wall.",
+          "at": [0, 0, 0],
+          "mirror": "xz"
+        },
+        {
+          "type": "group",
+          "about": "Barrels by the gates.",
+          "mirror": "xz",
+          "parts": [
+            { "type": "block", "at": [25.5, 0, 5.5], "size": [1, 1, 1], "m": "wood" },
+            { "type": "block", "at": [26.5, 0, 6.5], "size": [1, 1, 1], "m": "wood" }
+          ]
+        },
+        {
+          "type": "prefab",
+          "id": "chapel",
+          "about": "Between the forts, the ruined chapel, the pedestal on its altar.",
+          "at": [0, 0, 0]
+        },
+        {
+          "type": "group",
+          "about": "Out in the field: trees (cut through a trunk and the top falls), boulders, haystacks, hedges, field walls and wells.",
+          "mirror": "xz",
+          "parts": [
+            { "type": "piece", "id": "tree", "at": [13, 0, 9] },
+            { "type": "piece", "id": "tall-tree", "at": [18, 0, 27] },
+            { "type": "piece", "id": "tree", "at": [5, 0, 21] },
+            { "type": "piece", "id": "boulder", "at": [10, 0, 16] },
+            { "type": "piece", "id": "haystack", "at": [19, 0, 5] },
+            { "type": "block", "at": [15.25, 0, 19], "size": [0.5, 1.5, 8], "m": "hedge" },
+            { "type": "block", "at": [9, 0, 30.25], "size": [8, 1, 0.5], "m": "stone" },
+            { "type": "block", "at": [19, 0, 12.25], "size": [3, 1, 0.5], "m": "wood" },
+            { "type": "walls", "at": [9, 0, 9], "size": [3, 1, 3], "thick": 0.5, "m": "stone" },
+            { "type": "block", "at": [25, 0, 25], "size": [2, 1, 2], "m": "rock" },
+            { "type": "block", "at": [25, 1, 25], "size": [1, 1, 1], "m": "rock" }
+          ]
+        },
+        {
+          "type": "prefab",
+          "id": "shepherds-hut",
+          "about": "A shepherd's hut in each corner.",
+          "at": [31.5, 0, 30.5],
+          "mirror": "xz"
+        },
+        {
+          "type": "group",
+          "about": "A gatehouse over each gate, the gate through it and the walk running through it.",
+          "mirror": "x",
+          "parts": [
+            { "type": "block", "at": [23.5, 0, 0], "size": [3, 8, 8], "m": "stone" },
+            { "type": "hole", "at": [23.5, 0, 0], "size": [3, 2.5, 3] },
+            { "type": "hole", "at": [23, 3, 0], "size": [2, 2.5, 8] }
+          ]
+        },
+        {
+          "type": "block",
+          "about": "The bridge between the gatehouses, 8 m up.",
+          "at": [0, 7.5, 0],
+          "size": [44, 0.5, 3],
+          "m": "stone"
+        },
+        {
+          "type": "group",
+          "about": "A turret on the outer corner of each tower: only the hook gets you up.",
+          "mirror": "xz",
+          "parts": [
+            { "type": "block", "at": [23, 4.5, 15], "size": [2, 5, 2], "m": "stone" },
+            { "type": "block", "at": [23, 9.5, 15], "size": [3, 0.5, 3], "m": "stone" }
+          ]
+        },
+        {
+          "type": "block",
+          "about": "Ledges along the north and south edges.",
+          "at": [0, 7.5, 34.5],
+          "size": [50, 0.5, 3],
+          "m": "rock",
+          "mirror": "z"
+        }
+      ],
+      "spawns": [
+        { "at": [33.5, 0, 4.5], "mirror": "xz" },
+        { "at": [29, 0, 8.5], "mirror": "xz" },
+        { "at": [33, 0, 18], "mirror": "xz" },
+        { "at": [23, 0, 20], "mirror": "xz" },
+        { "at": [31.5, 0, 30.5], "mirror": "xz" },
+        { "at": [16, 0, 13], "mirror": "xz" },
+        { "at": [9, 0, 25], "mirror": "xz" }
+      ],
+      "pickups": [
+        { "piece": "orb", "at": [0, 0, 26], "mirror": "z" },
+        { "piece": "armor", "at": [24.5, 4.5, -13.5], "mirror": "point" },
+        { "piece": "health", "at": [33, 0, 9], "mirror": "point" },
+        { "piece": "health", "at": [13, 0, -13], "mirror": "point" },
+        { "piece": "health", "at": [-22, 0, 30], "mirror": "point" },
+        { "piece": "health", "at": [3, 0, 12], "mirror": "point" },
+        { "piece": "weapon-rocket", "at": [8, 8, 0], "mirror": "x" },
+        { "piece": "weapon-rail", "at": [23, 10, 15], "mirror": "point" },
+        { "piece": "weapon-spark", "at": [18, 8, 34.5], "mirror": "point" },
+        { "piece": "weapon-launcher", "at": [33, 0, -6], "mirror": "point" }
+      ],
+      "pads": [
+        { "at": [28, 0, 4], "to": [23.5, 8, 2.5], "mirror": "xz" },
+        { "at": [14, 0, 31], "to": [14, 8, 34.5], "mirror": "xz" }
+      ],
+      "zones": { "flags": { "red": [-31, 0, 0], "blue": [31, 0, 0] }, "pedestal": [0, 1, 0] }
+    }
+  ]
+}

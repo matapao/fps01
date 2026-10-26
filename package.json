@@ -1,0 +1,40 @@
+{
+  "name": "fps01",
+  "version": "0.3.2",
+  "private": true,
+  "description": "An arena shooter on maps built of boxes you can blow apart: for LAN parties, and for zirbel as fps01.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "node server/run.js",
+    "test": "node --test",
+    "check": "npm run check:standards && npm run format:check && npm run check:javascript && node tools/check.js",
+    "audit": "npm audit --audit-level=low",
+    "typecheck": "tsc --noEmit -p . && tsc -p tsconfig.checked-js.json && tsc -p tsconfig.checked-js.node.json && tsc -p tsconfig.checked-js.portable.json",
+    "zirbel": "node tools/build.js",
+    "format": "node docs/engineering/style.mjs --write",
+    "format:check": "node docs/engineering/style.mjs",
+    "check:standards": "node docs/engineering/check.mjs",
+    "verify": "npm run check",
+    "check:javascript": "node tools/check-javascript.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "three": "0.186.1",
+    "ws": "8.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "@types/three": "0.186.0",
+    "@types/ws": "8.18.2",
+    "esbuild": "0.28.2",
+    "prettier": "3.9.10",
+    "typescript": "7.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matapao/fps01.git"
+  }
+}

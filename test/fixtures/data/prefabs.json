@@ -1,0 +1,332 @@
+{
+  "prefabs": [
+    {
+      "id": "gravel-bunker",
+      "name": "Gravel bunker",
+      "about": "A steel bin full of gravel on four legs, its bottom 3 m up, 4 m across. Blow a hole in its bottom and the gravel pours down; blow its legs away and the whole thing comes down. Too tall to climb: the hook gets you up.",
+      "parts": [
+        { "type": "block", "at": [1.75, 0, 1.75], "size": [0.5, 3, 0.5], "m": "steel", "mirror": "xz" },
+        { "type": "block", "at": [0, 3, 0], "size": [4, 0.5, 4], "m": "steel" },
+        { "type": "walls", "at": [0, 3.5, 0], "size": [4, 2, 4], "thick": 0.5, "m": "steel" },
+        { "type": "block", "at": [0, 3.5, 0], "size": [3, 2, 3], "m": "gravel" },
+        { "type": "block", "at": [0, 5.5, 0], "size": [2, 0.5, 2], "m": "gravel" }
+      ]
+    },
+    {
+      "id": "waiting-room",
+      "name": "Waiting room",
+      "about": "A brick room 5 m square on the platform, a slate roof, doors onto both tracks (north and south), a window at each end, and a bench inside by its east end.",
+      "parts": [
+        { "type": "walls", "at": [0, 0, 0], "size": [5, 3, 5], "thick": 0.5, "m": "brick" },
+        { "type": "block", "at": [0, 3, 0], "size": [6, 0.5, 6], "m": "slate" },
+        { "type": "hole", "at": [0, 0, 2.25], "size": [2, 2.5, 0.5], "mirror": "z" },
+        { "type": "hole", "at": [2.25, 1, 0], "size": [0.5, 1, 2], "mirror": "x" },
+        { "type": "block", "at": [1.5, 0, 0], "size": [1, 0.5, 2], "m": "wood" }
+      ]
+    },
+    {
+      "id": "box-wagon",
+      "name": "Box wagon",
+      "about": "A box wagon on its chassis, 9 m long along x, its doors open on both sides (walk in one and out the other), and a flat roof 3.5 m up. Its paint is the material wagon: swap it for another.",
+      "parts": [
+        { "type": "block", "at": [0, 0, 0], "size": [9, 0.5, 3], "m": "steel" },
+        { "type": "walls", "at": [0, 0.5, 0], "size": [9, 2.5, 3], "thick": 0.5, "m": "wagon" },
+        { "type": "block", "at": [0, 3, 0], "size": [9, 0.5, 3], "m": "wagon" },
+        { "type": "hole", "at": [0, 0.5, 1.25], "size": [2, 2.5, 0.5], "mirror": "z" }
+      ]
+    },
+    {
+      "id": "tank-wagon",
+      "name": "Tank wagon",
+      "about": "A tank wagon, 8 m long along x: a rounded tank on a steel chassis, a hatch on top.",
+      "parts": [
+        { "type": "block", "at": [0, 0, 0], "size": [8, 0.5, 3], "m": "steel" },
+        { "type": "block", "at": [0, 0.5, 0], "size": [7, 0.5, 2], "m": "tank" },
+        { "type": "block", "at": [0, 1, 0], "size": [7, 1.5, 3], "m": "tank" },
+        { "type": "block", "at": [0, 2.5, 0], "size": [7, 0.5, 2], "m": "tank" },
+        { "type": "block", "at": [0, 3, 0], "size": [1, 0.5, 1], "m": "steel" }
+      ]
+    },
+    {
+      "id": "engine-shed",
+      "name": "Engine shed",
+      "about": "A brick shed 10 m deep (x) and 28 m wide (z), its open front facing west: big doors for the tracks at z = ±10, a door and two windows between them, a door out of each side. Inside, a shunting engine on each track, oil spilt in front of them (you slide on it), a workbench along the back. Its slate roof is 5.5 m up.",
+      "parts": [
+        { "type": "block", "at": [-4.75, 0, 0], "size": [0.5, 5, 28], "m": "brick" },
+        { "type": "block", "at": [4.75, 0, 0], "size": [0.5, 5, 28], "m": "brick" },
+        { "type": "block", "at": [0, 0, 13.75], "size": [10, 5, 0.5], "m": "brick", "mirror": "z" },
+        { "type": "block", "at": [0, 5, 0], "size": [10, 0.5, 28], "m": "slate" },
+        { "type": "hole", "at": [-4.75, 0, 10], "size": [0.5, 4, 4], "mirror": "z" },
+        { "type": "hole", "at": [-4.75, 0, 0], "size": [0.5, 2.5, 2] },
+        { "type": "hole", "at": [-4.75, 1.5, 4.5], "size": [0.5, 1, 2], "mirror": "z" },
+        { "type": "hole", "at": [0, 0, 13.75], "size": [2, 2.5, 0.5], "mirror": "z" },
+        {
+          "type": "group",
+          "about": "On each track: a shunting engine, the oil spilt in front of it, a workbench.",
+          "mirror": "z",
+          "parts": [
+            { "type": "block", "at": [0.5, 0, 10], "size": [7, 0.5, 3], "m": "steel" },
+            { "type": "block", "at": [-0.5, 0.5, 10], "size": [5, 2, 2], "m": "green-wagon" },
+            { "type": "block", "at": [3, 0.5, 10], "size": [2, 3, 3], "m": "green-wagon" },
+            { "type": "hole", "at": [3, 2, 10], "size": [2, 1, 1] },
+            { "type": "block", "at": [-0.5, -0.5, 5.25], "size": [7, 0.5, 4.5], "m": "oil" },
+            { "type": "block", "at": [4, 0, 5], "size": [1, 1, 3], "m": "wood" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signal-box",
+      "name": "Signal box",
+      "about": "A brick box 7 by 6 m under a slate roof: a door at each end (east and west), a long window facing north, the levers under it.",
+      "parts": [
+        { "type": "walls", "at": [0, 0, 0], "size": [7, 3, 6], "thick": 0.5, "m": "brick" },
+        { "type": "block", "at": [0, 3, 0], "size": [8, 0.5, 7], "m": "slate" },
+        { "type": "hole", "at": [3.25, 0, 0], "size": [0.5, 2.5, 2], "mirror": "x" },
+        { "type": "hole", "at": [0, 1.5, -2.75], "size": [5, 1, 0.5] },
+        { "type": "block", "at": [0, 0, -2.25], "size": [5, 1, 0.5], "m": "steel" }
+      ]
+    },
+    {
+      "id": "hut",
+      "name": "Hut",
+      "about": "A one-room hut 6 by 5 m: brick walls, a slate roof 3 m up, a door facing west and a window facing north.",
+      "parts": [
+        { "type": "walls", "at": [0, 0, 0], "size": [6, 3, 5], "thick": 0.5, "m": "brick" },
+        { "type": "block", "at": [0, 3, 0], "size": [6, 0.5, 5], "m": "slate" },
+        { "type": "hole", "at": [-2.75, 0, 0], "size": [0.5, 2.5, 2] },
+        { "type": "hole", "at": [0, 1.5, -2.25], "size": [2, 1, 0.5] }
+      ]
+    },
+    {
+      "id": "market-stall",
+      "name": "Market stall",
+      "about": "A counter 3 m long under an awning on four posts, 2.5 m up.",
+      "parts": [
+        { "type": "block", "at": [0, 0, 0], "size": [3, 1, 1], "m": "wood" },
+        { "type": "block", "at": [1.75, 0, 1.25], "size": [0.5, 2.5, 0.5], "m": "wood", "mirror": "xz" },
+        { "type": "block", "at": [0, 2.5, 0], "size": [4, 0.5, 3], "m": "awning" }
+      ]
+    },
+    {
+      "id": "fountain",
+      "name": "Fountain",
+      "about": "A stone basin 4 m square, knee high, and a spout 2.5 m high in its middle.",
+      "parts": [
+        { "type": "walls", "at": [0, 0, 0], "size": [4, 1, 4], "thick": 0.5, "m": "stone" },
+        { "type": "block", "at": [0, 0, 0], "size": [1, 2.5, 1], "m": "stone" }
+      ]
+    },
+    {
+      "id": "boat",
+      "name": "Boat",
+      "about": "A boat moored in a canal, 6 m long along z: its hull down to the canal's bottom, its deck 2 m up, level with a quay, and a cabin on it.",
+      "parts": [
+        { "type": "block", "at": [0, 0, 0], "size": [3, 2, 6], "m": "boat" },
+        { "type": "block", "at": [0, 2, 0], "size": [2, 1, 4], "m": "wood" }
+      ]
+    },
+    {
+      "id": "bridge",
+      "name": "Bridge",
+      "about": "A stone bridge 4 m wide across a canal 8 m wide, its deck 2.5 m up, railings either side, and steps down to the street at both ends (x = ±9.5).",
+      "parts": [
+        { "type": "block", "at": [0, 2, 0], "size": [14, 0.5, 4], "m": "stone" },
+        { "type": "block", "at": [0, 2.5, 1.75], "size": [8, 1, 0.5], "m": "stone", "mirror": "z" },
+        {
+          "type": "stairs",
+          "at": [9.5, 0, 0],
+          "dir": "west",
+          "steps": 5,
+          "run": 0.5,
+          "rise": 0.5,
+          "width": 4,
+          "m": "stone",
+          "mirror": "x"
+        }
+      ]
+    },
+    {
+      "id": "wide-bridge",
+      "name": "Wide bridge",
+      "about": "The bridge, 6 m wide: room for the pedestal in its middle.",
+      "parts": [
+        { "type": "block", "at": [0, 2, 0], "size": [14, 0.5, 6], "m": "stone" },
+        { "type": "block", "at": [0, 2.5, 2.75], "size": [8, 1, 0.5], "m": "stone", "mirror": "z" },
+        {
+          "type": "stairs",
+          "at": [9.5, 0, 0],
+          "dir": "west",
+          "steps": 5,
+          "run": 0.5,
+          "rise": 0.5,
+          "width": 6,
+          "m": "stone",
+          "mirror": "x"
+        }
+      ]
+    },
+    {
+      "id": "town-house",
+      "name": "Town house",
+      "about": "A brick house 12 m deep (x) and 17 m long (z) with two rooms, a roof of tiles 3.5 m up. Doors onto the street (west), into the back room and onto the alleys; windows. Its upper storey is the prefab town-house-upper, laid after everything on the ground.",
+      "parts": [
+        { "type": "walls", "at": [0, 0, 0], "size": [12, 3.5, 17], "thick": 0.5, "m": "brick" },
+        { "type": "block", "at": [0, 0, 0.25], "size": [11, 3.5, 0.5], "m": "brick" },
+        { "type": "block", "at": [0, 3.5, 0], "size": [12, 0.5, 17], "m": "roof-tiles" },
+        { "type": "hole", "at": [-5.75, 0, -3.5], "size": [0.5, 2.5, 2] },
+        { "type": "hole", "at": [0, 0, -8.25], "size": [2, 2.5, 0.5] },
+        { "type": "hole", "at": [3, 0, 0.25], "size": [2, 2.5, 0.5] },
+        { "type": "hole", "at": [5.75, 0, 4.5], "size": [0.5, 2.5, 2] },
+        { "type": "hole", "at": [-2, 0, 8.25], "size": [2, 2.5, 0.5] },
+        { "type": "hole", "at": [-5.75, 1.5, -6.5], "size": [0.5, 1, 1] },
+        { "type": "hole", "at": [-5.75, 1.5, 3.5], "size": [0.5, 1, 2] },
+        { "type": "hole", "at": [5.75, 1.5, -4.5], "size": [0.5, 1, 2] },
+        { "type": "block", "at": [4.5, 0, -6.5], "size": [1, 1, 2], "m": "crate" }
+      ]
+    },
+    {
+      "id": "town-house-upper",
+      "name": "Town house, upper storey",
+      "about": "A second storey on a town house: stairs inside up through a hatch in its first roof, windows all round, a roof of tiles 8 m up.",
+      "parts": [
+        { "type": "walls", "at": [0, 4, 0], "size": [12, 3.5, 17], "thick": 0.5, "m": "brick" },
+        { "type": "block", "at": [0, 7.5, 0], "size": [12, 0.5, 17], "m": "roof-tiles" },
+        {
+          "type": "stairs",
+          "at": [-4, 0, 1.25],
+          "dir": "east",
+          "steps": 8,
+          "run": 0.5,
+          "rise": 0.5,
+          "width": 1.5,
+          "m": "wood"
+        },
+        { "type": "hole", "at": [-2, 3.5, 1.25], "size": [4, 0.5, 1.5] },
+        { "type": "hole", "at": [-5.75, 5, -5.5], "size": [0.5, 1, 2] },
+        { "type": "hole", "at": [-5.75, 5, 4.5], "size": [0.5, 1, 2] },
+        { "type": "hole", "at": [5.75, 5, -4.5], "size": [0.5, 1, 2] },
+        { "type": "hole", "at": [5.75, 5, 3.5], "size": [0.5, 1, 2] },
+        { "type": "hole", "at": [0, 5, -8.25], "size": [2, 1, 0.5] },
+        { "type": "hole", "at": [0, 5, 8.25], "size": [2, 1, 0.5] }
+      ]
+    },
+    {
+      "id": "end-house",
+      "name": "End house",
+      "about": "A plastered house of one room, 12 m square, a roof of tiles 3.5 m up: doors onto the street, the alley and the square, a window, and crates inside.",
+      "parts": [
+        { "type": "walls", "at": [0, 0, 0], "size": [12, 3.5, 12], "thick": 0.5, "m": "plaster" },
+        { "type": "block", "at": [0, 3.5, 0], "size": [12, 0.5, 12], "m": "roof-tiles" },
+        { "type": "hole", "at": [0, 0, -5.75], "size": [2, 2.5, 0.5] },
+        { "type": "hole", "at": [5.75, 0, 0], "size": [0.5, 2.5, 2] },
+        { "type": "hole", "at": [-5.75, 0, 3], "size": [0.5, 2.5, 2] },
+        { "type": "hole", "at": [-5.75, 1.5, -2], "size": [0.5, 1, 2] },
+        { "type": "block", "at": [2, 0, 3], "size": [2, 1, 2], "m": "crate" },
+        { "type": "block", "at": [-3, 0, -3], "size": [1, 1, 2], "m": "box" }
+      ]
+    },
+    {
+      "id": "fort",
+      "name": "Fort",
+      "about": "A stone fort at the east end, its front wall (2 m thick, 3 m high) facing west along x = 23 with a gate in it, battlements along its outer edge and stairs up to its top from the courtyard; side walls with a door in each, and the back wall; a tower at each end of the front wall, with steps up onto it from the walk and battlements of its own.",
+      "parts": [
+        { "type": "block", "at": [23, 0, 0], "size": [2, 3, 30], "m": "stone" },
+        { "type": "block", "at": [35.5, 0, 0], "size": [1, 3, 28], "m": "stone" },
+        { "type": "hole", "at": [23, 0, 0], "size": [2, 2.5, 3] },
+        {
+          "type": "block",
+          "at": [22.25, 3, -14.5],
+          "size": [0.5, 1, 1],
+          "m": "stone",
+          "repeat": { "count": 15, "step": [0, 0, 2] }
+        },
+        {
+          "type": "group",
+          "about": "Each half of it: the stairs up to the walk, the side wall and its door, the tower with its steps and battlements.",
+          "mirror": "z",
+          "parts": [
+            {
+              "type": "stairs",
+              "at": [27, 0, 8],
+              "dir": "west",
+              "steps": 6,
+              "run": 0.5,
+              "rise": 0.5,
+              "width": 2,
+              "m": "stone"
+            },
+            { "type": "block", "at": [30, 0, 14.5], "size": [12, 3, 1], "m": "stone" },
+            { "type": "hole", "at": [30, 0, 14.5], "size": [2, 2.5, 1] },
+            { "type": "block", "at": [24, 0, 14], "size": [4, 4.5, 4], "m": "stone" },
+            {
+              "type": "stairs",
+              "at": [23, 3, 10.5],
+              "dir": "south",
+              "steps": 3,
+              "run": 0.5,
+              "rise": 0.5,
+              "width": 2,
+              "m": "stone"
+            },
+            {
+              "type": "group",
+              "about": "The tower's battlements.",
+              "at": [24, 4.5, 14],
+              "parts": [{ "type": "block", "at": [1.5, 0, 1.5], "size": [1, 1, 1], "m": "stone", "mirror": "xz" }]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapel",
+      "name": "Ruined chapel",
+      "about": "A ruined stone chapel 12 by 8 m, its walls 1 m thick and 4 m high, open to the sky: doors at both ends and in both sides, broken windows, pews, and the altar in its middle.",
+      "parts": [
+        { "type": "walls", "at": [0, 0, 0], "size": [12, 4, 8], "thick": 1, "m": "stone" },
+        { "type": "hole", "at": [5.5, 0, 0], "size": [1, 2.5, 3], "mirror": "x" },
+        { "type": "hole", "at": [0, 0, 3.5], "size": [2, 2.5, 1], "mirror": "z" },
+        {
+          "type": "group",
+          "mirror": "xz",
+          "parts": [
+            { "type": "hole", "at": [3.5, 2.5, 3.5], "size": [3, 1.5, 1] },
+            { "type": "hole", "at": [5.5, 2, 2.25], "size": [1, 1, 1.5] },
+            { "type": "block", "at": [3, 0, 1.5], "size": [2, 0.5, 1], "m": "wood" }
+          ]
+        },
+        { "type": "block", "at": [0, 0, 0], "size": [2, 1, 2], "m": "stone" }
+      ]
+    },
+    {
+      "id": "stable",
+      "name": "Stable",
+      "about": "A stable leaning on a fort's side wall: three posts, a roof with hay stacked on it (blow the roof away and the hay comes down in heaps), and bales inside.",
+      "parts": [
+        {
+          "type": "block",
+          "at": [27.25, 0, 11.25],
+          "size": [0.5, 2.5, 0.5],
+          "m": "wood",
+          "repeat": { "count": 3, "step": [4, 0, 0] }
+        },
+        { "type": "block", "at": [31, 2.5, 12.5], "size": [9, 0.5, 3], "m": "wood" },
+        { "type": "block", "at": [31, 3, 13], "size": [6, 1, 2], "m": "hay" },
+        { "type": "block", "at": [27.5, 0, 13], "size": [2, 1, 1], "m": "hay" },
+        { "type": "block", "at": [33.5, 0, 12.5], "size": [1, 1, 2], "m": "hay" }
+      ]
+    },
+    {
+      "id": "shepherds-hut",
+      "name": "Shepherd's hut",
+      "about": "A stone hut 7 by 6 m, a slate roof 3 m up, a door facing west and a window facing north.",
+      "parts": [
+        { "type": "walls", "at": [0, 0, 0], "size": [7, 3, 6], "thick": 0.5, "m": "stone" },
+        { "type": "block", "at": [0, 3, 0], "size": [7, 0.5, 6], "m": "slate" },
+        { "type": "hole", "at": [-3.25, 0, 0], "size": [0.5, 2.5, 2] },
+        { "type": "hole", "at": [0, 1.5, -2.75], "size": [2, 1, 0.5] }
+      ]
+    }
+  ]
+}

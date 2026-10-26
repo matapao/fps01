@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prefabs.schema.json",
+  "title": "Prefabs",
+  "description": "The prefabs.",
+  "type": "object",
+  "properties": {
+    "prefabs": {
+      "type": "array",
+      "description": "Every prefab.",
+      "items": {
+        "type": "object",
+        "description": "A prefab.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Its id: lower case letters, digits and hyphens. Other blocks refer to it by this.",
+            "pattern": "^[a-z][a-zA-Z0-9-]{0,39}$"
+          },
+          "name": { "type": "string", "description": "What it's called.", "minLength": 1, "maxLength": 40 },
+          "about": {
+            "type": "string",
+            "description": "What it is and what it's for, for people and agents: one or two sentences.",
+            "minLength": 1,
+            "maxLength": 400
+          },
+          "parts": {
+            "type": "array",
+            "description": "Its parts, in its own space (its middle at x = 0, z = 0; the floor at y = 0), in the order they're laid.",
+            "items": { "$ref": "geometry.schema.json#/$defs/part" },
+            "minItems": 1,
+            "maxItems": 200
+          }
+        },
+        "additionalProperties": false,
+        "required": ["id", "name", "parts"]
+      },
+      "minItems": 0,
+      "maxItems": 200
+    }
+  },
+  "additionalProperties": false,
+  "required": ["prefabs"]
+}

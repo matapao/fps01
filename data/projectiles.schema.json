@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "projectiles.schema.json",
+  "title": "Projectiles",
+  "description": "The projectiles.",
+  "type": "object",
+  "properties": {
+    "projectiles": {
+      "type": "array",
+      "description": "Every projectile.",
+      "items": {
+        "type": "object",
+        "description": "A projectile.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Its id: lower case letters, digits and hyphens. Other blocks refer to it by this.",
+            "pattern": "^[a-z][a-zA-Z0-9-]{0,39}$"
+          },
+          "speed": {
+            "type": "number",
+            "description": "How fast it leaves, in m/s.",
+            "minimum": 0,
+            "maximum": 60
+          },
+          "gravity": {
+            "type": "number",
+            "description": "How hard gravity pulls it, in m/s².",
+            "minimum": 0,
+            "maximum": 40
+          },
+          "size": {
+            "type": "number",
+            "description": "Its radius, in metres.",
+            "minimum": 0.03,
+            "maximum": 0.5
+          },
+          "fuseMs": {
+            "type": "integer",
+            "description": "When it goes off by itself, in ms.",
+            "minimum": 200,
+            "maximum": 30000
+          },
+          "bounce": {
+            "type": "number",
+            "description": "It bounces, keeping this share of its speed (leave out: it goes off where it hits).",
+            "minimum": 0,
+            "maximum": 0.95
+          },
+          "steer": {
+            "type": "boolean",
+            "description": "Its owner steers it where they look (the pilot missile)."
+          },
+          "split": {
+            "type": "object",
+            "description": "When it goes off, it breaks into more.",
+            "properties": {
+              "into": {
+                "type": "string",
+                "description": "What it breaks into.",
+                "minLength": 1,
+                "maxLength": 40,
+                "x-zirbel-ref": "projectiles"
+              },
+              "count": { "type": "integer", "description": "How many.", "minimum": 1, "maximum": 8 }
+            },
+            "additionalProperties": false,
+            "required": ["into", "count"]
+          },
+          "blast": {
+            "type": "object",
+            "description": "The blast where it goes off: full damage at the centre, nothing at the radius; walls shield you.",
+            "properties": {
+              "damage": {
+                "type": "integer",
+                "description": "Damage at the centre.",
+                "minimum": 1,
+                "maximum": 400
+              },
+              "radius": {
+                "type": "number",
+                "description": "How far it reaches, in metres.",
+                "minimum": 0.5,
+                "maximum": 12
+              },
+              "hole": {
+                "type": "number",
+                "description": "The hole it tears, its radius in metres (0: none).",
+                "minimum": 0,
+                "maximum": 4
+              },
+              "push": {
+                "type": "number",
+                "description": "How hard it throws people and grenades, in m/s.",
+                "minimum": 0,
+                "maximum": 40
+              }
+            },
+            "additionalProperties": false,
+            "required": ["damage", "radius", "hole", "push"]
+          },
+          "hit": {
+            "type": "object",
+            "description": "It only hurts whoever it hits.",
+            "properties": {
+              "damage": { "type": "integer", "description": "Damage.", "minimum": 1, "maximum": 300 },
+              "headshot": {
+                "type": "number",
+                "description": "How many times that on the head.",
+                "minimum": 1,
+                "maximum": 5
+              }
+            },
+            "additionalProperties": false,
+            "required": ["damage", "headshot"]
+          },
+          "credit": {
+            "type": "string",
+            "description": "What a kill with it is counted as (on the death screen and for medals).",
+            "minLength": 1,
+            "maxLength": 20
+          },
+          "model": {
+            "type": "string",
+            "description": "What it looks like: a model from the asset catalogue.",
+            "enum": [
+              "projectiles/grenade",
+              "projectiles/bouncer",
+              "projectiles/rocket",
+              "projectiles/mortar",
+              "projectiles/bomblet",
+              "projectiles/splitter",
+              "projectiles/splitter-bit",
+              "projectiles/choir",
+              "projectiles/missile",
+              "projectiles/pilot",
+              "projectiles/ball"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "required": ["id", "speed", "gravity", "size", "fuseMs", "model"]
+      },
+      "minItems": 1,
+      "maxItems": 40
+    }
+  },
+  "additionalProperties": false,
+  "required": ["projectiles"]
+}

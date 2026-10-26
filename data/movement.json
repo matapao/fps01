@@ -1,0 +1,16 @@
+{
+  "run": 9,
+  "jump": 7.5,
+  "gravity": 20,
+  "groundAccel": 10,
+  "airAccel": 1.2,
+  "friction": 6,
+  "stopSpeed": 3,
+  "speedCap": 16,
+  "dodge": { "speed": 11, "hop": 3.2, "cooldownMs": 1200 },
+  "padCooldownMs": 400,
+  "water": { "speed": 0.7, "gravity": 0.3, "accel": 4, "swim": 3.5 },
+  "slippery": { "friction": 0.1, "accel": 0.15 },
+  "hook": { "range": 40, "pull": 50, "speed": 17, "arrive": 1.3, "hop": 6, "cooldownMs": 350 },
+  "lift": { "rise": 9, "fall": 5, "airAccel": 6 }
+}

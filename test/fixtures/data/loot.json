@@ -1,0 +1,55 @@
+{
+  "powerups": {
+    "firstMs": 45000,
+    "everyMs": 60000,
+    "warningMs": 10000,
+    "lastsMs": 30000,
+    "droppedMs": 20000,
+    "kinds": [
+      { "id": "triple", "name": "Triple Damage", "color": "#4d7cff", "damage": 3 },
+      { "id": "rush", "name": "Rush", "color": "#ffd23d", "speed": 1.3 },
+      { "id": "mend", "name": "Mend", "color": "#ff4d4d", "perSecond": 10, "cap": 200 },
+      { "id": "shimmer", "name": "Shimmer", "color": "#c9d4e3" },
+      { "id": "guard", "name": "Blast Guard", "color": "#4dff88", "share": 0.5 },
+      { "id": "lift", "name": "Lift", "color": "#c77dff" }
+    ]
+  },
+  "crates": {
+    "firstMs": 20000,
+    "everyMs": [40000, 70000],
+    "fallSpeed": 2.4,
+    "lastsMs": 45000,
+    "reach": 1.3,
+    "dropHeight": 12,
+    "items": [
+      { "id": "woolly", "name": "Woolly", "chance": 3, "about": "runs off and hops over things · click to set it off" },
+      { "id": "splitter", "name": "Splitter bomb", "chance": 3, "about": "bounces, then bursts into five more" },
+      {
+        "id": "choir",
+        "name": "Choir grenade",
+        "chance": 2,
+        "about": "a very big blast, three seconds after you throw it"
+      },
+      {
+        "id": "airstrike",
+        "name": "Air strike",
+        "chance": 2,
+        "about": "pick a spot on the map: five missiles come down out of the sky"
+      },
+      { "id": "pilot", "name": "Pilot missile", "chance": 1, "about": "steer the missile yourself · click to set it off" },
+      { "id": "teleport", "name": "Teleport", "chance": 3, "about": "click where you want to be" },
+      {
+        "id": "health",
+        "name": "Health crate",
+        "chance": 4,
+        "about": "+50 health and a full load for every weapon you carry",
+        "health": 50,
+        "cap": 200
+      }
+    ]
+  },
+  "woolly": { "speed": 4.5, "hop": 5.5, "ms": 8000, "blast": { "damage": 130, "radius": 5, "hole": 2.2, "push": 16 } },
+  "airstrike": { "missiles": 5, "spacing": 2.5 },
+  "pilot": { "turn": 2.2 },
+  "teleport": { "range": 60 }
+}
